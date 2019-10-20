@@ -14,7 +14,7 @@ Suero::Suero(char t, unsigned int c) : Elemento(){
 
 //Destructor
 Suero::~Suero(){
-  cout << "Destruyendo Suero -> ";
+  //cout << "Destruyendo Suero -> ";
 }
 
 //Setters

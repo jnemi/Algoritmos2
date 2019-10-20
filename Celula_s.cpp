@@ -10,7 +10,7 @@ Celula_s::Celula_s(float x, float y, unsigned int e, unsigned int p, string m, b
 
 //Destructor
 Celula_s::~Celula_s(){
-  cout << "Destruyendo Celula S -> ";
+  //cout << "Destruyendo Celula S -> ";
 }
 //Mostrar
 void Celula_s::mostrar(){

@@ -10,7 +10,7 @@ Anticuerpo::Anticuerpo(float x, float y) : Microorganismo(x, y){
 
 //Destructor
 Anticuerpo::~Anticuerpo(){
-  cout << "Destruyendo Anticuerpo -> ";
+  //cout << "Destruyendo Anticuerpo -> ";
 }
 
 //Mostrar

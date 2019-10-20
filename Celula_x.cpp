@@ -12,7 +12,7 @@ Celula_x::Celula_x(float x, float y, unsigned int e, unsigned int p, string m, b
 
 //Destructor
 Celula_x::~Celula_x(){
-  cout << "Destruyendo Celula X -> ";
+  //cout << "Destruyendo Celula X -> ";
 }
 
 //Setter
