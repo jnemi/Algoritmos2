@@ -6,7 +6,7 @@ Elemento::Elemento(){}
 //Destructor
 Elemento::~Elemento()
 {
-    cout<<"Elemento"<<endl;
+    //cout<<"Elemento"<<endl;
 }
 
 //Mostrar

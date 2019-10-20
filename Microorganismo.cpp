@@ -14,7 +14,7 @@ Microorganismo::Microorganismo(float x, float y) : Elemento(){
 
 //Destructor
 Microorganismo::~Microorganismo(){
-  cout << "Microorganismo -> ";
+  //cout << "Microorganismo -> ";
 }
 
 //Setters

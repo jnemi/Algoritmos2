@@ -19,7 +19,7 @@ Celula::Celula(float x, float y, unsigned int e, unsigned int p, string m, bool 
 
 //Destructor
 Celula::~Celula(){
-  cout << "Celula -> ";
+  //cout << "Celula -> ";
 }
 
 //Setters
