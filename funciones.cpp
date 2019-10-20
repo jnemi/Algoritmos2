@@ -39,19 +39,14 @@ void procesarArchivo(ifstream &archivo, string &dato, int &i, Elemento **vec){
       archivo >> dato;
       archivo >> aux1;
       archivo >> aux2;
-      if(dato == "X"){
+      if(dato == "X")
         vec[i] = new Celula_x(aux1, aux2, 0, 0, "-", true, 0);
-      }else{
-        if(dato == "Y"){
-          vec[i] = new Celula_y(aux1, aux2, 0, 0, "-", true, 0);
-        }else{
-          if(dato == "Z"){
-            vec[i] = new Celula_z(aux1, aux2, 0, 0, "-", true, 0);
-          }else{
-            vec[i] = new Celula_s(aux1, aux2, 0, 0, "-", true);
-          }
-        }
-      }
+      else if(dato == "Y")
+        vec[i] = new Celula_y(aux1, aux2, 0, 0, "-", true, 0);
+      else if(dato == "Z")
+        vec[i] = new Celula_z(aux1, aux2, 0, 0, "-", true, 0);
+      else
+        vec[i] = new Celula_s(aux1, aux2, 0, 0, "-", true);
    }else{
      if(dato == "anticuerpo"){
        //se crea objeto anticuerpo

@@ -14,5 +14,6 @@ Celula_s::~Celula_s(){
 }
 //Mostrar
 void Celula_s::mostrar(){
+  cout << "Celula S:" << endl;
   Celula::mostrar();
 }
