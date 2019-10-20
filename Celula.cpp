@@ -23,14 +23,6 @@ Celula::~Celula(){
 }
 
 //Setters
-void Celula::asignarPosicionX(float x){
-  posicion_x = x;
-}
-
-void Celula::asignarPosicionY(float y){
-  posicion_y = y;
-}
-
 void Celula::asignarCantEnzimas(unsigned int e){
   cantEnzimas = e;
 }
@@ -48,14 +40,6 @@ void Celula::asignarUnicelular(bool u){
 }
 
 //Getters
-float Celula::obtenerPosicionX(){
-  return posicion_x;
-}
-
-float Celula::obtenerPosicionY(){
-  return posicion_y;
-}
-
 unsigned int Celula::obtenerCantEnzimas(){
   return cantEnzimas;
 }

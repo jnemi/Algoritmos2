@@ -13,14 +13,6 @@ class Celula : public Microorganismo{
    public:
      //Setters
      //PRE: Recibir dato valido
-     //POS: Asigna valor a la posicion en x
-     void asignarPosicionX(float);
-
-     //PRE: Recibir dato valido
-     //POS: Asigna valor a la posicion en y
-     void asignarPosicionY(float);
-
-     //PRE: Recibir dato valido
      //POS: Asigna valor a cantEnzimas
      void asignarCantEnzimas(unsigned int);
 
@@ -37,14 +29,6 @@ class Celula : public Microorganismo{
      void asignarUnicelular(bool);
 
      //Getters
-     //PRE: -
-     //POS: Devuelve la posicion en x
-     float obtenerPosicionX();
-
-     //PRE: -
-     //POS: Devuelve la posicion en y
-     float obtenerPosicionY();
-
      //PRE: -
      //POS: Devuelve la cantidad de enzimas
      unsigned int obtenerCantEnzimas();
