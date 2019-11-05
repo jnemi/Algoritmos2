@@ -5,19 +5,18 @@
 #include "Celula_s.h"
 #include "Suero.h"
 #include "Anticuerpo.h"
+#include "List.h"
 
 using namespace std;
 
-//Constante para el tamaño maximo del vector
-const int LARGO = 100;
+
 
 int main(){
-    //Creo vector de punteros a Elemento
-    Elemento *vec[LARGO];
-    //Variable maximo logico
-    int mL;
-    //Menu
-    menu(vec, mL);
+    List <Elemento> *lista_general = new List <Elemento>;
+    List <Celula> *lista_celulas = new List <Celula>;
+    lectura(lista_general, lista_celulas);
 
+    delete lista_general;
+    delete lista_celulas;
   return 0;
 }

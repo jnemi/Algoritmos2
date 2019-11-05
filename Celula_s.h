@@ -16,7 +16,7 @@ class Celula_s : public Celula{
        Celula_s();
 
        //Constructor con parametros
-       Celula_s(float, float, unsigned int, unsigned int, string, bool);
+       Celula_s(float, float);
 
        //Destructor
        ~Celula_s();

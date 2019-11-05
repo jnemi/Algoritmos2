@@ -27,7 +27,7 @@ class Celula_z : public Celula{
        Celula_z();
 
        //Constructor con parametros
-       Celula_z(float, float, unsigned int, unsigned int, string, bool, float);
+       Celula_z(float, float);
 
        //Destructor
        ~Celula_z();

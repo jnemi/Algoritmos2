@@ -5,7 +5,7 @@ Celula_s::Celula_s() : Celula(){
 }
 
 //Constructor con parametros
-Celula_s::Celula_s(float x, float y, unsigned int e, unsigned int p, string m, bool u) : Celula(x, y, e, p, m, u){
+Celula_s::Celula_s(float x, float y) : Celula(x, y){
 }
 
 //Destructor
