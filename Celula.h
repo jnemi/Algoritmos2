@@ -1,6 +1,7 @@
 #ifndef CELULA_H_INCLUDED
 #define CELULA_H_INCLUDED
 #include "Microorganismo.h"
+#include "List.h"
 
 class Celula : public Microorganismo{
    //Atributos
@@ -9,6 +10,9 @@ class Celula : public Microorganismo{
      unsigned int cantProteinas;
      string materialGenetico;
      bool unicelular;
+
+     List<Celula> adyacentes;
+
    //Metodos
    public:
      //Setters
@@ -53,7 +57,7 @@ class Celula : public Microorganismo{
      Celula();
 
      //constructor con parametros
-     Celula(float, float, unsigned int, unsigned int, string, bool);
+     Celula(float, float);
 
      //Destructor
      virtual ~Celula();

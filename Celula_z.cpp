@@ -6,8 +6,7 @@ Celula_z::Celula_z() : Celula(){
 }
 
 //Constructor con parametros
-Celula_z::Celula_z(float x, float y, unsigned int e, unsigned int p, string m, bool u, float pm) : Celula(x, y, e, p, m, u){
-  porcentajeMutacion = pm;
+Celula_z::Celula_z(float x, float y) : Celula(x, y){
 }
 
 //Destructor

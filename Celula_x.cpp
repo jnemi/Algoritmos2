@@ -6,8 +6,7 @@ Celula_x::Celula_x() : Celula(){
 }
 
 //Constructor con parametros
-Celula_x::Celula_x(float x, float y, unsigned int e, unsigned int p, string m, bool u, float i) : Celula(x, y, e, p, m, u){
-  porcentajeInflamacion = i;
+Celula_x::Celula_x(float x, float y) : Celula(x, y){
 }
 
 //Destructor

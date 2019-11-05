@@ -2,19 +2,10 @@
 
 //Constructor sin parametros
 Celula::Celula() : Microorganismo(){
-  cantEnzimas = 0;
-  cantProteinas = 0;
-  materialGenetico = "-";
-  //asigna unicelular por defecto
-  unicelular = true;
 }
 
 //Constructor con parametros
-Celula::Celula(float x, float y, unsigned int e, unsigned int p, string m, bool u) : Microorganismo(x, y){
-  cantEnzimas = e;
-  cantProteinas = p;
-  materialGenetico = m;
-  unicelular = u;
+Celula::Celula(float x, float y) : Microorganismo(x, y){
 }
 
 //Destructor
