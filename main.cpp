@@ -5,15 +5,15 @@
 #include "Celula_s.h"
 #include "Suero.h"
 #include "Anticuerpo.h"
-#include "List.h"
+#include "Lista.h"
 
 using namespace std;
 
 
 
 int main(){
-    List <Elemento> *lista_general = new List <Elemento>;
-    List <Celula> *lista_celulas = new List <Celula>;
+    Lista <Elemento> *lista_general = new Lista <Elemento>;
+    Lista <Celula> *lista_celulas = new Lista <Celula>;
     lectura(lista_general, lista_celulas);
 
     delete lista_general;

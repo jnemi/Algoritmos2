@@ -8,14 +8,14 @@
 #include "Suero.h"
 #include "Anticuerpo.h"
 #include <fstream>
-#include "List.h"
+#include "Lista.h"
 
 using namespace std;
 
-void lectura(List<Elemento>*, List<Celula>*);
+void lectura(Lista<Elemento>*, Lista<Celula>*);
 
-void procesar_archivo(ifstream &archivo, string &dato, List<Elemento>*, List<Celula>*);
+void procesar_archivo(ifstream &archivo, string &dato, Lista<Elemento>*, Lista<Celula>*);
 
-void armado_red_celulas(List<Elemento>*);
+void armado_red_celulas(Lista<Elemento>*);
 
 #endif // FUNCIONES_H_INCLUDED
