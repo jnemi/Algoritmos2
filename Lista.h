@@ -1,6 +1,7 @@
 #ifndef LISTA_H_INCLUDED
 #define LISTA_H_INCLUDED
 #include "Nodo.h"
+#include <iostream>
 
 template <typename Objeto>
 
@@ -33,6 +34,7 @@ Lista<Objeto>::Lista()
 template <typename Objeto>
 Lista<Objeto>::~Lista()
 {
+    cout<<obtener_largo()<<" elementos a destruir en la lista..."<<endl;
     while (!lista_vacia())
         borrar(primero);
 }

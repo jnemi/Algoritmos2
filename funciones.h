@@ -16,6 +16,8 @@ void lectura(Lista<Elemento>*, Lista<Celula>*);
 
 void procesar_archivo(ifstream &archivo, string &dato, Lista<Elemento>*, Lista<Celula>*);
 
-void armado_red_celulas(Lista<Elemento>*);
+void armado_red_celular(Lista<Celula>*, int, int);
+
+void cruzar_celulas(Lista<Celula*>*);
 
 #endif // FUNCIONES_H_INCLUDED

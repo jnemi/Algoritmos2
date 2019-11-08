@@ -15,6 +15,10 @@ class Celula : public Microorganismo{
 
    //Metodos
    public:
+
+     //Agregar Celulas Adyacentes
+     void agregarAdyacente(Celula*);
+
      //Setters
      //PRE: Recibir dato valido
      //POS: Asigna valor a cantEnzimas
