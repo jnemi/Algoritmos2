@@ -69,10 +69,6 @@ void Lista<Objeto>::insertar(Objeto* obj, Nodo<Objeto>* aux)
         nuevo_elemento->asignar_siguiente(primero);
         primero->asignar_anterior(nuevo_elemento);
         primero = nuevo_elemento;
-    }else if(aux == ultimo){
-        nuevo_elemento->asignar_anterior(ultimo);
-        ultimo->asignar_siguiente(nuevo_elemento);
-        ultimo = nuevo_elemento;
     }else{
         nuevo_elemento->asignar_siguiente(aux);
         nuevo_elemento->asignar_anterior(aux->obtener_anterior());
