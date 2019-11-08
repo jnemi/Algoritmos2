@@ -1,8 +1,8 @@
 #include "funciones.h"
 
 //Funcion para leer el archivo
-void lectura(List<Elemento>* lista_general, List <Celula> *lista_celulas){
-      ifstream archivo;
+void lectura(Lista<Elemento>* lista_general, Lista <Celula> *lista_celulas){
+   ifstream archivo;
    //Abro el archivo para lectura
    archivo.open("estado.txt");
 
@@ -27,7 +27,7 @@ void lectura(List<Elemento>* lista_general, List <Celula> *lista_celulas){
 }
 
 //Funcion para procesar los datos del archivo
-void procesar_archivo(ifstream &archivo, string &dato, List<Elemento> *lista_general, List<Celula>* lista_celulas){
+void procesar_archivo(ifstream &archivo, string &dato, Lista<Elemento> *lista_general, Lista<Celula>* lista_celulas){
    float aux1, aux2;
    char aux3;
    unsigned int aux4;
@@ -37,31 +37,31 @@ void procesar_archivo(ifstream &archivo, string &dato, List<Elemento> *lista_gen
       archivo >> aux1;
       archivo >> aux2;
       if(dato == "X")
-       lista_celulas -> push(new Celula_x(aux1, aux2));
+        lista_celulas -> extender(new Celula_x(aux1, aux2));
       else if(dato == "Y")
-        lista_celulas -> push(new Celula_y(aux1, aux2));
+        lista_celulas -> extender(new Celula_y(aux1, aux2));
       else if(dato == "Z")
-        lista_celulas -> push(new Celula_z(aux1, aux2));
+        lista_celulas -> extender(new Celula_z(aux1, aux2));
       else
-        lista_celulas -> push(new Celula_s(aux1, aux2));
+        lista_celulas -> extender(new Celula_s(aux1, aux2));
    }else{
      if(dato == "anticuerpo"){
        //se crea objeto anticuerpo
        archivo >> aux1;
        archivo >> aux2;
-       lista_general -> push(new Anticuerpo(aux1, aux2));
+       lista_general -> extender(new Anticuerpo(aux1, aux2));
      }else{
           if(dato == "dosis"){
             //se crea objeto dosis
             archivo >> aux3;
             //aux3 = dato;
             archivo >> aux4;
-            lista_general -> push(new Suero(aux3, aux4));
+            lista_general -> extender(new Suero(aux3, aux4));
          }
        }
      }
 }
 
-void armado_red_celulas(List<Elemento>* lista){
+void armado_red_celulas(Lista<Elemento>* lista){
 
 }

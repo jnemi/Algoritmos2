@@ -1,7 +1,7 @@
 #ifndef CELULA_H_INCLUDED
 #define CELULA_H_INCLUDED
 #include "Microorganismo.h"
-#include "List.h"
+#include "Lista.h"
 
 class Celula : public Microorganismo{
    //Atributos
@@ -11,7 +11,7 @@ class Celula : public Microorganismo{
      string materialGenetico;
      bool unicelular;
 
-     List<Celula> adyacentes;
+     Lista<Celula> adyacentes;
 
    //Metodos
    public:
