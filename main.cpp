@@ -16,7 +16,16 @@ int main(){
     Lista <Celula> *lista_celulas = new Lista <Celula>;
     lectura(lista_general, lista_celulas);
 
+    armado_red_celular(lista_celulas, 3, 1);
+
+    for (int i = 1; i <= lista_celulas->obtener_largo(); i++)
+        lista_celulas->obtener_valor(i).mostrar();
+
+    //armado_red_celular(lista_celulas, 3, 1);
+
     delete lista_general;
     delete lista_celulas;
+
+    cout<<endl<<endl<<"[DEBUG]: PROGRAMA FINALIZADO"<<endl;
   return 0;
 }

@@ -13,6 +13,14 @@ Celula::~Celula(){
   //cout << "Celula -> ";
 }
 
+//Agregar Celulas Adyacentes
+void Celula::agregarAdyacente(Celula** nueva_ady)
+{
+    cout<<"[DEBUG]: Conectando "<<this<<" con "<<*nueva_ady;
+    adyacentes.extender(nueva_ady);
+    cout<<"  COMPLETADO"<<endl;
+}
+
 //Setters
 void Celula::asignarCantEnzimas(unsigned int e){
   cantEnzimas = e;
@@ -50,6 +58,12 @@ bool Celula::obtenerUnicelular(){
 //Mostrar
 void Celula::mostrar(){
   Microorganismo::mostrar();
+  cout<<"****************************"<<endl;
+  cout<<"Direccion: "<<this<<endl;
+  cout<<"****************************"<<endl;
+  cout<<">>Adyacentes: "<<endl;
+  for (int i = 1; i <= adyacentes.obtener_largo(); i++)
+    cout<<"        Cel: "<<(adyacentes.obtener_valor(i))<<endl;
   cout << "Cantidad de enzimas: " << obtenerCantEnzimas() << endl;
   cout << "Cantidad de proteinas: " << obtenerCantEnzimas() << endl;
   cout << "Material Gnetico: " << obtenerMaterialGnetico() << endl;
@@ -57,4 +71,5 @@ void Celula::mostrar(){
     cout << "Tipo de organismo: Unicelular" << endl;
   else
     cout << "Tipo de organismo: Pluricelular" << endl;
+  cout<<"_______________________________________________________________"<<endl;
 }

@@ -1,4 +1,5 @@
 #include "funciones.h"
+#include <iostream>
 
 //Funcion para leer el archivo
 void lectura(Lista<Elemento>* lista_general, Lista <Celula> *lista_celulas){
@@ -62,6 +63,68 @@ void procesar_archivo(ifstream &archivo, string &dato, Lista<Elemento> *lista_ge
      }
 }
 
-void armado_red_celulas(Lista<Elemento>* lista){
+void armado_red_celular(Lista<Celula>* lista, int elementosXGrupo, int interseccion){
+    cout<<"[DEBUG]: Configurando la red celular"<<endl<<endl;
+    int cantGrupos = ((lista->obtener_largo() - 1) / (elementosXGrupo - interseccion)) + 1;
+    cout<<"         Hay "<<lista->obtener_largo()<<" elemento en la lista"<<endl;
+    cout<<"         Armando grupos con "<<elementosXGrupo<<" elementos por grupo, ";
+    cout<<"con "<<interseccion<<" elementos intersectando..."<<endl<<endl;
 
+    cout<<"[DEBUG]: Preparando "<<cantGrupos<<" grupos..."<<endl<<endl;
+
+    for (int a = 1; a <= cantGrupos; a++)
+    {
+        Lista<Celula*> grupo;
+
+        Nodo<Celula>* aux;
+        int principioGrupo = 1 + (a - 1)*(elementosXGrupo - interseccion);
+        aux = lista->buscar_nodo(principioGrupo);
+
+        cout<<"[DEBUG]: Grupo "<<a<<", iniciando en "<<principioGrupo<<"("<<aux<<" -> "<<&(aux->obtener_valor())<<"):"<<endl;
+
+        for (int k = 1; k <= elementosXGrupo; k++)
+        {
+            /*
+            Celula* pCelulaAux = &(aux->obtener_valor());
+            grupo.extender(&pCelulaAux);
+            */
+
+
+            if (aux != 0){
+                cout<<"         Ejecutando linea 95";
+                Celula** pCelulaAux = new Celula*;
+                cout<<" 97";
+                *pCelulaAux = &(aux->obtener_valor());
+                cout<<" 99";
+                aux = aux->obtener_siguiente();
+                cout<<" 101";
+                grupo.extender(pCelulaAux);
+                cout<<" OK"<<endl;
+                cout<<"         "<<&(pCelulaAux)<<"->"<<&(*pCelulaAux)<<"->"<<&(**pCelulaAux)<<endl;
+            }
+        }
+        cout<<endl<<"[DEBUG]: Iniciando cruce..."<<endl;
+        cruzar_celulas(&grupo);
+    }
+}
+
+void cruzar_celulas(Lista<Celula*>* celulas_conectadas)
+{
+    int largo = celulas_conectadas->obtener_largo();
+    for (int i = 1; i <= largo; i++)
+    {
+        for (int j = 1; j <= largo; j++)
+        {
+            if (i != j){
+                cout<<"[DEBUG]: Cruzando "<<celulas_conectadas->obtener_valor(i)<<"("<<i<<")"<<" con "<<celulas_conectadas->obtener_valor(j)<<"("<<j<<") ";
+                Celula* celula = celulas_conectadas->obtener_valor(i);
+                Celula** adyacente = &(celulas_conectadas->obtener_valor(j));
+                if (celula != 0 && *adyacente != 0)
+                    celula->agregarAdyacente(adyacente);
+                else
+                    cout<<"[DEBUG]: Cruce rechazado"<<endl;
+                //celulas_conectadas->obtener_valor(i)->agregarAdyacente(&(celulas_conectadas->obtener_valor(j)));
+            }
+        }
+    }
 }

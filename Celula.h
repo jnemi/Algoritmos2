@@ -11,10 +11,14 @@ class Celula : public Microorganismo{
      string materialGenetico;
      bool unicelular;
 
-     Lista<Celula> adyacentes;
+     Lista<Celula*> adyacentes;
 
    //Metodos
    public:
+
+     //Agregar Celulas Adyacentes
+     void agregarAdyacente(Celula**);
+
      //Setters
      //PRE: Recibir dato valido
      //POS: Asigna valor a cantEnzimas
