@@ -14,9 +14,9 @@ Celula::~Celula(){
 }
 
 //Agregar Celulas Adyacentes
-void Celula::agregarAdyacente(Celula* nueva_ady)
+void Celula::agregarAdyacente(Celula** nueva_ady)
 {
-    cout<<"[DEBUG]: Conectando "<<this<<" con "<<nueva_ady;
+    cout<<"[DEBUG]: Conectando "<<this<<" con "<<*nueva_ady;
     adyacentes.extender(nueva_ady);
     cout<<"  COMPLETADO"<<endl;
 }
@@ -63,7 +63,7 @@ void Celula::mostrar(){
   cout<<"****************************"<<endl;
   cout<<">>Adyacentes: "<<endl;
   for (int i = 1; i <= adyacentes.obtener_largo(); i++)
-    cout<<"        Cel: "<<&(adyacentes.obtener_valor(i))<<endl;
+    cout<<"        Cel: "<<(adyacentes.obtener_valor(i))<<endl;
   cout << "Cantidad de enzimas: " << obtenerCantEnzimas() << endl;
   cout << "Cantidad de proteinas: " << obtenerCantEnzimas() << endl;
   cout << "Material Gnetico: " << obtenerMaterialGnetico() << endl;

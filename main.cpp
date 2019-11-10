@@ -25,5 +25,7 @@ int main(){
 
     delete lista_general;
     delete lista_celulas;
+
+    cout<<endl<<endl<<"[DEBUG]: PROGRAMA FINALIZADO"<<endl;
   return 0;
 }

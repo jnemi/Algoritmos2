@@ -91,10 +91,15 @@ void armado_red_celular(Lista<Celula>* lista, int elementosXGrupo, int intersecc
 
 
             if (aux != 0){
+                cout<<"         Ejecutando linea 95";
                 Celula** pCelulaAux = new Celula*;
+                cout<<" 97";
                 *pCelulaAux = &(aux->obtener_valor());
+                cout<<" 99";
                 aux = aux->obtener_siguiente();
+                cout<<" 101";
                 grupo.extender(pCelulaAux);
+                cout<<" OK"<<endl;
                 cout<<"         "<<&(pCelulaAux)<<"->"<<&(*pCelulaAux)<<"->"<<&(**pCelulaAux)<<endl;
             }
         }
@@ -112,10 +117,13 @@ void cruzar_celulas(Lista<Celula*>* celulas_conectadas)
         {
             if (i != j){
                 cout<<"[DEBUG]: Cruzando "<<celulas_conectadas->obtener_valor(i)<<"("<<i<<")"<<" con "<<celulas_conectadas->obtener_valor(j)<<"("<<j<<") ";
-                celulas_conectadas->obtener_valor(i)->agregarAdyacente(celulas_conectadas->obtener_valor(j));
+                Celula* celula = celulas_conectadas->obtener_valor(i);
+                Celula** adyacente = &(celulas_conectadas->obtener_valor(j));
+                if (celula != 0 && *adyacente != 0)
+                    celula->agregarAdyacente(adyacente);
+                else
+                    cout<<"[DEBUG]: Cruce rechazado"<<endl;
                 //celulas_conectadas->obtener_valor(i)->agregarAdyacente(&(celulas_conectadas->obtener_valor(j)));
-
-                //celulas_conectadas->obtener_valor(i)->agregarAdyacente(new Celula);
             }
         }
     }
