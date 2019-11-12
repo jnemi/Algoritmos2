@@ -22,7 +22,7 @@ int main(int argc, char** argv){
     juego = new Juego();
     juego->iniciar("Nanobot", 100, 100, 0);
 
-    juego->correr();
+    juego->correr(lista_celulas);
 
     juego->limpiar();
 

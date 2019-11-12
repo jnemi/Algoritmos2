@@ -29,8 +29,8 @@ public:
     Juego();
     ~Juego(){}
     bool iniciar(const char* titulo, int xPos, int yPos, int flags);
-    void correr();
-    void renderizar();
+    void correr(Lista<Celula>* lista_celulas);
+    void renderizar(Lista<Celula>* lista_celulas);
     void manejarEventos();
     void limpiar();
 };

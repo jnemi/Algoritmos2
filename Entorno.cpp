@@ -34,7 +34,6 @@ bool Entorno::iniciar(const char *title, int xpos, int ypos, int flags)
             renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
             if (renderer == 0) {
             	cerr<<"Fallo al crear Renderer"<<endl;
-
                 return false;
             } else {
                 int imgFlags = IMG_INIT_PNG;
@@ -104,21 +103,44 @@ Entorno::~Entorno()
 	renderer = NULL;
 }
 
-void Entorno::renderizarTodo()
+void Entorno::renderizarTodo(Lista<Celula>* lista)
 {
     SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 	SDL_RenderClear(renderer); // clear the renderer to the draw color
 	renderizar(FONDO,0,0);
 	renderizar(NANOBOT,0,SCREEN_HEIGHT-NANOBOT_HEIGHT);
-
 	//Prepara el Draw para dibujar una linea negra
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
     //Inserte codigo para dibujar lineas
-
+    armado_red_grafica(renderer, lista);
     //Inserte codigo para renderizar imagenes
+    int largo = lista->obtener_largo();
+    float x, y;
+    char tipo_celula;
 
+    for(int i=1; i<=largo; i++){
+        x = lista->obtener_valor(i).obtener_posicion_x();
+        y = lista->obtener_valor(i).obtener_posicion_y();
+        tipo_celula = lista->obtener_valor(i).obtener_tipo_celula();
+
+        cout << "La imagen va en (" << x << "," << y << ")" << endl;
+
+       switch(tipo_celula){
+        case 'x':
+            renderizar(CELULA_X, x-25, y-25);
+            break;
+        case 'y':
+            renderizar(CELULA_Y, x-25, y-25);
+            break;
+        case 'z':
+            renderizar(CELULA_Z, x-25, y-25);
+            break;
+        case 's':
+            renderizar(CELULA_S, x-25, y-25);
+            break;
+        }
+    }
 	SDL_RenderPresent(renderer); // draw to the screen
-
 }
 
 void Entorno::limpiar()
