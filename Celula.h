@@ -12,10 +12,11 @@ class Celula : public Microorganismo{
      bool unicelular;
      char tipo;
 
-     Lista<Celula*> adyacentes;
-
-   //Metodos
    public:
+   
+     Lista<Celula*> adyacentes;
+   
+     //Metodos
      char obtener_tipo_celula();
      //Agregar Celulas Adyacentes
      void agregarAdyacente(Celula**);
