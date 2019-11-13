@@ -7,6 +7,7 @@ Celula_z::Celula_z() : Celula(){
 
 //Constructor con parametros
 Celula_z::Celula_z(float x, float y) : Celula(x, y){
+    tipo = 'z';
 }
 
 //Destructor

@@ -1,5 +1,11 @@
 #include "funciones.h"
+#include "SDL2/SDL.h"
+#include "SDL2/SDL_image.h"
 #include <iostream>
+#include <stdio.h>
+#include "Juego.h"
+#include "Entorno.h"
+#include "Constants.h"
 
 //Funcion para leer el archivo
 void lectura(Lista<Elemento>* lista_general, Lista <Celula> *lista_celulas){
@@ -64,13 +70,13 @@ void procesar_archivo(ifstream &archivo, string &dato, Lista<Elemento> *lista_ge
 }
 
 void armado_red_celular(Lista<Celula>* lista, int elementosXGrupo, int interseccion){
-    cout<<"[DEBUG]: Configurando la red celular"<<endl<<endl;
+    //cout<<"[DEBUG]: Configurando la red celular"<<endl<<endl;
     int cantGrupos = ((lista->obtener_largo() - 1) / (elementosXGrupo - interseccion)) + 1;
-    cout<<"         Hay "<<lista->obtener_largo()<<" elemento en la lista"<<endl;
-    cout<<"         Armando grupos con "<<elementosXGrupo<<" elementos por grupo, ";
-    cout<<"con "<<interseccion<<" elementos intersectando..."<<endl<<endl;
+    //cout<<"         Hay "<<lista->obtener_largo()<<" elemento en la lista"<<endl;
+    //cout<<"         Armando grupos con "<<elementosXGrupo<<" elementos por grupo, ";
+    //cout<<"con "<<interseccion<<" elementos intersectando..."<<endl<<endl;
 
-    cout<<"[DEBUG]: Preparando "<<cantGrupos<<" grupos..."<<endl<<endl;
+    //cout<<"[DEBUG]: Preparando "<<cantGrupos<<" grupos..."<<endl<<endl;
 
     for (int a = 1; a <= cantGrupos; a++)
     {
@@ -80,7 +86,7 @@ void armado_red_celular(Lista<Celula>* lista, int elementosXGrupo, int intersecc
         int principioGrupo = 1 + (a - 1)*(elementosXGrupo - interseccion);
         aux = lista->buscar_nodo(principioGrupo);
 
-        cout<<"[DEBUG]: Grupo "<<a<<", iniciando en "<<principioGrupo<<"("<<aux<<" -> "<<&(aux->obtener_valor())<<"):"<<endl;
+        //cout<<"[DEBUG]: Grupo "<<a<<", iniciando en "<<principioGrupo<<"("<<aux<<" -> "<<&(aux->obtener_valor())<<"):"<<endl;
 
         for (int k = 1; k <= elementosXGrupo; k++)
         {
@@ -125,6 +131,28 @@ void cruzar_celulas(Lista<Celula*>* celulas_conectadas)
                     cout<<"[DEBUG]: Cruce rechazado"<<endl;
                 //celulas_conectadas->obtener_valor(i)->agregarAdyacente(&(celulas_conectadas->obtener_valor(j)));
             }
+        }
+    }
+}
+
+void armado_red_grafica(SDL_Renderer* renderer, Lista<Celula>* lista){
+    int largo = lista->obtener_largo();
+    float x1, y1, x2, y2;
+
+    for(int i=1; i<=largo; i++){
+        Celula cel_actual = lista->obtener_valor(i);
+        x1 = cel_actual.obtener_posicion_x();
+        y1 = cel_actual.obtener_posicion_y();
+       
+        int cantAdyacentes = cel_actual.adyacentes.obtener_largo();
+        
+        for (int j = 1; j <= cantAdyacentes; j++){
+            Celula* adyacente_actual = cel_actual.adyacentes.obtener_valor(j);
+            x2 = adyacente_actual->obtener_posicion_x();
+            y2 = adyacente_actual->obtener_posicion_y();
+
+            //cout << "LA LINEA VA DE (" << x1 << "," << y1 << ") a (" << x2 << "," << y2 << ")";
+            SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
         }
     }
 }

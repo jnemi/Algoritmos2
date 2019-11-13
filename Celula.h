@@ -10,12 +10,14 @@ class Celula : public Microorganismo{
      unsigned int cantProteinas;
      string materialGenetico;
      bool unicelular;
+     char tipo;
 
-     Lista<Celula*> adyacentes;
-
-   //Metodos
    public:
-
+   
+     Lista<Celula*> adyacentes;
+   
+     //Metodos
+     char obtener_tipo_celula();
      //Agregar Celulas Adyacentes
      void agregarAdyacente(Celula**);
 
@@ -37,6 +39,12 @@ class Celula : public Microorganismo{
      void asignarUnicelular(bool);
 
      //Getters
+     //PRE: -
+     //POS: Devuelve la posicion de la celula en el eje X.
+     float obtener_posicion_x();
+     //PRE: -
+     //POS: Devuelve la posicion de la celula en el eje Y.
+     float obtener_posicion_y();
      //PRE: -
      //POS: Devuelve la cantidad de enzimas
      unsigned int obtenerCantEnzimas();

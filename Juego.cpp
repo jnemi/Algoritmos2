@@ -11,7 +11,7 @@ const int SCREEN_FPS = 30;
 
 bool Juego::iniciar(const char *title, int xpos, int ypos, int flags) {
 
-    entorno.iniciar(title,xpos,ypos,flags);
+   return entorno.iniciar(title,xpos,ypos,flags);
 }
 
 
@@ -20,7 +20,7 @@ Juego::Juego(){
 	running = false;
 }
 
-void Juego::correr() {
+void Juego::correr(Lista<Celula>* lista_celulas) {
 	running = true;
 	FPSManager fpsManager(SCREEN_FPS);
 
@@ -29,15 +29,15 @@ void Juego::correr() {
 		fpsManager.start();
 
 		manejarEventos();
-		renderizar();
+		renderizar(lista_celulas);
 
 		fpsManager.stop();
 	}
 }
 
-void Juego::renderizar() {
+void Juego::renderizar(Lista<Celula>* lista_celulas) {
 
-	entorno.renderizarTodo();
+    entorno.renderizarTodo(lista_celulas);
 
 }
 

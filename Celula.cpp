@@ -39,6 +39,18 @@ void Celula::asignarUnicelular(bool u){
 }
 
 //Getters
+float Celula::obtener_posicion_x(){
+    return posicion_x;
+}
+
+float Celula::obtener_posicion_y(){
+    return posicion_y;
+}
+
+char Celula::obtener_tipo_celula(){
+    return tipo;
+}
+
 unsigned int Celula::obtenerCantEnzimas(){
   return cantEnzimas;
 }

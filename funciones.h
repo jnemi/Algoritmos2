@@ -9,6 +9,8 @@
 #include "Anticuerpo.h"
 #include <fstream>
 #include "Lista.h"
+#include "SDL2/SDL.h"
+#include "SDL2/SDL_image.h"
 
 using namespace std;
 
@@ -20,4 +22,5 @@ void armado_red_celular(Lista<Celula>*, int, int);
 
 void cruzar_celulas(Lista<Celula*>*);
 
+void armado_red_grafica(SDL_Renderer*, Lista<Celula>*);
 #endif // FUNCIONES_H_INCLUDED
