@@ -65,5 +65,9 @@ void Juego::manejarEventos() {
         entorno.explotarDosis(B);
     }
 
+    if(inputManager->isKeyDown(KEY_DOWN)){
+        entorno.mover_nanobot_arriba();
+    }
+
     //Your code here
 }

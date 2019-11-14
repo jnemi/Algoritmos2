@@ -139,13 +139,13 @@ void armado_red_grafica(SDL_Renderer* renderer, Lista<Celula>* lista){
     int largo = lista->obtener_largo();
     float x1, y1, x2, y2;
 
-    for(int i=1; i<=largo; i++){
+    /*for(int i=1; i<=largo; i++){
         Celula cel_actual = lista->obtener_valor(i);
         x1 = cel_actual.obtener_posicion_x();
         y1 = cel_actual.obtener_posicion_y();
-       
+
         int cantAdyacentes = cel_actual.adyacentes.obtener_largo();
-        
+
         for (int j = 1; j <= cantAdyacentes; j++){
             Celula* adyacente_actual = cel_actual.adyacentes.obtener_valor(j);
             x2 = adyacente_actual->obtener_posicion_x();
@@ -154,5 +154,5 @@ void armado_red_grafica(SDL_Renderer* renderer, Lista<Celula>* lista){
             //cout << "LA LINEA VA DE (" << x1 << "," << y1 << ") a (" << x2 << "," << y2 << ")";
             SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
         }
-    }
+    }*/
 }
