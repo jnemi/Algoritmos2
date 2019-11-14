@@ -5,7 +5,7 @@ using namespace std;
 
 #include "Constants.h"
 
-
+int y = 0;
 Entorno::Entorno()
 {
     estadoDosisA = 1;
@@ -108,15 +108,18 @@ void Entorno::renderizarTodo(Lista<Celula>* lista)
     SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 	SDL_RenderClear(renderer); // clear the renderer to the draw color
 	renderizar(FONDO,0,0);
-	renderizar(NANOBOT,0,SCREEN_HEIGHT-NANOBOT_HEIGHT);
+	renderizar(NANOBOT, 100, y);
+	//renderizar(NANOBOT,0,SCREEN_HEIGHT-NANOBOT_HEIGHT);
 	//Prepara el Draw para dibujar una linea negra
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
     //Inserte codigo para dibujar lineas
-    armado_red_grafica(renderer, lista);
+    //armado_red_grafica(renderer, lista);
     //Inserte codigo para renderizar imagenes
     int largo = lista->obtener_largo();
     float x, y;
     char tipo_celula;
+
+
 
     for(int i=1; i<=largo; i++){
         x = lista->obtener_valor(i).obtener_posicion_x();
@@ -179,4 +182,8 @@ bool Entorno::dosisAExplotando()
 bool Entorno::dosisBExplotando()
 {
     return estadoDosisB>1;
+}
+
+void Entorno::mover_nanobot_arriba(){
+    y++;
 }

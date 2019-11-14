@@ -34,6 +34,7 @@ class Entorno
         void explotarDosis(dosis dosis);
         bool dosisAExplotando();
         bool dosisBExplotando();
+        void mover_nanobot_arriba();
 
 };
 
