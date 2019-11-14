@@ -136,8 +136,8 @@ void cruzar_celulas(Lista<Celula*>* celulas_conectadas)
 }
 
 void armado_red_grafica(SDL_Renderer* renderer, Lista<Celula>* lista){
-    int largo = lista->obtener_largo();
-    float x1, y1, x2, y2;
+    //int largo = lista->obtener_largo();
+    //float x1, y1, x2, y2;
 
     /*for(int i=1; i<=largo; i++){
         Celula cel_actual = lista->obtener_valor(i);

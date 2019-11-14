@@ -8,6 +8,7 @@
 #include "funciones.h"
 #include "Celula.h"
 #include "Lista.h"
+#include "Nanobot.h"
 
 enum imagenes{FONDO,NANOBOT,CELULA_S,CELULA_X,CELULA_Y,CELULA_Z,ANTICUERPO,DOSIS_A,DOSIS_B};
 enum dosis{A,B};
@@ -34,8 +35,18 @@ class Entorno
         void explotarDosis(dosis dosis);
         bool dosisAExplotando();
         bool dosisBExplotando();
-        void mover_nanobot_arriba();
-
+        //PRE: -
+        //POS: Desplaza el nanobot arriba
+        void desplazar_arriba();
+        //PRE: -
+        //POS: Desplaza el nanobot abajo
+        void desplazar_abajo();
+        //PRE: -
+        //POS: Desplaza el nanobot a la derecha
+        void desplazar_derecha();
+        //PRE: -
+        //POS: Desplaza el nanobot a la izquierda
+        void desplazar_izquierda();
 };
 
 #endif // ENTORNO_H

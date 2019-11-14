@@ -66,7 +66,19 @@ void Juego::manejarEventos() {
     }
 
     if(inputManager->isKeyDown(KEY_DOWN)){
-        entorno.mover_nanobot_arriba();
+        entorno.desplazar_abajo();
+    }
+
+    if(inputManager->isKeyDown(KEY_UP)){
+        entorno.desplazar_arriba();
+    }
+
+    if(inputManager->isKeyDown(KEY_RIGHT)){
+        entorno.desplazar_derecha();
+    }
+
+    if(inputManager->isKeyDown(KEY_LEFT)){
+        entorno.desplazar_izquierda();
     }
 
     //Your code here
