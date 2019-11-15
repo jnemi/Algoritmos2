@@ -1,11 +1,12 @@
 #include "Entorno.h"
-
+#include "Nanobot.h"
 #include<iostream>
 using namespace std;
 
 #include "Constants.h"
 
-int y = 0;
+Nanobot nanobot(0, 560);
+
 Entorno::Entorno()
 {
     estadoDosisA = 1;
@@ -108,7 +109,7 @@ void Entorno::renderizarTodo(Lista<Celula>* lista)
     SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 	SDL_RenderClear(renderer); // clear the renderer to the draw color
 	renderizar(FONDO,0,0);
-	renderizar(NANOBOT, 100, y);
+	renderizar(NANOBOT, nanobot.obtener_posicion_x(), nanobot.obtener_posicion_y());
 	//renderizar(NANOBOT,0,SCREEN_HEIGHT-NANOBOT_HEIGHT);
 	//Prepara el Draw para dibujar una linea negra
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
@@ -184,6 +185,26 @@ bool Entorno::dosisBExplotando()
     return estadoDosisB>1;
 }
 
-void Entorno::mover_nanobot_arriba(){
-    y++;
+void Entorno::desplazar_arriba(){
+    int aux = nanobot.obtener_posicion_y();
+    aux--;
+    nanobot.asignar_posicion_y(aux);
+}
+
+void Entorno::desplazar_abajo(){
+    int aux = nanobot.obtener_posicion_y();
+    aux++;
+    nanobot.asignar_posicion_y(aux);
+}
+
+void Entorno::desplazar_derecha(){
+    int aux = nanobot.obtener_posicion_x();
+    aux++;
+    nanobot.asignar_posicion_x(aux);
+}
+
+void Entorno::desplazar_izquierda(){
+    int aux = nanobot.obtener_posicion_x();
+    aux--;
+    nanobot.asignar_posicion_x(aux);
 }
