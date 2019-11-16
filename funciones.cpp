@@ -8,7 +8,7 @@
 #include "Constants.h"
 
 //Funcion para leer el archivo
-void lectura(Lista<Elemento>* lista_general, Lista <Celula> *lista_celulas){
+void lectura(Lista <Elemento>* lista_general, Lista <Celula>* lista_celulas, Lista <Anticuerpo>* lista_anticuerpos){
    ifstream archivo;
    //Abro el archivo para lectura
    archivo.open("estado.txt");
@@ -25,7 +25,7 @@ void lectura(Lista<Elemento>* lista_general, Lista <Celula> *lista_celulas){
 
    //Recorro el archivo
    while(archivo >> dato){
-      procesar_archivo(archivo, dato, lista_general, lista_celulas);
+      procesar_archivo(archivo, dato, lista_general, lista_celulas, lista_anticuerpos);
    }
 
 
@@ -34,7 +34,7 @@ void lectura(Lista<Elemento>* lista_general, Lista <Celula> *lista_celulas){
 }
 
 //Funcion para procesar los datos del archivo
-void procesar_archivo(ifstream &archivo, string &dato, Lista<Elemento> *lista_general, Lista<Celula>* lista_celulas){
+void procesar_archivo(ifstream &archivo, string &dato, Lista<Elemento> *lista_general, Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos){
    float aux1, aux2;
    char aux3;
    unsigned int aux4;
@@ -56,7 +56,7 @@ void procesar_archivo(ifstream &archivo, string &dato, Lista<Elemento> *lista_ge
        //se crea objeto anticuerpo
        archivo >> aux1;
        archivo >> aux2;
-       lista_general -> extender(new Anticuerpo(aux1, aux2));
+       lista_anticuerpos -> extender(new Anticuerpo(aux1, aux2));
      }else{
           if(dato == "dosis"){
             //se crea objeto dosis

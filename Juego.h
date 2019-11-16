@@ -15,6 +15,7 @@
 #include "Entorno.h"
 #include "Lista.h"
 #include "Celula.h"
+#include "Anticuerpo.h"
 
 
 using namespace std;
@@ -29,8 +30,8 @@ public:
     Juego();
     ~Juego(){}
     bool iniciar(const char* titulo, int xPos, int yPos, int flags);
-    void correr(Lista<Celula>* lista_celulas);
-    void renderizar(Lista<Celula>* lista_celulas);
+    void correr(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos);
+    void renderizar(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos);
     void manejarEventos();
     void limpiar();
 };

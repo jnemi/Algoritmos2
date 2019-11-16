@@ -30,7 +30,7 @@ class Entorno
         void cargarTexturas();
         void renderizar(imagenes imagen,float x, float y);
         bool iniciar(const char *titulo, int xPos, int yPos, int flags);
-        void renderizarTodo(Lista<Celula>* lista_celulas);
+        void renderizarTodo(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos);
         void limpiar();
         void explotarDosis(dosis dosis);
         bool dosisAExplotando();

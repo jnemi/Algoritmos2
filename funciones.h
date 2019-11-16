@@ -14,9 +14,9 @@
 
 using namespace std;
 
-void lectura(Lista<Elemento>*, Lista<Celula>*);
+void lectura(Lista<Elemento>*, Lista<Celula>*, Lista<Anticuerpo>*);
 
-void procesar_archivo(ifstream &archivo, string &dato, Lista<Elemento>*, Lista<Celula>*);
+void procesar_archivo(ifstream &archivo, string &dato, Lista<Elemento>*, Lista<Celula>*, Lista<Anticuerpo>*);
 
 void armado_red_celular(Lista<Celula>*, int, int);
 

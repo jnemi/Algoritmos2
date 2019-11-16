@@ -20,7 +20,7 @@ Juego::Juego(){
 	running = false;
 }
 
-void Juego::correr(Lista<Celula>* lista_celulas) {
+void Juego::correr(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos) {
 	running = true;
 	FPSManager fpsManager(SCREEN_FPS);
 
@@ -29,15 +29,15 @@ void Juego::correr(Lista<Celula>* lista_celulas) {
 		fpsManager.start();
 
 		manejarEventos();
-		renderizar(lista_celulas);
+		renderizar(lista_celulas, lista_anticuerpos);
 
 		fpsManager.stop();
 	}
 }
 
-void Juego::renderizar(Lista<Celula>* lista_celulas) {
+void Juego::renderizar(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos) {
 
-    entorno.renderizarTodo(lista_celulas);
+    entorno.renderizarTodo(lista_celulas, lista_anticuerpos);
 
 }
 

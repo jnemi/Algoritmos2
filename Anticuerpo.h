@@ -15,6 +15,11 @@ class Anticuerpo : public Microorganismo{
     //Constructor con parametros
     Anticuerpo(float, float);
 
+    //Getters
+    float obtener_posicion_x();
+
+    float obtener_posicion_y();
+
     //Destructor
     ~Anticuerpo();
 };

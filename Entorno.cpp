@@ -104,7 +104,7 @@ Entorno::~Entorno()
 	renderer = NULL;
 }
 
-void Entorno::renderizarTodo(Lista<Celula>* lista)
+void Entorno::renderizarTodo(Lista<Celula>* lista, Lista<Anticuerpo>* lista_anticuerpos)
 {
     SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 	SDL_RenderClear(renderer); // clear the renderer to the draw color
@@ -144,6 +144,15 @@ void Entorno::renderizarTodo(Lista<Celula>* lista)
             break;
         }
     }
+
+    int tam = lista_anticuerpos -> obtener_largo();
+
+    for(int i = 1; i <= tam; i++){
+        x = lista_anticuerpos -> obtener_valor(i).obtener_posicion_x();
+        y = lista_anticuerpos -> obtener_valor(i).obtener_posicion_y();
+        renderizar(ANTICUERPO, x-25, y-25);
+    }
+
 	SDL_RenderPresent(renderer); // draw to the screen
 }
 
