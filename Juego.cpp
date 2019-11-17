@@ -24,11 +24,12 @@ void Juego::correr(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticu
 	running = true;
 	FPSManager fpsManager(SCREEN_FPS);
 
+    Anticuerpo* p = &lista_anticuerpos -> obtener_valor(1);
 
 	while(running) {
 		fpsManager.start();
 
-		manejarEventos();
+		manejarEventos(p);
 		renderizar(lista_celulas, lista_anticuerpos);
 
 		fpsManager.stop();
@@ -50,7 +51,7 @@ void Juego::limpiar() {
 // En general, para saber si una tecla esta siendo presionada se utilizara
 // el metodo "isKeyDown(KEY)". Para saber que KEY pasar por parametro, consultar
 // el archivo "InputTable.h" que mapea codigos de teclado de SDL.
-void Juego::manejarEventos() {
+void Juego::manejarEventos(Anticuerpo* p) {
 	InputManager* inputManager = InputManager::getInstance();
     inputManager->update();
     if(inputManager->quitRequested()) running = false;
@@ -80,6 +81,9 @@ void Juego::manejarEventos() {
     if(inputManager->isKeyDown(KEY_LEFT)){
         entorno.desplazar_izquierda();
     }
+
+    if (p -> obtenerPosicionY() > 10)
+        entorno.mover_arriba(*p);
 
     //Your code here
 }

@@ -1,5 +1,6 @@
 #include "Entorno.h"
 #include "Nanobot.h"
+#include "Anticuerpo.h"
 #include<iostream>
 using namespace std;
 
@@ -51,7 +52,7 @@ bool Entorno::iniciar(const char *title, int xpos, int ypos, int flags)
 }
 
 
-void Entorno::renderizar(imagenes imagen,float x, float y)
+void Entorno::renderizar(imagenes imagen, float x, float y)
 {
     switch(imagen)
     {
@@ -216,4 +217,28 @@ void Entorno::desplazar_izquierda(){
     int aux = nanobot.obtener_posicion_x();
     aux--;
     nanobot.asignar_posicion_x(aux);
+}
+
+void Entorno::mover_arriba(Microorganismo &anticuerpo){
+    float aux = anticuerpo.obtenerPosicionY();
+    aux--;
+    anticuerpo.asignarPosicionY(aux);
+}
+
+void Entorno::mover_abajo(Anticuerpo &anticuerpo){
+    float aux = anticuerpo.obtener_posicion_y();
+    aux++;
+    anticuerpo.asignarPosicionY(aux);
+}
+
+void Entorno::mover_derecha(Anticuerpo &anticuerpo){
+    float aux = anticuerpo.obtener_posicion_x();
+    aux++;
+    anticuerpo.asignarPosicionX(aux);
+}
+
+void Entorno::mover_izquierda(Anticuerpo &anticuerpo){
+    float aux = anticuerpo.obtener_posicion_x();
+    aux--;
+    anticuerpo.asignarPosicionX(aux);
 }

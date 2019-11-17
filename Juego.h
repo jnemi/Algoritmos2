@@ -32,7 +32,7 @@ public:
     bool iniciar(const char* titulo, int xPos, int yPos, int flags);
     void correr(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos);
     void renderizar(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos);
-    void manejarEventos();
+    void manejarEventos(Anticuerpo*);
     void limpiar();
 };
 

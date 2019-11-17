@@ -47,6 +47,19 @@ class Entorno
         //PRE: -
         //POS: Desplaza el nanobot a la izquierda
         void desplazar_izquierda();
+
+        //PRE: -
+        //POS: Desplaza un anticuerpo arriba
+        void mover_arriba(Microorganismo &anticuerpo);
+        //PRE: -
+        //POS: Desplaza un anticuerpo abajo
+        void mover_abajo(Anticuerpo &anticuerpo);
+        //PRE: -
+        //POS: Desplaza un anticuerpo a la derecha
+        void mover_derecha(Anticuerpo &anticuerpo);
+        //PRE: -
+        //POS: Desplaza un anticuerpo a la izquierda
+        void mover_izquierda(Anticuerpo &anticuerpo);
 };
 
 #endif // ENTORNO_H
