@@ -53,13 +53,13 @@ class Entorno
         void mover_arriba(Microorganismo &anticuerpo);
         //PRE: -
         //POS: Desplaza un anticuerpo abajo
-        void mover_abajo(Anticuerpo &anticuerpo);
+        void mover_abajo(Microorganismo &anticuerpo);
         //PRE: -
         //POS: Desplaza un anticuerpo a la derecha
-        void mover_derecha(Anticuerpo &anticuerpo);
+        void mover_derecha(Microorganismo &anticuerpo);
         //PRE: -
         //POS: Desplaza un anticuerpo a la izquierda
-        void mover_izquierda(Anticuerpo &anticuerpo);
+        void mover_izquierda(Microorganismo &anticuerpo);
 };
 
 #endif // ENTORNO_H

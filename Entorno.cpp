@@ -225,20 +225,20 @@ void Entorno::mover_arriba(Microorganismo &anticuerpo){
     anticuerpo.asignarPosicionY(aux);
 }
 
-void Entorno::mover_abajo(Anticuerpo &anticuerpo){
-    float aux = anticuerpo.obtener_posicion_y();
+void Entorno::mover_abajo(Microorganismo &anticuerpo){
+    float aux = anticuerpo.obtenerPosicionY();
     aux++;
     anticuerpo.asignarPosicionY(aux);
 }
 
-void Entorno::mover_derecha(Anticuerpo &anticuerpo){
-    float aux = anticuerpo.obtener_posicion_x();
+void Entorno::mover_derecha(Microorganismo &anticuerpo){
+    float aux = anticuerpo.obtenerPosicionX();
     aux++;
     anticuerpo.asignarPosicionX(aux);
 }
 
-void Entorno::mover_izquierda(Anticuerpo &anticuerpo){
-    float aux = anticuerpo.obtener_posicion_x();
+void Entorno::mover_izquierda(Microorganismo &anticuerpo){
+    float aux = anticuerpo.obtenerPosicionX();
     aux--;
     anticuerpo.asignarPosicionX(aux);
 }
