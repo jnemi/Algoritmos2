@@ -20,7 +20,7 @@ void procesar_archivo(ifstream &archivo, string &dato, Lista<Elemento>*, Lista<C
 
 void armado_red_celular(Lista<Celula>*, int, int);
 
-void cruzar_celulas(Lista<Celula*>*);
+void cruzar_celulas(Lista<Celula>* , Lista<int>*);
 
 void armado_red_grafica(SDL_Renderer*, Lista<Celula>*);
 #endif // FUNCIONES_H_INCLUDED

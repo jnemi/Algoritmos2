@@ -11,15 +11,26 @@ class Celula : public Microorganismo{
      string materialGenetico;
      bool unicelular;
      char tipo;
+     Lista<int> adyacentes;
 
    public:
-   
-     Lista<Celula*> adyacentes;
-   
+
      //Metodos
      char obtener_tipo_celula();
      //Agregar Celulas Adyacentes
-     void agregarAdyacente(Celula**);
+     void agregarAdyacente(int);
+
+     //PRE: Recibe un entero [0, cantidad de adyacentes]
+     //POS: Devuelve el indice (de la lista de celulas) de una celula adyacente
+     int obtenerAdyacente(int);
+
+     //PRE: -
+     //POS: Devuelve la cantidad de adyacentes
+     int obtenerCantidadAdyacentes();
+
+     //PRE: Recibe un entero [0, cantidad de adyacentes]
+     //POS: Elimina un elemento de la lista adyacentes
+     void removerAdyacente(int);
 
      //Setters
      //PRE: Recibir dato valido
