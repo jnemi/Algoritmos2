@@ -20,7 +20,7 @@ Juego::Juego(){
 	running = false;
 }
 
-void Juego::correr(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos) {
+void Juego::correr(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos, Nanobot *nanobot) {
 	running = true;
 	FPSManager fpsManager(SCREEN_FPS);
 
@@ -29,16 +29,16 @@ void Juego::correr(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticu
 	while(running) {
 		fpsManager.start();
 
-		manejarEventos(lista_anticuerpos, tope);
-		renderizar(lista_celulas, lista_anticuerpos);
+		manejarEventos(lista_anticuerpos, tope, nanobot);
+		renderizar(lista_celulas, lista_anticuerpos, nanobot);
 
 		fpsManager.stop();
 	}
 }
 
-void Juego::renderizar(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos) {
+void Juego::renderizar(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos, Nanobot *nanobot) {
 
-    entorno.renderizarTodo(lista_celulas, lista_anticuerpos);
+    entorno.renderizarTodo(lista_celulas, lista_anticuerpos, nanobot);
 
 }
 
@@ -51,7 +51,7 @@ void Juego::limpiar() {
 // En general, para saber si una tecla esta siendo presionada se utilizara
 // el metodo "isKeyDown(KEY)". Para saber que KEY pasar por parametro, consultar
 // el archivo "InputTable.h" que mapea codigos de teclado de SDL.
-void Juego::manejarEventos(Lista<Anticuerpo>* lista_anticuerpos, bool &tope) {
+void Juego::manejarEventos(Lista<Anticuerpo>* lista_anticuerpos, bool &tope, Nanobot *nanobot) {
 	InputManager* inputManager = InputManager::getInstance();
     inputManager->update();
     if(inputManager->quitRequested()) running = false;
@@ -67,19 +67,19 @@ void Juego::manejarEventos(Lista<Anticuerpo>* lista_anticuerpos, bool &tope) {
     }
 
     if(inputManager->isKeyDown(KEY_DOWN)){
-        entorno.desplazar_abajo();
+        entorno.desplazar_abajo(nanobot);
     }
 
     if(inputManager->isKeyDown(KEY_UP)){
-        entorno.desplazar_arriba();
+        entorno.desplazar_arriba(nanobot);
     }
 
     if(inputManager->isKeyDown(KEY_RIGHT)){
-        entorno.desplazar_derecha();
+        entorno.desplazar_derecha(nanobot);
     }
 
     if(inputManager->isKeyDown(KEY_LEFT)){
-        entorno.desplazar_izquierda();
+        entorno.desplazar_izquierda(nanobot);
     }
 
     if (lista_anticuerpos -> obtener_largo() != 0){

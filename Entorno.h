@@ -30,23 +30,23 @@ class Entorno
         void cargarTexturas();
         void renderizar(imagenes imagen,float x, float y);
         bool iniciar(const char *titulo, int xPos, int yPos, int flags);
-        void renderizarTodo(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos);
+        void renderizarTodo(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos, Nanobot *nanobot);
         void limpiar();
         void explotarDosis(dosis dosis);
         bool dosisAExplotando();
         bool dosisBExplotando();
         //PRE: -
         //POS: Desplaza el nanobot arriba
-        void desplazar_arriba();
+        void desplazar_arriba(Nanobot *nanobot);
         //PRE: -
         //POS: Desplaza el nanobot abajo
-        void desplazar_abajo();
+        void desplazar_abajo(Nanobot *nanobot);
         //PRE: -
         //POS: Desplaza el nanobot a la derecha
-        void desplazar_derecha();
+        void desplazar_derecha(Nanobot *nanobot);
         //PRE: -
         //POS: Desplaza el nanobot a la izquierda
-        void desplazar_izquierda();
+        void desplazar_izquierda(Nanobot *nanobot);
 
         //PRE: -
         //POS: Desplaza un anticuerpo arriba

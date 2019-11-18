@@ -16,6 +16,7 @@ int main(int argc, char** argv){
     Lista <Elemento> *lista_general = new Lista <Elemento>;
     Lista <Celula> *lista_celulas = new Lista <Celula>;
     Lista <Anticuerpo> *lista_anticuerpos = new Lista <Anticuerpo>;
+    Nanobot *nanobot = new Nanobot(0, 550);
 
     lectura(lista_general, lista_celulas, lista_anticuerpos);
 
@@ -24,7 +25,7 @@ int main(int argc, char** argv){
     juego = new Juego();
     juego->iniciar("Nanobot", 100, 100, 0);
 
-    juego->correr(lista_celulas, lista_anticuerpos);
+    juego->correr(lista_celulas, lista_anticuerpos, nanobot);
 
     juego->limpiar();
 
