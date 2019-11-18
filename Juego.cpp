@@ -24,16 +24,12 @@ void Juego::correr(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticu
 	running = true;
 	FPSManager fpsManager(SCREEN_FPS);
 
-    Anticuerpo* p = &lista_anticuerpos -> obtener_valor(1);
-    bool up = true;
-
-    Anticuerpo* k = &lista_anticuerpos -> obtener_valor(2);
-    bool tope = true;
+	bool tope = true;
 
 	while(running) {
 		fpsManager.start();
 
-		manejarEventos(p, up, k, tope);
+		manejarEventos(lista_anticuerpos, tope);
 		renderizar(lista_celulas, lista_anticuerpos);
 
 		fpsManager.stop();
@@ -55,7 +51,7 @@ void Juego::limpiar() {
 // En general, para saber si una tecla esta siendo presionada se utilizara
 // el metodo "isKeyDown(KEY)". Para saber que KEY pasar por parametro, consultar
 // el archivo "InputTable.h" que mapea codigos de teclado de SDL.
-void Juego::manejarEventos(Anticuerpo* p, bool& up, Anticuerpo* k, bool& tope) {
+void Juego::manejarEventos(Lista<Anticuerpo>* lista_anticuerpos, bool &tope) {
 	InputManager* inputManager = InputManager::getInstance();
     inputManager->update();
     if(inputManager->quitRequested()) running = false;
@@ -86,32 +82,44 @@ void Juego::manejarEventos(Anticuerpo* p, bool& up, Anticuerpo* k, bool& tope) {
         entorno.desplazar_izquierda();
     }
 
-    if (p -> obtenerPosicionY() < 10){
-        up = false;
-    }
+    if (lista_anticuerpos -> obtener_largo() != 0){
 
-    if (p -> obtenerPosicionY() > 550){
-        up = true;
-    }
+        for (int i = 1; i <= lista_anticuerpos -> obtener_largo(); i++){
 
-    if (up){
-        entorno.mover_arriba(*p);
-    }else{
-        entorno.mover_abajo(*p);
-    }
+            Anticuerpo* p = &lista_anticuerpos -> obtener_valor(i);
 
-    if (k -> obtenerPosicionX() < 10){
-        tope = false;
-    }
+            if (i % 2 != 0){
 
-    if (k -> obtenerPosicionX() > 900){
-        tope = true;
-    }
+                if (p -> obtenerPosicionY() < 10){
+                    tope = false;
+                }
 
-    if (tope){
-        entorno.mover_izquierda(*k);
-    }else{
-        entorno.mover_derecha(*k);
+                if (p -> obtenerPosicionY() > 550){
+                    tope = true;
+                }
+
+                if (tope){
+                    entorno.mover_arriba(*p);
+                }else{
+                    entorno.mover_abajo(*p);
+                }
+            }else{
+
+                if (p -> obtenerPosicionX() < 10){
+                    tope = false;
+                }
+
+                if (p -> obtenerPosicionX() > 900){
+                    tope = true;
+                }
+
+                if (tope){
+                    entorno.mover_izquierda(*p);
+                }else{
+                    entorno.mover_derecha(*p);
+                }
+            }
+        }
     }
 
     //Your code here
