@@ -1,7 +1,6 @@
 #ifndef GRAFO_H
 #define GRAFO_H
 
-#include "datos_de_aeropuerto.h"
 #include <string>
 #include <iostream>
 #include <Celula.h>
@@ -223,10 +222,10 @@ void Grafo::informacionMicroorganismo(float coordenadaX, float coordenadaY)
     vertice = getPtrVertice(coordenadaX, coordenadaY);
     if (microorganismo)
     {
-        cout << "Celulas entrantes a " << vertice->microorganismo->mostrar() << endl;
+        cout << "Microorganismos entrantes a " << vertice->microorganismo->mostrar() << endl;
         mostrarMicroorganismoEntrantes(vertice);
         cout << endl;
-        cout << "Celulas salientes de " << vertice->microorganismo->mostrar() << endl;
+        cout << "Microorganismos salientes de " << vertice->microorganismo->mostrar() << endl;
         mostrarMicroorganismosSalientes(vertice->aristaAdyacente);
         cout << endl;
     }
