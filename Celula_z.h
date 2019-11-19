@@ -1,6 +1,9 @@
 #ifndef CELULA_Z_H_INCLUDED
 #define CELULA_Z_H_INCLUDED
 #include "Celula.h"
+#include "Celula_x.h"
+#include <stdlib.h>
+#include <time.h>
 
 class Celula_z : public Celula{
    //Atributos
@@ -22,6 +25,10 @@ class Celula_z : public Celula{
        //PRE: -
        //POS: Imprime los datos por pantalla
        void mostrar();
+
+       //PRE: Recibe la direccion de la lista de Celulas
+       //POS: Contagia una o mas Celulas S adyacentes (si las hay)
+       void contagiar(Lista<Celula>*);
 
        //Constructor sin parametros
        Celula_z();

@@ -22,6 +22,14 @@ int main(int argc, char** argv){
 
     armado_red_celular(lista_celulas, 3, 1);
 
+    /*
+    lista_celulas->obtener_puntero(4)->contagiar(lista_celulas);
+    lista_celulas->obtener_puntero(4)->contagiar(lista_celulas);
+    lista_celulas->obtener_puntero(4)->contagiar(lista_celulas);
+    lista_celulas->obtener_puntero(4)->contagiar(lista_celulas);
+    lista_celulas->obtener_puntero(4)->contagiar(lista_celulas);
+    */
+
     juego = new Juego();
     juego->iniciar("Nanobot", 100, 100, 0);
 

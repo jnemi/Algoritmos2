@@ -76,6 +76,10 @@ class Celula : public Microorganismo{
      //POS: Imprime los datos por pantalla
      virtual void mostrar();
 
+     //PRE: Recibe la direccion de la lista de Celulas
+     //POS: Contagia una o mas Celulas S adyacentes (si las hay)
+     virtual void contagiar(Lista<Celula>*);
+
      //constructor sin parametros
      Celula();
 
