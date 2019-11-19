@@ -59,6 +59,14 @@ public:
     //PRE: Recibe un indice entero [0, largo]
     //POS: Devuelve la direccion de memoria del objeto ubicado en el indice recibido
     Objeto* obtener_puntero(int);
+
+    //PRE: Recibe dos enteros [0, largo]
+    //POS: Intercambia las posiciones de los elementos correspondientes a los indices ingresados
+    void intercambiar(int, int);
+
+    //PRE: Recibe un indice [0, largo], y un puntero a un objeto en el heap
+    //POS: Reemplaza el elemento indicado con el indice por el objeto del segundo parametro
+    void reemplazar(int, Objeto*);
 };
 
 template <typename Objeto>
@@ -197,5 +205,24 @@ Objeto* Lista<Objeto>::obtener_puntero(int indice)
     return buscar_nodo(indice)->obtener_puntero();
 }
 
+
+template <typename Objeto>
+void Lista<Objeto>::intercambiar(int indice_A, int indice_B)
+{
+    Nodo<Objeto>* nodo_A = buscar_nodo(indice_A);
+    Nodo<Objeto>* nodo_B = buscar_nodo(indice_B);
+    Objeto* aux = nodo_A->obtener_puntero();
+    nodo_A->asignar_valor(nodo_B->obtener_puntero());
+    nodo_B->asignar_valor(aux);
+}
+
+template <typename Objeto>
+void Lista<Objeto>::reemplazar(int indice, Objeto* reemplazo)
+{
+    Nodo<Objeto>* nodo = buscar_nodo(indice);
+    Objeto* borrar = nodo->obtener_puntero();
+    nodo->asignar_valor(reemplazo);
+    delete borrar;
+}
 
 #endif // LISTA_H_INCLUDED
