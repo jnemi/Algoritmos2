@@ -30,9 +30,9 @@ public:
     Juego();
     ~Juego(){}
     bool iniciar(const char* titulo, int xPos, int yPos, int flags);
-    void correr(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos);
-    void renderizar(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos);
-    void manejarEventos(Lista<Anticuerpo>* lista_anticuerpos, bool &tope);
+    void correr(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos, Nanobot *nanobot);
+    void renderizar(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos, Nanobot *nanobot);
+    void manejarEventos(Lista<Anticuerpo>* lista_anticuerpos, bool &tope, Nanobot *nanobot);
     void limpiar();
 };
 

@@ -6,8 +6,6 @@ using namespace std;
 
 #include "Constants.h"
 
-Nanobot nanobot(0, 560);
-
 Entorno::Entorno()
 {
     estadoDosisA = 1;
@@ -105,17 +103,17 @@ Entorno::~Entorno()
 	renderer = NULL;
 }
 
-void Entorno::renderizarTodo(Lista<Celula>* lista, Lista<Anticuerpo>* lista_anticuerpos)
+void Entorno::renderizarTodo(Lista<Celula>* lista, Lista<Anticuerpo>* lista_anticuerpos, Nanobot *nanobot)
 {
     SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 	SDL_RenderClear(renderer); // clear the renderer to the draw color
 	renderizar(FONDO,0,0);
-	renderizar(NANOBOT, nanobot.obtener_posicion_x(), nanobot.obtener_posicion_y());
+	renderizar(NANOBOT, nanobot->obtener_posicion_x(), nanobot->obtener_posicion_y());
 	//renderizar(NANOBOT,0,SCREEN_HEIGHT-NANOBOT_HEIGHT);
 	//Prepara el Draw para dibujar una linea negra
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
     //Inserte codigo para dibujar lineas
-    //armado_red_grafica(renderer, lista);
+    armado_red_grafica(renderer, lista);
     //Inserte codigo para renderizar imagenes
     int largo = lista->obtener_largo();
     float x, y;
@@ -128,21 +126,21 @@ void Entorno::renderizarTodo(Lista<Celula>* lista, Lista<Anticuerpo>* lista_anti
         y = lista->obtener_valor(i).obtener_posicion_y();
         tipo_celula = lista->obtener_valor(i).obtener_tipo_celula();
 
-        cout << "La imagen va en (" << x << "," << y << ")" << endl;
+        //cout << "La imagen va en (" << x << "," << y << ")" << endl;
 
-       switch(tipo_celula){
-        case 'x':
-            renderizar(CELULA_X, x-25, y-25);
-            break;
-        case 'y':
-            renderizar(CELULA_Y, x-25, y-25);
-            break;
-        case 'z':
-            renderizar(CELULA_Z, x-25, y-25);
-            break;
-        case 's':
-            renderizar(CELULA_S, x-25, y-25);
-            break;
+        switch(tipo_celula){
+            case 'x':
+                renderizar(CELULA_X, x-25, y-25);
+                break;
+            case 'y':
+                renderizar(CELULA_Y, x-25, y-25);
+                break;
+            case 'z':
+                renderizar(CELULA_Z, x-25, y-25);
+                break;
+            case 's':
+                renderizar(CELULA_S, x-25, y-25);
+                break;
         }
     }
 
@@ -195,28 +193,28 @@ bool Entorno::dosisBExplotando()
     return estadoDosisB>1;
 }
 
-void Entorno::desplazar_arriba(){
-    int aux = nanobot.obtener_posicion_y();
+void Entorno::desplazar_arriba(Nanobot *nanobot){
+    int aux = nanobot->obtener_posicion_y();
     aux--;
-    nanobot.asignar_posicion_y(aux);
+    nanobot->asignar_posicion_y(aux);
 }
 
-void Entorno::desplazar_abajo(){
-    int aux = nanobot.obtener_posicion_y();
+void Entorno::desplazar_abajo(Nanobot *nanobot){
+    int aux = nanobot->obtener_posicion_y();
     aux++;
-    nanobot.asignar_posicion_y(aux);
+    nanobot->asignar_posicion_y(aux);
 }
 
-void Entorno::desplazar_derecha(){
-    int aux = nanobot.obtener_posicion_x();
+void Entorno::desplazar_derecha(Nanobot *nanobot){
+    int aux = nanobot->obtener_posicion_x();
     aux++;
-    nanobot.asignar_posicion_x(aux);
+    nanobot->asignar_posicion_x(aux);
 }
 
-void Entorno::desplazar_izquierda(){
-    int aux = nanobot.obtener_posicion_x();
+void Entorno::desplazar_izquierda(Nanobot *nanobot){
+    int aux = nanobot->obtener_posicion_x();
     aux--;
-    nanobot.asignar_posicion_x(aux);
+    nanobot->asignar_posicion_x(aux);
 }
 
 void Entorno::mover_arriba(Microorganismo &anticuerpo){
