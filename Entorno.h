@@ -48,18 +48,27 @@ class Entorno
         //POS: Desplaza el nanobot a la izquierda
         void desplazar_izquierda();
 
-        //PRE: -
+        //PRE: El parámetro debe ser una referencia a un objeto anticuerpo
         //POS: Desplaza un anticuerpo arriba
         void mover_arriba(Microorganismo &anticuerpo);
-        //PRE: -
+        //PRE: El parámetro debe ser una referencia a un objeto anticuerpo
         //POS: Desplaza un anticuerpo abajo
         void mover_abajo(Microorganismo &anticuerpo);
-        //PRE: -
+        //PRE: El parámetro debe ser una referencia a un objeto anticuerpo
         //POS: Desplaza un anticuerpo a la derecha
         void mover_derecha(Microorganismo &anticuerpo);
-        //PRE: -
+        //PRE: El parámetro debe ser una referencia a un objeto anticuerpo
         //POS: Desplaza un anticuerpo a la izquierda
         void mover_izquierda(Microorganismo &anticuerpo);
+
+        //PRE: El parámetro debe ser una referencia a un objeto anticuerpo
+        //POS: Devuelve true si la posición del anticuerpo coincide con la
+        //del nanobot
+        bool verificar_anticuerpo(Microorganismo &anticuerpo);
+
+        void liberar(Anticuerpo &anticuerpo);
+
+        void volar(Microorganismo &anticuerpo);
 };
 
 #endif // ENTORNO_H

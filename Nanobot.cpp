@@ -6,25 +6,25 @@ Nanobot::Nanobot(){
     posicion_y = 0;
 }
 
-Nanobot::Nanobot(int x, int y){
+Nanobot::Nanobot(float x, float y){
     posicion_x = x;
     posicion_y = y;
 }
 
 //Setters
-void Nanobot::asignar_posicion_x(int x){
+void Nanobot::asignar_posicion_x(float x){
     posicion_x = x;
 }
 
-void Nanobot::asignar_posicion_y(int y){
+void Nanobot::asignar_posicion_y(float y){
     posicion_y = y;
 }
 
 //Getters
-int Nanobot::obtener_posicion_x(){
+float Nanobot::obtener_posicion_x(){
     return posicion_x;
 }
 
-int Nanobot::obtener_posicion_y(){
+float Nanobot::obtener_posicion_y(){
     return posicion_y;
 }

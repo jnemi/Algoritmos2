@@ -6,7 +6,7 @@ using namespace std;
 
 #include "Constants.h"
 
-Nanobot nanobot(0, 560);
+Nanobot nanobot(340, 467.8);
 
 Entorno::Entorno()
 {
@@ -151,7 +151,11 @@ void Entorno::renderizarTodo(Lista<Celula>* lista, Lista<Anticuerpo>* lista_anti
     for(int i = 1; i <= tam; i++){
         x = lista_anticuerpos -> obtener_valor(i).obtener_posicion_x();
         y = lista_anticuerpos -> obtener_valor(i).obtener_posicion_y();
-        renderizar(ANTICUERPO, x-25, y-25);
+
+        if (lista_anticuerpos -> obtener_valor(i).obtener_capturado())
+            renderizar(ANTICUERPO, nanobot.obtener_posicion_x(), nanobot.obtener_posicion_y());
+        else
+            renderizar(ANTICUERPO, x-25, y-25);
     }
 
 	SDL_RenderPresent(renderer); // draw to the screen
@@ -196,25 +200,25 @@ bool Entorno::dosisBExplotando()
 }
 
 void Entorno::desplazar_arriba(){
-    int aux = nanobot.obtener_posicion_y();
+    float aux = nanobot.obtener_posicion_y();
     aux--;
     nanobot.asignar_posicion_y(aux);
 }
 
 void Entorno::desplazar_abajo(){
-    int aux = nanobot.obtener_posicion_y();
+    float aux = nanobot.obtener_posicion_y();
     aux++;
     nanobot.asignar_posicion_y(aux);
 }
 
 void Entorno::desplazar_derecha(){
-    int aux = nanobot.obtener_posicion_x();
+    float aux = nanobot.obtener_posicion_x();
     aux++;
     nanobot.asignar_posicion_x(aux);
 }
 
 void Entorno::desplazar_izquierda(){
-    int aux = nanobot.obtener_posicion_x();
+    float aux = nanobot.obtener_posicion_x();
     aux--;
     nanobot.asignar_posicion_x(aux);
 }
@@ -240,5 +244,33 @@ void Entorno::mover_derecha(Microorganismo &anticuerpo){
 void Entorno::mover_izquierda(Microorganismo &anticuerpo){
     float aux = anticuerpo.obtenerPosicionX();
     aux--;
+    anticuerpo.asignarPosicionX(aux);
+}
+
+bool Entorno::verificar_anticuerpo(Microorganismo &anticuerpo){
+    float x = nanobot.obtener_posicion_x();
+    float y = nanobot.obtener_posicion_y();
+
+    float ax = anticuerpo.obtenerPosicionX();
+    float ay = anticuerpo.obtenerPosicionY();
+
+    if ((x < ax && ax < x + 85) && (y < ay && ay < y + 50)){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+void Entorno::liberar(Anticuerpo &anticuerpo){
+
+    if (anticuerpo.obtener_capturado()){
+        anticuerpo.capturar(false);
+        anticuerpo.disparar(true);
+    }
+}
+
+void Entorno::volar(Microorganismo &anticuerpo){
+    float aux = anticuerpo.obtenerPosicionX();
+    aux = aux + 5;
     anticuerpo.asignarPosicionX(aux);
 }

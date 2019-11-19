@@ -14,26 +14,11 @@ Celula::~Celula(){
 }
 
 //Agregar Celulas Adyacentes
-void Celula::agregarAdyacente(int nueva_ady)
+void Celula::agregarAdyacente(Celula** nueva_ady)
 {
-    cout<<"[DEBUG]: Conectando "<<this<<" con "<<nueva_ady;
-    adyacentes.extender(new int(nueva_ady));
+    cout<<"[DEBUG]: Conectando "<<this<<" con "<<*nueva_ady;
+    adyacentes.extender(nueva_ady);
     cout<<"  COMPLETADO"<<endl;
-}
-
-int Celula::obtenerAdyacente(int indice)
-{
-    return adyacentes.obtener_valor(indice);
-}
-
-int Celula::obtenerCantidadAdyacentes()
-{
-    return adyacentes.obtener_largo();
-}
-
-void Celula::removerAdyacente(int indice)
-{
-    adyacentes.borrar(indice);
 }
 
 //Setters

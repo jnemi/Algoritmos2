@@ -19,7 +19,7 @@ int main(int argc, char** argv){
 
     lectura(lista_general, lista_celulas, lista_anticuerpos);
 
-    armado_red_celular(lista_celulas, 3, 1);
+    //armado_red_celular(lista_celulas, 3, 1);
 
     juego = new Juego();
     juego->iniciar("Nanobot", 100, 100, 0);
@@ -28,8 +28,10 @@ int main(int argc, char** argv){
 
     juego->limpiar();
 
-    for (int i = 1; i <= lista_celulas->obtener_largo(); i++)
-        lista_celulas->obtener_valor(i).mostrar();
+    //for (int i = 1; i <= lista_celulas->obtener_largo(); i++)
+    //    lista_celulas->obtener_valor(i).mostrar();
+
+    //armado_red_celular(lista_celulas, 3, 1);
 
     delete lista_general;
     delete lista_celulas;

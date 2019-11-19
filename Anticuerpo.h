@@ -3,6 +3,11 @@
 #include "Microorganismo.h"
 
 class Anticuerpo : public Microorganismo{
+  private:
+
+      bool capturado;
+      bool disparado;
+
   public:
     //Mostrar
     //PRE: -
@@ -19,6 +24,14 @@ class Anticuerpo : public Microorganismo{
     float obtener_posicion_x();
 
     float obtener_posicion_y();
+
+    void capturar(bool);
+
+    bool obtener_capturado();
+
+    void disparar(bool);
+
+    bool obtener_disparado();
 
     //Destructor
     ~Anticuerpo();

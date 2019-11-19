@@ -88,14 +88,23 @@ void Juego::manejarEventos(Lista<Anticuerpo>* lista_anticuerpos, bool &tope) {
 
             Anticuerpo* p = &lista_anticuerpos -> obtener_valor(i);
 
-            if (i % 2 != 0){
+            if (entorno.verificar_anticuerpo(*p) && !p -> obtener_disparado()){
+                p -> capturar(true);
+            }
+
+            if(inputManager->isKeyDown(KEY_Z)){
+                entorno.liberar(*p);
+            }
+
+
+            if (i % 2 != 0 && !p -> obtener_disparado()){
 
                 if (p -> obtenerPosicionY() < 10){
-                    tope = false;
+                        tope = false;
                 }
 
                 if (p -> obtenerPosicionY() > 550){
-                    tope = true;
+                        tope = true;
                 }
 
                 if (tope){
@@ -103,7 +112,9 @@ void Juego::manejarEventos(Lista<Anticuerpo>* lista_anticuerpos, bool &tope) {
                 }else{
                     entorno.mover_abajo(*p);
                 }
-            }else{
+            }
+
+            if (i % 2 == 0 && !p -> obtener_disparado()){
 
                 if (p -> obtenerPosicionX() < 10){
                     tope = false;
@@ -118,6 +129,10 @@ void Juego::manejarEventos(Lista<Anticuerpo>* lista_anticuerpos, bool &tope) {
                 }else{
                     entorno.mover_derecha(*p);
                 }
+            }
+
+            if (p -> obtener_disparado()){
+                entorno.volar(*p);
             }
         }
     }
