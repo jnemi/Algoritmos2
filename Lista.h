@@ -63,6 +63,10 @@ public:
     //PRE: Recibe dos enteros [0, largo]
     //POS: Intercambia las posiciones de los elementos correspondientes a los indices ingresados
     void intercambiar(int, int);
+
+    //PRE: Recibe un indice [0, largo], y un puntero a un objeto en el heap
+    //POS: Reemplaza el elemento indicado con el indice por el objeto del segundo parametro
+    void reemplazar(int, Objeto*);
 };
 
 template <typename Objeto>
@@ -210,6 +214,15 @@ void Lista<Objeto>::intercambiar(int indice_A, int indice_B)
     Objeto* aux = nodo_A->obtener_puntero();
     nodo_A->asignar_valor(nodo_B->obtener_puntero());
     nodo_B->asignar_valor(aux);
+}
+
+template <typename Objeto>
+void Lista<Objeto>::reemplazar(int indice, Objeto* reemplazo)
+{
+    Nodo<Objeto>* nodo = buscar_nodo(indice);
+    Objeto* borrar = nodo->obtener_puntero();
+    nodo->asignar_valor(reemplazo);
+    delete borrar;
 }
 
 #endif // LISTA_H_INCLUDED
