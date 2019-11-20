@@ -261,16 +261,46 @@ bool Entorno::verificar_anticuerpo(Microorganismo &anticuerpo){
     }
 }
 
-void Entorno::liberar(Anticuerpo &anticuerpo){
+void Entorno::liberar(Anticuerpo &anticuerpo, Direccion direccion){
 
     if (anticuerpo.obtener_capturado()){
         anticuerpo.capturar(false);
-        anticuerpo.disparar(true);
+        anticuerpo.asignar_direccion(direccion);
     }
 }
 
-void Entorno::volar(Microorganismo &anticuerpo){
-    float aux = anticuerpo.obtenerPosicionX();
-    aux = aux + 5;
-    anticuerpo.asignarPosicionX(aux);
+void Entorno::volar(Anticuerpo &anticuerpo){
+
+    if (anticuerpo.obtener_direccion() == DERECHA){
+        float aux = anticuerpo.obtenerPosicionX();
+        aux = aux + 5;
+        anticuerpo.asignarPosicionX(aux);
+    }else{
+
+        if (anticuerpo.obtener_direccion() == ARRIBA){
+            float aux = anticuerpo.obtenerPosicionY();
+            aux = aux - 5;
+            anticuerpo.asignarPosicionY(aux);
+        }else{
+
+            if (anticuerpo.obtener_direccion() == ABAJO){
+                float aux = anticuerpo.obtenerPosicionY();
+                aux = aux + 5;
+                anticuerpo.asignarPosicionY(aux);
+            }else{
+
+                if (anticuerpo.obtener_direccion() == IZQUIERDA){
+                    float aux = anticuerpo.obtenerPosicionX();
+                    aux = aux - 5;
+                    anticuerpo.asignarPosicionX(aux);
+                }
+            }
+        }
+    }
 }
+
+/*void Entorno::volar_arriba(Microorganismo &anticuerpo){
+    float aux = anticuerpo.obtenerPosicionY();
+    aux = aux - 5;
+    anticuerpo.asignarPosicionY(aux);
+}*/

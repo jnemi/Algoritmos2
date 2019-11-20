@@ -88,16 +88,28 @@ void Juego::manejarEventos(Lista<Anticuerpo>* lista_anticuerpos, bool &tope) {
 
             Anticuerpo* p = &lista_anticuerpos -> obtener_valor(i);
 
-            if (entorno.verificar_anticuerpo(*p) && !p -> obtener_disparado()){
+            if (entorno.verificar_anticuerpo(*p) && p -> obtener_direccion() == LIBRE){
                 p -> capturar(true);
             }
 
-            if(inputManager->isKeyDown(KEY_Z)){
-                entorno.liberar(*p);
+            if(inputManager->isKeyDown(KEY_Z)&&inputManager->isKeyDown(KEY_RIGHT)){
+                entorno.liberar(*p, DERECHA);
+            }
+
+            if (inputManager->isKeyDown(KEY_Z)&&inputManager->isKeyDown(KEY_UP)){
+                entorno.liberar(*p, ARRIBA);
+            }
+
+            if (inputManager->isKeyDown(KEY_Z)&&inputManager->isKeyDown(KEY_DOWN)){
+                entorno.liberar(*p, ABAJO);
+            }
+
+            if (inputManager->isKeyDown(KEY_Z)&&inputManager->isKeyDown(KEY_LEFT)){
+                entorno.liberar(*p, IZQUIERDA);
             }
 
 
-            if (i % 2 != 0 && !p -> obtener_disparado()){
+            if (i % 2 != 0 && p -> obtener_direccion() == LIBRE){
 
                 if (p -> obtenerPosicionY() < 10){
                         tope = false;
@@ -114,7 +126,7 @@ void Juego::manejarEventos(Lista<Anticuerpo>* lista_anticuerpos, bool &tope) {
                 }
             }
 
-            if (i % 2 == 0 && !p -> obtener_disparado()){
+            if (i % 2 == 0 && p -> obtener_direccion() == LIBRE){
 
                 if (p -> obtenerPosicionX() < 10){
                     tope = false;
@@ -131,9 +143,7 @@ void Juego::manejarEventos(Lista<Anticuerpo>* lista_anticuerpos, bool &tope) {
                 }
             }
 
-            if (p -> obtener_disparado()){
-                entorno.volar(*p);
-            }
+            entorno.volar(*p);
         }
     }
 

@@ -66,9 +66,9 @@ class Entorno
         //del nanobot
         bool verificar_anticuerpo(Microorganismo &anticuerpo);
 
-        void liberar(Anticuerpo &anticuerpo);
+        void liberar(Anticuerpo &anticuerpo, Direccion direccion);
 
-        void volar(Microorganismo &anticuerpo);
+        void volar(Anticuerpo &anticuerpo);
 };
 
 #endif // ENTORNO_H

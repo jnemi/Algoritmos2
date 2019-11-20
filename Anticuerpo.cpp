@@ -3,13 +3,13 @@
 //Constructor sin parametros
 Anticuerpo::Anticuerpo() : Microorganismo(){
     capturado = false;
-    disparado = false;
+    direccion = LIBRE;
 }
 
 //Constructor con parametros
 Anticuerpo::Anticuerpo(float x, float y) : Microorganismo(x, y){
     capturado = false;
-    disparado = false;
+    direccion = LIBRE;
 }
 
 //Destructor
@@ -39,10 +39,10 @@ bool Anticuerpo::obtener_capturado(){
     return capturado;
 }
 
-void Anticuerpo::disparar(bool disparado){
-    this -> disparado = disparado;
+void Anticuerpo::asignar_direccion(Direccion direccion){
+    this -> direccion = direccion;
 }
 
-bool Anticuerpo::obtener_disparado(){
-    return disparado;
+Direccion Anticuerpo::obtener_direccion(){
+    return direccion;
 }
