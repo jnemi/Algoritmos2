@@ -20,7 +20,7 @@ Juego::Juego(){
 	running = false;
 }
 
-void Juego::correr(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos, Nanobot *nanobot) {
+void Juego::correr(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos) {
 	running = true;
 	FPSManager fpsManager(SCREEN_FPS);
 
@@ -29,16 +29,16 @@ void Juego::correr(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticu
 	while(running) {
 		fpsManager.start();
 
-		manejarEventos(lista_anticuerpos, tope, nanobot);
-		renderizar(lista_celulas, lista_anticuerpos, nanobot);
+		manejarEventos(lista_anticuerpos, tope);
+		renderizar(lista_celulas, lista_anticuerpos);
 
 		fpsManager.stop();
 	}
 }
 
-void Juego::renderizar(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos, Nanobot *nanobot) {
+void Juego::renderizar(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos) {
 
-    entorno.renderizarTodo(lista_celulas, lista_anticuerpos, nanobot);
+    entorno.renderizarTodo(lista_celulas, lista_anticuerpos);
 
 }
 
@@ -51,7 +51,7 @@ void Juego::limpiar() {
 // En general, para saber si una tecla esta siendo presionada se utilizara
 // el metodo "isKeyDown(KEY)". Para saber que KEY pasar por parametro, consultar
 // el archivo "InputTable.h" que mapea codigos de teclado de SDL.
-void Juego::manejarEventos(Lista<Anticuerpo>* lista_anticuerpos, bool &tope, Nanobot *nanobot) {
+void Juego::manejarEventos(Lista<Anticuerpo>* lista_anticuerpos, bool &tope) {
 	InputManager* inputManager = InputManager::getInstance();
     inputManager->update();
     if(inputManager->quitRequested()) running = false;
@@ -67,19 +67,19 @@ void Juego::manejarEventos(Lista<Anticuerpo>* lista_anticuerpos, bool &tope, Nan
     }
 
     if(inputManager->isKeyDown(KEY_DOWN)){
-        entorno.desplazar_abajo(nanobot);
+        entorno.desplazar_abajo();
     }
 
     if(inputManager->isKeyDown(KEY_UP)){
-        entorno.desplazar_arriba(nanobot);
+        entorno.desplazar_arriba();
     }
 
     if(inputManager->isKeyDown(KEY_RIGHT)){
-        entorno.desplazar_derecha(nanobot);
+        entorno.desplazar_derecha();
     }
 
     if(inputManager->isKeyDown(KEY_LEFT)){
-        entorno.desplazar_izquierda(nanobot);
+        entorno.desplazar_izquierda();
     }
 
     if (lista_anticuerpos -> obtener_largo() != 0){
@@ -88,14 +88,35 @@ void Juego::manejarEventos(Lista<Anticuerpo>* lista_anticuerpos, bool &tope, Nan
 
             Anticuerpo* p = &lista_anticuerpos -> obtener_valor(i);
 
-            if (i % 2 != 0){
+            if (entorno.verificar_anticuerpo(*p) && p -> obtener_direccion() == LIBRE){
+                p -> capturar(true);
+            }
+
+            if(inputManager->isKeyDown(KEY_Z)&&inputManager->isKeyDown(KEY_RIGHT)){
+                entorno.liberar(*p, DERECHA);
+            }
+
+            if (inputManager->isKeyDown(KEY_Z)&&inputManager->isKeyDown(KEY_UP)){
+                entorno.liberar(*p, ARRIBA);
+            }
+
+            if (inputManager->isKeyDown(KEY_Z)&&inputManager->isKeyDown(KEY_DOWN)){
+                entorno.liberar(*p, ABAJO);
+            }
+
+            if (inputManager->isKeyDown(KEY_Z)&&inputManager->isKeyDown(KEY_LEFT)){
+                entorno.liberar(*p, IZQUIERDA);
+            }
+
+
+            if (i % 2 != 0 && p -> obtener_direccion() == LIBRE){
 
                 if (p -> obtenerPosicionY() < 10){
-                    tope = false;
+                        tope = false;
                 }
 
                 if (p -> obtenerPosicionY() > 550){
-                    tope = true;
+                        tope = true;
                 }
 
                 if (tope){
@@ -103,7 +124,9 @@ void Juego::manejarEventos(Lista<Anticuerpo>* lista_anticuerpos, bool &tope, Nan
                 }else{
                     entorno.mover_abajo(*p);
                 }
-            }else{
+            }
+
+            if (i % 2 == 0 && p -> obtener_direccion() == LIBRE){
 
                 if (p -> obtenerPosicionX() < 10){
                     tope = false;
@@ -119,6 +142,8 @@ void Juego::manejarEventos(Lista<Anticuerpo>* lista_anticuerpos, bool &tope, Nan
                     entorno.mover_derecha(*p);
                 }
             }
+
+            entorno.volar(*p);
         }
     }
 

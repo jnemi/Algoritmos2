@@ -80,24 +80,41 @@ void armado_red_celular(Lista<Celula>* lista, int elementosXGrupo, int intersecc
 
     for (int a = 1; a <= cantGrupos; a++)
     {
-        Lista<int> grupo;
+        Lista<Celula*> grupo;
 
+        Nodo<Celula>* aux;
         int principioGrupo = 1 + (a - 1)*(elementosXGrupo - interseccion);
+        aux = lista->buscar_nodo(principioGrupo);
 
         //cout<<"[DEBUG]: Grupo "<<a<<", iniciando en "<<principioGrupo<<"("<<aux<<" -> "<<&(aux->obtener_valor())<<"):"<<endl;
 
         for (int k = 1; k <= elementosXGrupo; k++)
         {
-            int indice_actual = principioGrupo + k - 1;
-            if (indice_actual <= lista->obtener_largo())
-                grupo.extender(new int(indice_actual));
+            /*
+            Celula* pCelulaAux = &(aux->obtener_valor());
+            grupo.extender(&pCelulaAux);
+            */
+
+
+            if (aux != 0){
+                cout<<"         Ejecutando linea 95";
+                Celula** pCelulaAux = new Celula*;
+                cout<<" 97";
+                *pCelulaAux = &(aux->obtener_valor());
+                cout<<" 99";
+                aux = aux->obtener_siguiente();
+                cout<<" 101";
+                grupo.extender(pCelulaAux);
+                cout<<" OK"<<endl;
+                cout<<"         "<<&(pCelulaAux)<<"->"<<&(*pCelulaAux)<<"->"<<&(**pCelulaAux)<<endl;
+            }
         }
         cout<<endl<<"[DEBUG]: Iniciando cruce..."<<endl;
-        cruzar_celulas(lista, &grupo);
+        cruzar_celulas(&grupo);
     }
 }
 
-void cruzar_celulas(Lista<Celula>* lista, Lista<int>* celulas_conectadas)
+void cruzar_celulas(Lista<Celula*>* celulas_conectadas)
 {
     int largo = celulas_conectadas->obtener_largo();
     for (int i = 1; i <= largo; i++)
@@ -106,9 +123,12 @@ void cruzar_celulas(Lista<Celula>* lista, Lista<int>* celulas_conectadas)
         {
             if (i != j){
                 cout<<"[DEBUG]: Cruzando "<<celulas_conectadas->obtener_valor(i)<<"("<<i<<")"<<" con "<<celulas_conectadas->obtener_valor(j)<<"("<<j<<") ";
-
-                lista->obtener_puntero(celulas_conectadas->obtener_valor(i))->agregarAdyacente(celulas_conectadas->obtener_valor(j));
-
+                Celula* celula = celulas_conectadas->obtener_valor(i);
+                Celula** adyacente = &(celulas_conectadas->obtener_valor(j));
+                if (celula != 0 && *adyacente != 0)
+                    celula->agregarAdyacente(adyacente);
+                else
+                    cout<<"[DEBUG]: Cruce rechazado"<<endl;
                 //celulas_conectadas->obtener_valor(i)->agregarAdyacente(&(celulas_conectadas->obtener_valor(j)));
             }
         }
@@ -116,25 +136,23 @@ void cruzar_celulas(Lista<Celula>* lista, Lista<int>* celulas_conectadas)
 }
 
 void armado_red_grafica(SDL_Renderer* renderer, Lista<Celula>* lista){
-    int largo = lista->obtener_largo();
-    float x1, y1, x2, y2;
+    //int largo = lista->obtener_largo();
+    //float x1, y1, x2, y2;
 
+    /*for(int i=1; i<=largo; i++){
+        Celula cel_actual = lista->obtener_valor(i);
+        x1 = cel_actual.obtener_posicion_x();
+        y1 = cel_actual.obtener_posicion_y();
 
-    for(int i=1; i<=largo; i++){
-        Celula* cel_actual = lista->obtener_puntero(i);
-        x1 = cel_actual->obtener_posicion_x();
-        y1 = cel_actual->obtener_posicion_y();
-
-        int cantAdyacentes = cel_actual->obtenerCantidadAdyacentes();
+        int cantAdyacentes = cel_actual.adyacentes.obtener_largo();
 
         for (int j = 1; j <= cantAdyacentes; j++){
-            Celula* adyacente_actual = lista->obtener_puntero(cel_actual->obtenerAdyacente(j));
+            Celula* adyacente_actual = cel_actual.adyacentes.obtener_valor(j);
             x2 = adyacente_actual->obtener_posicion_x();
             y2 = adyacente_actual->obtener_posicion_y();
 
             //cout << "LA LINEA VA DE (" << x1 << "," << y1 << ") a (" << x2 << "," << y2 << ")";
             SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
         }
-    }
-
+    }*/
 }

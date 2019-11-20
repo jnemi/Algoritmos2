@@ -30,36 +30,45 @@ class Entorno
         void cargarTexturas();
         void renderizar(imagenes imagen,float x, float y);
         bool iniciar(const char *titulo, int xPos, int yPos, int flags);
-        void renderizarTodo(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos, Nanobot *nanobot);
+        void renderizarTodo(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos);
         void limpiar();
         void explotarDosis(dosis dosis);
         bool dosisAExplotando();
         bool dosisBExplotando();
         //PRE: -
         //POS: Desplaza el nanobot arriba
-        void desplazar_arriba(Nanobot *nanobot);
+        void desplazar_arriba();
         //PRE: -
         //POS: Desplaza el nanobot abajo
-        void desplazar_abajo(Nanobot *nanobot);
+        void desplazar_abajo();
         //PRE: -
         //POS: Desplaza el nanobot a la derecha
-        void desplazar_derecha(Nanobot *nanobot);
+        void desplazar_derecha();
         //PRE: -
         //POS: Desplaza el nanobot a la izquierda
-        void desplazar_izquierda(Nanobot *nanobot);
+        void desplazar_izquierda();
 
-        //PRE: -
+        //PRE: El parámetro debe ser una referencia a un objeto anticuerpo
         //POS: Desplaza un anticuerpo arriba
         void mover_arriba(Microorganismo &anticuerpo);
-        //PRE: -
+        //PRE: El parámetro debe ser una referencia a un objeto anticuerpo
         //POS: Desplaza un anticuerpo abajo
         void mover_abajo(Microorganismo &anticuerpo);
-        //PRE: -
+        //PRE: El parámetro debe ser una referencia a un objeto anticuerpo
         //POS: Desplaza un anticuerpo a la derecha
         void mover_derecha(Microorganismo &anticuerpo);
-        //PRE: -
+        //PRE: El parámetro debe ser una referencia a un objeto anticuerpo
         //POS: Desplaza un anticuerpo a la izquierda
         void mover_izquierda(Microorganismo &anticuerpo);
+
+        //PRE: El parámetro debe ser una referencia a un objeto anticuerpo
+        //POS: Devuelve true si la posición del anticuerpo coincide con la
+        //del nanobot
+        bool verificar_anticuerpo(Microorganismo &anticuerpo);
+
+        void liberar(Anticuerpo &anticuerpo, Direccion direccion);
+
+        void volar(Anticuerpo &anticuerpo);
 };
 
 #endif // ENTORNO_H

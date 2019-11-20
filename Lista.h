@@ -12,61 +12,17 @@ private:
     Nodo<Objeto>* ultimo;
     int largo;
 public:
-    //PRE: -
-    //POS: Construye una Lista
     Lista();
-
-    //PRE: -
-    //POS: Libera la memoria asociada a la Lista
     ~Lista();
-
-    //PRE: -
-    //POS: Devuelve la cantidad de elementos que hay en la lista
     int obtener_largo();
-
-    //PRE: -
-    //POS: Devuelve True si esta vacia. False, si no esta vacia
     bool lista_vacia();
-
-    //PRE: Recibe un puntero a un objeto en el heap y un entero [0, largo]
-    //POS: Inserta el objeto en la ubicacion indicada
     void insertar(Objeto*, int);
-
-    //PRE: Recibe un puntero a un objeto en el heap y un puntero a un Nodo asociado a la Lista
-    //POS: Inserta el objeto en la ubicacion del Nodo indicado
     void insertar(Objeto*, Nodo<Objeto>*);
-
-    //PRE: Recibe un ountero a un objeto en el heap
-    //POS: Agrega el objeto al final de la Lista
     void extender(Objeto*);
-
-    //PRE: Recibe un entero [0, largo]
-    //POS: Elimina el elemento indicado, liberando la memoria
     void borrar(int);
-
-    //PRE: Recibe un puntero a un Nodo asociado a la Lista
-    //POS: Elimina el elemento indicado, liberando la memoria
     void borrar(Nodo<Objeto>*);
-
-    //PRE: Recibe un indice entero [0, largo]
-    //POS: Devuelve la direccion del Nodo correspondiente al indice recibido
     Nodo<Objeto>* buscar_nodo(int);
-
-    //PRE: Recibe un indice entero [0, largo]
-    //POS: Devuelve por referencia el objeto ubicado en el indice recibido
     Objeto& obtener_valor(int);
-
-    //PRE: Recibe un indice entero [0, largo]
-    //POS: Devuelve la direccion de memoria del objeto ubicado en el indice recibido
-    Objeto* obtener_puntero(int);
-
-    //PRE: Recibe dos enteros [0, largo]
-    //POS: Intercambia las posiciones de los elementos correspondientes a los indices ingresados
-    void intercambiar(int, int);
-
-    //PRE: Recibe un indice [0, largo], y un puntero a un objeto en el heap
-    //POS: Reemplaza el elemento indicado con el indice por el objeto del segundo parametro
-    void reemplazar(int, Objeto*);
 };
 
 template <typename Objeto>
@@ -199,30 +155,5 @@ Objeto& Lista<Objeto>::obtener_valor(int indice)
     return buscar_nodo(indice)->obtener_valor();
 }
 
-template <typename Objeto>
-Objeto* Lista<Objeto>::obtener_puntero(int indice)
-{
-    return buscar_nodo(indice)->obtener_puntero();
-}
-
-
-template <typename Objeto>
-void Lista<Objeto>::intercambiar(int indice_A, int indice_B)
-{
-    Nodo<Objeto>* nodo_A = buscar_nodo(indice_A);
-    Nodo<Objeto>* nodo_B = buscar_nodo(indice_B);
-    Objeto* aux = nodo_A->obtener_puntero();
-    nodo_A->asignar_valor(nodo_B->obtener_puntero());
-    nodo_B->asignar_valor(aux);
-}
-
-template <typename Objeto>
-void Lista<Objeto>::reemplazar(int indice, Objeto* reemplazo)
-{
-    Nodo<Objeto>* nodo = buscar_nodo(indice);
-    Objeto* borrar = nodo->obtener_puntero();
-    nodo->asignar_valor(reemplazo);
-    delete borrar;
-}
 
 #endif // LISTA_H_INCLUDED
