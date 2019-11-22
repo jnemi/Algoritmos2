@@ -20,7 +20,7 @@ Juego::Juego(){
 	running = false;
 }
 
-void Juego::correr(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos, Nanobot *nanobot) {
+void Juego::correr(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos, Lista<Suero>* lista_dosis_a, Lista<Suero>* lista_dosis_b, Nanobot *nanobot) {
 	running = true;
 	FPSManager fpsManager(SCREEN_FPS);
 
@@ -29,16 +29,16 @@ void Juego::correr(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticu
 	while(running) {
 		fpsManager.start();
 
-		manejarEventos(lista_anticuerpos, tope, nanobot);
-		renderizar(lista_celulas, lista_anticuerpos, nanobot);
+		manejarEventos(lista_anticuerpos, lista_dosis_a, lista_dosis_b, tope, nanobot);
+		renderizar(lista_celulas, lista_anticuerpos, lista_dosis_a, lista_dosis_b, nanobot);
 
 		fpsManager.stop();
 	}
 }
 
-void Juego::renderizar(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos, Nanobot *nanobot) {
+void Juego::renderizar(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos, Lista<Suero>* lista_dosis_a, Lista<Suero>* lista_dosis_b, Nanobot *nanobot) {
 
-    entorno.renderizarTodo(lista_celulas, lista_anticuerpos, nanobot);
+    entorno.renderizarTodo(lista_celulas, lista_anticuerpos, lista_dosis_a, lista_dosis_b, nanobot);
 
 }
 
@@ -51,7 +51,7 @@ void Juego::limpiar() {
 // En general, para saber si una tecla esta siendo presionada se utilizara
 // el metodo "isKeyDown(KEY)". Para saber que KEY pasar por parametro, consultar
 // el archivo "InputTable.h" que mapea codigos de teclado de SDL.
-void Juego::manejarEventos(Lista<Anticuerpo>* lista_anticuerpos, bool &tope, Nanobot *nanobot) {
+void Juego::manejarEventos(Lista<Anticuerpo>* lista_anticuerpos, Lista <Suero>* lista_dosis_a, Lista <Suero>* lista_dosis_b, bool &tope, Nanobot *nanobot) {
 	InputManager* inputManager = InputManager::getInstance();
     inputManager->update();
     if(inputManager->quitRequested()) running = false;
@@ -64,6 +64,14 @@ void Juego::manejarEventos(Lista<Anticuerpo>* lista_anticuerpos, bool &tope, Nan
     if(inputManager->isKeyDown(KEY_B)||entorno.dosisBExplotando())
     {
         entorno.explotarDosis(B);
+    }
+
+    if(inputManager -> isKeyDown(KEY_1)){
+        entorno.inyectar_dosis_a(nanobot, lista_dosis_a);
+    }
+
+    if(inputManager -> isKeyDown(KEY_2)){
+        entorno.inyectar_dosis_b(nanobot, lista_dosis_b);
     }
 
     if(inputManager->isKeyDown(KEY_DOWN)){

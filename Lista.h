@@ -78,11 +78,11 @@ Lista<Objeto>::Lista()
 template <typename Objeto>
 Lista<Objeto>::~Lista()
 {
-    cout<<obtener_largo()<<" elementos a destruir en la lista..."<<endl;
+    //cout<<obtener_largo()<<" elementos a destruir en la lista..."<<endl;
     while (!lista_vacia()){
-        cout<<"Borrando nodo... ";
+      //  cout<<"Borrando nodo... ";
         borrar(primero);
-        cout<<" COMPLETADO"<<endl;
+        //cout<<" COMPLETADO"<<endl;
     }
 }
 
