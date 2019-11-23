@@ -8,7 +8,7 @@
 #include "Constants.h"
 
 //Funcion para leer el archivo
-void lectura(Lista <Elemento>* lista_general, Lista <Celula>* lista_celulas, Lista <Anticuerpo>* lista_anticuerpos){
+void lectura(Lista <Suero>* lista_dosis_a, Lista <Suero>* lista_dosis_b, Lista <Celula>* lista_celulas, Lista <Anticuerpo>* lista_anticuerpos){
    ifstream archivo;
    //Abro el archivo para lectura
    archivo.open("estado.txt");
@@ -25,7 +25,7 @@ void lectura(Lista <Elemento>* lista_general, Lista <Celula>* lista_celulas, Lis
 
    //Recorro el archivo
    while(archivo >> dato){
-      procesar_archivo(archivo, dato, lista_general, lista_celulas, lista_anticuerpos);
+      procesar_archivo(archivo, dato, lista_dosis_a, lista_dosis_b, lista_celulas, lista_anticuerpos);
    }
 
 
@@ -34,10 +34,10 @@ void lectura(Lista <Elemento>* lista_general, Lista <Celula>* lista_celulas, Lis
 }
 
 //Funcion para procesar los datos del archivo
-void procesar_archivo(ifstream &archivo, string &dato, Lista<Elemento> *lista_general, Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos){
+void procesar_archivo(ifstream &archivo, string &dato, Lista<Suero> *lista_dosis_a, Lista <Suero>* lista_dosis_b, Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos){
    float aux1, aux2;
    char aux3;
-   unsigned int aux4;
+   int aux4;
    if(dato == "celula"){
       //Se crea objeto Celula
       archivo >> dato;
@@ -59,11 +59,23 @@ void procesar_archivo(ifstream &archivo, string &dato, Lista<Elemento> *lista_ge
        lista_anticuerpos -> extender(new Anticuerpo(aux1, aux2));
      }else{
           if(dato == "dosis"){
-            //se crea objeto dosis
+            //aux3 es el tipo
+            //aux4 es la cantidad
             archivo >> aux3;
-            //aux3 = dato;
             archivo >> aux4;
-            lista_general -> extender(new Suero(aux3, aux4));
+            if(aux3 == 'A'){
+                for(int i=1; i<=aux4; i++){
+                    lista_dosis_a -> extender(new Suero(aux3));
+                    //cout << "SE EXTIENDE LISTA DOSIS A" << endl;
+                }
+                }else{
+                    if(aux3 == 'B'){
+                        for(int i=1; i<=aux4; i++){
+                            lista_dosis_b -> extender(new Suero(aux3));
+                            //cout << "SE EXTIENDE LISTA DOSIS B" << endl;
+                        }
+                    }
+                }
          }
        }
      }
@@ -92,7 +104,7 @@ void armado_red_celular(Lista<Celula>* lista, int elementosXGrupo, int intersecc
             if (indice_actual <= lista->obtener_largo())
                 grupo.extender(new int(indice_actual));
         }
-        cout<<endl<<"[DEBUG]: Iniciando cruce..."<<endl;
+        //cout<<endl<<"[DEBUG]: Iniciando cruce..."<<endl;
         cruzar_celulas(lista, &grupo);
     }
 }
@@ -105,7 +117,7 @@ void cruzar_celulas(Lista<Celula>* lista, Lista<int>* celulas_conectadas)
         for (int j = 1; j <= largo; j++)
         {
             if (i != j){
-                cout<<"[DEBUG]: Cruzando "<<celulas_conectadas->obtener_valor(i)<<"("<<i<<")"<<" con "<<celulas_conectadas->obtener_valor(j)<<"("<<j<<") ";
+                //cout<<"[DEBUG]: Cruzando "<<celulas_conectadas->obtener_valor(i)<<"("<<i<<")"<<" con "<<celulas_conectadas->obtener_valor(j)<<"("<<j<<") ";
 
                 lista->obtener_puntero(celulas_conectadas->obtener_valor(i))->agregarAdyacente(celulas_conectadas->obtener_valor(j));
 

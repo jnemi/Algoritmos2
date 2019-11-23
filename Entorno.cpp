@@ -6,6 +6,10 @@ using namespace std;
 
 #include "Constants.h"
 
+//variables globales para el renderizado de dosis
+int indice_a = 1;
+int indice_b = 1;
+
 Entorno::Entorno()
 {
     estadoDosisA = 1;
@@ -103,7 +107,7 @@ Entorno::~Entorno()
 	renderer = NULL;
 }
 
-void Entorno::renderizarTodo(Lista<Celula>* lista, Lista<Anticuerpo>* lista_anticuerpos, Nanobot *nanobot)
+void Entorno::renderizarTodo(Lista<Celula>* lista, Lista<Anticuerpo>* lista_anticuerpos, Lista<Suero>* lista_dosis_a, Lista<Suero>* lista_dosis_b, Nanobot *nanobot)
 {
     SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 	SDL_RenderClear(renderer); // clear the renderer to the draw color
@@ -118,8 +122,6 @@ void Entorno::renderizarTodo(Lista<Celula>* lista, Lista<Anticuerpo>* lista_anti
     int largo = lista->obtener_largo();
     float x, y;
     char tipo_celula;
-
-
 
     for(int i=1; i<=largo; i++){
         x = lista->obtener_valor(i).obtener_posicion_x();
@@ -154,6 +156,28 @@ void Entorno::renderizarTodo(Lista<Celula>* lista, Lista<Anticuerpo>* lista_anti
             renderizar(ANTICUERPO, nanobot -> obtener_posicion_x(), nanobot -> obtener_posicion_y());
         else
             renderizar(ANTICUERPO, x-25, y-25);
+    }
+
+    int longitud_a = lista_dosis_a->obtener_largo();
+    int Ax, Ay, Bx, By;
+
+    for(int r=1; r<=longitud_a; r++){
+        if(lista_dosis_a->obtener_puntero(r)->obtener_renderizado()){
+            Ax = lista_dosis_a->obtener_puntero(r)->obtener_posicion_x();
+            Ay = lista_dosis_a->obtener_puntero(r)->obtener_posicion_y();
+            renderizar(DOSIS_A, Ax, Ay);
+        }
+
+    }
+
+    int longitud_b = lista_dosis_b->obtener_largo();
+
+    for(int j=1; j<=longitud_b; j++){
+        if(lista_dosis_b->obtener_puntero(j)->obtener_renderizado()){
+            Bx = lista_dosis_b->obtener_puntero(j)->obtener_posicion_x();
+            By = lista_dosis_b->obtener_puntero(j)->obtener_posicion_y();
+            renderizar(DOSIS_B, Bx, By);
+        }
     }
 
 	SDL_RenderPresent(renderer); // draw to the screen
@@ -294,5 +318,23 @@ void Entorno::volar(Anticuerpo &anticuerpo){
                 }
             }
         }
+    }
+}
+
+void Entorno::inyectar_dosis_a(Nanobot* nanobot, Lista <Suero>* lista_dosis_a){
+    if(indice_a <= 15){
+        lista_dosis_a->obtener_puntero(indice_a)->asignar_renderizado(true);
+        lista_dosis_a->obtener_puntero(indice_a)->asignar_posicion_x((nanobot->obtener_posicion_x())-50);
+        lista_dosis_a->obtener_puntero(indice_a)->asignar_posicion_y((nanobot->obtener_posicion_y())-50);
+        indice_a++;
+    }
+}
+
+void Entorno::inyectar_dosis_b(Nanobot* nanobot, Lista <Suero>* lista_dosis_b){
+    if(indice_b <= 15){
+        lista_dosis_b->obtener_puntero(indice_b)->asignar_renderizado(true);
+        lista_dosis_b->obtener_puntero(indice_b)->asignar_posicion_x((nanobot->obtener_posicion_x())-50);
+        lista_dosis_b->obtener_puntero(indice_b)->asignar_posicion_y((nanobot->obtener_posicion_y())-50);
+        indice_b++;
     }
 }
