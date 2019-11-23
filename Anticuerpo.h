@@ -2,7 +2,13 @@
 #define ANTICUERPO_H_INCLUDED
 #include "Microorganismo.h"
 
+enum Direccion{ARRIBA,ABAJO,DERECHA,IZQUIERDA,LIBRE};
+
 class Anticuerpo : public Microorganismo{
+  private:
+      bool capturado;
+      Direccion direccion;
+
   public:
     //Mostrar
     //PRE: -
@@ -15,10 +21,19 @@ class Anticuerpo : public Microorganismo{
     //Constructor con parametros
     Anticuerpo(float, float);
 
+    //Setters
+    void capturar(bool);
+
+    void asignar_direccion(Direccion);
+
     //Getters
     float obtener_posicion_x();
 
     float obtener_posicion_y();
+
+    bool obtener_capturado();
+
+    Direccion obtener_direccion();
 
     //Destructor
     ~Anticuerpo();
