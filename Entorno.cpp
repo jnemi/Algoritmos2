@@ -149,7 +149,11 @@ void Entorno::renderizarTodo(Lista<Celula>* lista, Lista<Anticuerpo>* lista_anti
     for(int i = 1; i <= tam; i++){
         x = lista_anticuerpos -> obtener_valor(i).obtener_posicion_x();
         y = lista_anticuerpos -> obtener_valor(i).obtener_posicion_y();
-        renderizar(ANTICUERPO, x-25, y-25);
+
+        if (lista_anticuerpos -> obtener_valor(i).obtener_capturado())
+            renderizar(ANTICUERPO, nanobot -> obtener_posicion_x(), nanobot -> obtener_posicion_y());
+        else
+            renderizar(ANTICUERPO, x-25, y-25);
     }
 
 	SDL_RenderPresent(renderer); // draw to the screen
@@ -239,4 +243,56 @@ void Entorno::mover_izquierda(Microorganismo &anticuerpo){
     float aux = anticuerpo.obtenerPosicionX();
     aux--;
     anticuerpo.asignarPosicionX(aux);
+}
+
+bool Entorno::verificar_anticuerpo(Microorganismo &anticuerpo, Nanobot* nanobot){
+    float x = nanobot -> obtener_posicion_x();
+    float y = nanobot -> obtener_posicion_y();
+
+    float ax = anticuerpo.obtenerPosicionX();
+    float ay = anticuerpo.obtenerPosicionY();
+
+    if ((x < ax && ax < x + 85) && (y < ay && ay < y + 50)){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+void Entorno::liberar(Anticuerpo &anticuerpo, Direccion direccion){
+
+    if (anticuerpo.obtener_capturado()){
+        anticuerpo.capturar(false);
+        anticuerpo.asignar_direccion(direccion);
+    }
+}
+
+void Entorno::volar(Anticuerpo &anticuerpo){
+
+    if (anticuerpo.obtener_direccion() == DERECHA){
+        float aux = anticuerpo.obtenerPosicionX();
+        aux = aux + 5;
+        anticuerpo.asignarPosicionX(aux);
+    }else{
+
+        if (anticuerpo.obtener_direccion() == ARRIBA){
+            float aux = anticuerpo.obtenerPosicionY();
+            aux = aux - 5;
+            anticuerpo.asignarPosicionY(aux);
+        }else{
+
+            if (anticuerpo.obtener_direccion() == ABAJO){
+                float aux = anticuerpo.obtenerPosicionY();
+                aux = aux + 5;
+                anticuerpo.asignarPosicionY(aux);
+            }else{
+
+                if (anticuerpo.obtener_direccion() == IZQUIERDA){
+                    float aux = anticuerpo.obtenerPosicionX();
+                    aux = aux - 5;
+                    anticuerpo.asignarPosicionX(aux);
+                }
+            }
+        }
+    }
 }

@@ -82,20 +82,41 @@ void Juego::manejarEventos(Lista<Anticuerpo>* lista_anticuerpos, bool &tope, Nan
         entorno.desplazar_izquierda(nanobot);
     }
 
-    if (lista_anticuerpos -> obtener_largo() != 0){
+     if (lista_anticuerpos -> obtener_largo() != 0){
 
         for (int i = 1; i <= lista_anticuerpos -> obtener_largo(); i++){
 
             Anticuerpo* p = &lista_anticuerpos -> obtener_valor(i);
 
-            if (i % 2 != 0){
+            if (entorno.verificar_anticuerpo(*p, nanobot) && p -> obtener_direccion() == LIBRE){
+                p -> capturar(true);
+            }
+
+            if(inputManager->isKeyDown(KEY_Z)&&inputManager->isKeyDown(KEY_RIGHT)){
+                entorno.liberar(*p, DERECHA);
+            }
+
+            if (inputManager->isKeyDown(KEY_Z)&&inputManager->isKeyDown(KEY_UP)){
+                entorno.liberar(*p, ARRIBA);
+            }
+
+            if (inputManager->isKeyDown(KEY_Z)&&inputManager->isKeyDown(KEY_DOWN)){
+                entorno.liberar(*p, ABAJO);
+            }
+
+            if (inputManager->isKeyDown(KEY_Z)&&inputManager->isKeyDown(KEY_LEFT)){
+                entorno.liberar(*p, IZQUIERDA);
+            }
+
+
+            if (i % 2 != 0 && p -> obtener_direccion() == LIBRE){
 
                 if (p -> obtenerPosicionY() < 10){
-                    tope = false;
+                        tope = false;
                 }
 
                 if (p -> obtenerPosicionY() > 550){
-                    tope = true;
+                        tope = true;
                 }
 
                 if (tope){
@@ -103,7 +124,9 @@ void Juego::manejarEventos(Lista<Anticuerpo>* lista_anticuerpos, bool &tope, Nan
                 }else{
                     entorno.mover_abajo(*p);
                 }
-            }else{
+            }
+
+            if (i % 2 == 0 && p -> obtener_direccion() == LIBRE){
 
                 if (p -> obtenerPosicionX() < 10){
                     tope = false;
@@ -119,6 +142,8 @@ void Juego::manejarEventos(Lista<Anticuerpo>* lista_anticuerpos, bool &tope, Nan
                     entorno.mover_derecha(*p);
                 }
             }
+
+            entorno.volar(*p);
         }
     }
 
