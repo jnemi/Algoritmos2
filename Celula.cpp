@@ -13,6 +13,11 @@ Celula::~Celula(){
   //cout << "Celula -> ";
 }
 
+void Celula::contagiar(Lista<Celula>*)
+{
+    //Definido en los herederos
+}
+
 //Agregar Celulas Adyacentes
 void Celula::agregarAdyacente(int nueva_ady)
 {
