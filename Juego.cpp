@@ -163,6 +163,19 @@ void Juego::manejarEventos(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* list
             }
 
             entorno.volar(*p);
+
+            for (int j = 1; j <= lista_celulas -> obtener_largo(); j++){
+
+                Celula* c = &lista_celulas-> obtener_valor(j);
+
+                if (c-> obtener_tipo_celula() == 'z'){
+
+                    if (entorno.verificarZ(*p, *c)){
+                        lista_celulas -> borrar(j);
+                        lista_anticuerpos -> borrar(i);
+                    }
+                }
+            }
         }
     }
 

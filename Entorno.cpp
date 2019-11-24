@@ -151,10 +151,12 @@ void Entorno::renderizarTodo(Lista<Celula>* lista, Lista<Anticuerpo>* lista_anti
         x = lista_anticuerpos -> obtener_valor(i).obtener_posicion_x();
         y = lista_anticuerpos -> obtener_valor(i).obtener_posicion_y();
 
-        if (lista_anticuerpos -> obtener_valor(i).obtener_capturado())
-            renderizar(ANTICUERPO, nanobot -> obtener_posicion_x(), nanobot -> obtener_posicion_y());
-        else
-            renderizar(ANTICUERPO, x-25, y-25);
+        if (lista_anticuerpos -> obtener_valor(i).obtener_capturado()){
+            lista_anticuerpos -> obtener_valor(i).asignarPosicionX(nanobot -> obtener_posicion_x());
+            lista_anticuerpos -> obtener_valor(i).asignarPosicionY(nanobot -> obtener_posicion_y());
+        }
+
+        renderizar(ANTICUERPO, x-25, y-25);
     }
 
     int longitud_a = lista_dosis_a->obtener_largo();
@@ -335,5 +337,19 @@ void Entorno::inyectar_dosis_b(Nanobot* nanobot, Lista <Suero>* lista_dosis_b){
         lista_dosis_b->obtener_puntero(indice_b)->asignar_posicion_x((nanobot->obtener_posicion_x())-50);
         lista_dosis_b->obtener_puntero(indice_b)->asignar_posicion_y((nanobot->obtener_posicion_y())-50);
         indice_b++;
+    }
+}
+
+bool Entorno::verificarZ(Microorganismo &anticuerpo, Celula &celula){
+    float ax = anticuerpo.obtenerPosicionX();
+    float ay = anticuerpo.obtenerPosicionY();
+
+    float x = celula.obtenerPosicionX();
+    float y = celula.obtenerPosicionY();
+
+    if ((x - 45 < ax && ax < x + 45) && (y - 45 < ay && ay < y + 45)){
+        return true;
+    }else{
+        return false;
     }
 }
