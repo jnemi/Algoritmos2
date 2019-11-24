@@ -186,7 +186,9 @@ void revertir_celula(Lista<Celula>* lista_celulas, Lista<Suero>* lista_dosis_a){
                             lista_celulas->obtener_puntero(j)->asignar_tipo('s');
                             break;
                         case 's':
+                            reconectar_red(lista_celulas, j);
                             lista_celulas->borrar(j);
+                            actualizar_adyacentes(lista_celulas, j);
                             break;
                     }
                 }
@@ -233,5 +235,50 @@ void evolucionar_celula(Lista<Celula>* lista_celulas, Lista<Suero>* lista_dosis_
                     }
                 }
         }
+    }
+}
+
+void reconectar_red(Lista<Celula>* lista_celulas, int punto_de_reconeccion)
+{
+    Lista<int>* grupo = new Lista<int>;
+
+    Celula* desconexa = lista_celulas->obtener_puntero(punto_de_reconeccion);
+    for (int adyacente = 1; adyacente <= desconexa->obtenerCantidadAdyacentes(); adyacente++){
+        grupo->extender(new int(desconexa->obtenerAdyacente(adyacente)));
+    }
+    cruzar_celulas(lista_celulas, grupo);
+
+    delete grupo;
+}
+
+void actualizar_adyacentes(Lista<Celula>* lista_celulas, int indice)
+{
+    Celula* cel_actual;
+
+    for (int indice_actual = 1; indice_actual <= lista_celulas->obtener_largo(); indice_actual++){
+        cel_actual = lista_celulas->obtener_puntero(indice_actual);
+        int cant_adyacentes_actual = cel_actual->obtenerCantidadAdyacentes();
+        int offset = 0;
+        for (int num_ady_actual = 1; num_ady_actual <= cant_adyacentes_actual; num_ady_actual++){
+            int adyacente_actual = cel_actual->obtenerAdyacente(num_ady_actual - offset);
+            if (adyacente_actual == indice){
+                cel_actual->removerAdyacente(num_ady_actual - offset);
+                offset++;
+            }
+            if (adyacente_actual > indice){
+                cel_actual->removerAdyacente(num_ady_actual - offset);
+                cel_actual->agregarAdyacente(adyacente_actual - 1);
+                offset++;
+            }
+        }
+    }
+}
+
+void infeccion_z(Lista<Celula>* lista_celulas)
+{
+    for (int indice = 1; indice <= lista_celulas->obtener_largo(); indice++)
+    {
+        Celula* cel_actual = lista_celulas->obtener_puntero(indice);
+        cel_actual->contagiar(lista_celulas);
     }
 }

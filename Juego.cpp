@@ -8,15 +8,14 @@ using namespace std;
 
 const int SCREEN_FPS = 30;
 
-
 bool Juego::iniciar(const char *title, int xpos, int ypos, int flags) {
 
    return entorno.iniciar(title,xpos,ypos,flags);
 }
 
 
-Juego::Juego(){
-
+Juego::Juego() : reloj(600)
+{
 	running = false;
 }
 
@@ -25,6 +24,8 @@ void Juego::correr(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticu
 	FPSManager fpsManager(SCREEN_FPS);
 
 	bool tope = true;
+
+    reloj.asignar_referencia_lista_celulas(lista_celulas);
 
 	while(running) {
 		fpsManager.start();
@@ -52,6 +53,9 @@ void Juego::limpiar() {
 // el metodo "isKeyDown(KEY)". Para saber que KEY pasar por parametro, consultar
 // el archivo "InputTable.h" que mapea codigos de teclado de SDL.
 void Juego::manejarEventos(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos, Lista <Suero>* lista_dosis_a, Lista <Suero>* lista_dosis_b, bool &tope, Nanobot *nanobot) {
+
+    reloj.tick();
+
 	InputManager* inputManager = InputManager::getInstance();
     inputManager->update();
     if(inputManager->quitRequested()) running = false;
@@ -97,7 +101,7 @@ void Juego::manejarEventos(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* list
     if(inputManager->isKeyDown(KEY_LEFT)){
         entorno.desplazar_izquierda(nanobot);
     }
-if (lista_anticuerpos -> obtener_largo() != 0){
+    if (lista_anticuerpos -> obtener_largo() != 0){
 
         for (int i = 1; i <= lista_anticuerpos -> obtener_largo(); i++){
 

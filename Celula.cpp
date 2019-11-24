@@ -92,10 +92,11 @@ void Celula::asignar_tipo(char t){
 }
 
 void Celula::duplicar_celula(Lista<Celula>* lista_celulas, char tipo, int j){
-    int x, y, fin;
+    int x, y;
 
-    x = lista_celulas->obtener_puntero(j)->obtener_posicion_x();
-    y = lista_celulas->obtener_puntero(j)->obtener_posicion_y();
+    Celula* duplicar = lista_celulas->obtener_puntero(j);
+    x = duplicar->obtener_posicion_x();
+    y = duplicar->obtener_posicion_y();
 
     if((x < 475)){
                 x = x + 100;
@@ -108,26 +109,24 @@ void Celula::duplicar_celula(Lista<Celula>* lista_celulas, char tipo, int j){
                 y = y - 100;
             }
 
+    Celula* nueva = new Celula(x, y);
+    lista_celulas->extender(nueva);
+
+    duplicar->agregarAdyacente(lista_celulas->obtener_largo());
+    nueva->agregarAdyacente(j);
+
     switch(tipo){
         case 's':
-            lista_celulas->extender(new Celula(x, y));
-            fin = lista_celulas->obtener_largo();
-            lista_celulas->obtener_puntero(fin)->asignar_tipo(tipo);
+            nueva->asignar_tipo(tipo);
             break;
         case 'x':
-            lista_celulas->extender(new Celula(x, y));
-            fin = lista_celulas->obtener_largo();
-            lista_celulas->obtener_puntero(fin)->asignar_tipo(tipo);
+            nueva->asignar_tipo(tipo);
             break;
         case 'y':
-            lista_celulas->extender(new Celula(x, y));
-            fin = lista_celulas->obtener_largo();
-            lista_celulas->obtener_puntero(fin)->asignar_tipo(tipo);
+            nueva->asignar_tipo(tipo);
             break;
         case 'z':
-            lista_celulas->extender(new Celula(x, y));
-            fin = lista_celulas->obtener_largo();
-            lista_celulas->obtener_puntero(fin)->asignar_tipo(tipo);
+            nueva->asignar_tipo(tipo);
             break;
     }
 }

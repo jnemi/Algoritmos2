@@ -16,6 +16,7 @@
 #include "Lista.h"
 #include "Celula.h"
 #include "Anticuerpo.h"
+#include "Reloj.h"
 
 
 using namespace std;
@@ -25,6 +26,7 @@ class Juego {
 private:
     bool running;
     Entorno entorno;
+    Reloj reloj;
 
 public:
     Juego();

@@ -28,4 +28,10 @@ void revertir_celula(Lista<Celula>*, Lista<Suero>*);
 
 void evolucionar_celula(Lista<Celula>*, Lista<Suero>*);
 
+void reconectar_red(Lista<Celula>*, int);
+
+void actualizar_adyacentes(Lista<Celula>*, int);
+
+void infeccion_z(Lista<Celula>*);
+
 #endif // FUNCIONES_H_INCLUDED
