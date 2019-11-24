@@ -55,6 +55,7 @@ void Juego::limpiar() {
 void Juego::manejarEventos(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos, Lista <Suero>* lista_dosis_a, Lista <Suero>* lista_dosis_b, bool &tope, Nanobot *nanobot) {
 
     reloj.tick();
+    running = estado_juego(lista_celulas);
 
 	InputManager* inputManager = InputManager::getInstance();
     inputManager->update();
