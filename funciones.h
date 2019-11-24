@@ -23,4 +23,9 @@ void armado_red_celular(Lista<Celula>*, int, int);
 void cruzar_celulas(Lista<Celula>* , Lista<int>*);
 
 void armado_red_grafica(SDL_Renderer*, Lista<Celula>*);
+
+void revertir_celula(Lista<Celula>*, Lista<Suero>*);
+
+void evolucionar_celula(Lista<Celula>*, Lista<Suero>*);
+
 #endif // FUNCIONES_H_INCLUDED
