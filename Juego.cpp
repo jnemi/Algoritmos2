@@ -29,7 +29,7 @@ void Juego::correr(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticu
 	while(running) {
 		fpsManager.start();
 
-		manejarEventos(lista_anticuerpos, lista_dosis_a, lista_dosis_b, tope, nanobot);
+		manejarEventos(lista_celulas, lista_anticuerpos, lista_dosis_a, lista_dosis_b, tope, nanobot);
 		renderizar(lista_celulas, lista_anticuerpos, lista_dosis_a, lista_dosis_b, nanobot);
 
 		fpsManager.stop();
@@ -51,19 +51,19 @@ void Juego::limpiar() {
 // En general, para saber si una tecla esta siendo presionada se utilizara
 // el metodo "isKeyDown(KEY)". Para saber que KEY pasar por parametro, consultar
 // el archivo "InputTable.h" que mapea codigos de teclado de SDL.
-void Juego::manejarEventos(Lista<Anticuerpo>* lista_anticuerpos, Lista <Suero>* lista_dosis_a, Lista <Suero>* lista_dosis_b, bool &tope, Nanobot *nanobot) {
+void Juego::manejarEventos(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos, Lista <Suero>* lista_dosis_a, Lista <Suero>* lista_dosis_b, bool &tope, Nanobot *nanobot) {
 	InputManager* inputManager = InputManager::getInstance();
     inputManager->update();
     if(inputManager->quitRequested()) running = false;
 
     if(inputManager->isKeyDown(KEY_A)||entorno.dosisAExplotando())
     {
-        entorno.explotarDosis(A);
+        entorno.explotarDosis(A, lista_celulas, lista_dosis_a, lista_dosis_b);
     }
 
     if(inputManager->isKeyDown(KEY_B)||entorno.dosisBExplotando())
     {
-        entorno.explotarDosis(B);
+        entorno.explotarDosis(B, lista_celulas, lista_dosis_a, lista_dosis_b);
     }
 
     if(inputManager -> isKeyDown(KEY_1)){

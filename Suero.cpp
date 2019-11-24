@@ -3,16 +3,16 @@
 //Constructor sin parametros
 Suero::Suero() : Elemento(){
   asignarTipo('-');
-  asignar_posicion_x(0);
-  asignar_posicion_y(0);
+  asignar_posicion_x(10000);
+  asignar_posicion_y(10000);
   asignar_renderizado(false);
 }
 
 //Constructor con parametros
 Suero::Suero(char t) : Elemento(){
   asignarTipo(t);
-  asignar_posicion_x(0);
-  asignar_posicion_y(0);
+  asignar_posicion_x(10000);
+  asignar_posicion_y(10000);
   asignar_renderizado(false);
 }
 

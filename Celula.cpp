@@ -87,6 +87,10 @@ bool Celula::obtenerUnicelular(){
   return unicelular;
 }
 
+void Celula::asignar_tipo(char t){
+    tipo = t;
+}
+
 //Mostrar
 void Celula::mostrar(){
   Microorganismo::mostrar();

@@ -113,7 +113,6 @@ void Entorno::renderizarTodo(Lista<Celula>* lista, Lista<Anticuerpo>* lista_anti
 	SDL_RenderClear(renderer); // clear the renderer to the draw color
 	renderizar(FONDO,0,0);
 	renderizar(NANOBOT, nanobot->obtener_posicion_x(), nanobot->obtener_posicion_y());
-	//renderizar(NANOBOT,0,SCREEN_HEIGHT-NANOBOT_HEIGHT);
 	//Prepara el Draw para dibujar una linea negra
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
     //Inserte codigo para dibujar lineas
@@ -193,13 +192,14 @@ void Entorno::limpiar()
 
 }
 
-void Entorno::explotarDosis(dosis dosis)
+void Entorno::explotarDosis(dosis dosis, Lista<Celula>* lista_celulas, Lista<Suero>* lista_dosis_a, Lista<Suero>* lista_dosis_b)
 {
     switch(dosis){
         case A:
             if(estadoDosisA<=LAST_DOSIS_SPRITE){
                 this->loaderA->loadSprite(DOSIS_PATH,estadoDosisA,renderer,&texturas[DOSIS_A]);
                 ++estadoDosisA;
+                revertir_celula(lista_celulas, lista_dosis_a);
             }
         break;
 
@@ -207,6 +207,7 @@ void Entorno::explotarDosis(dosis dosis)
             if(estadoDosisB<=LAST_DOSIS_SPRITE){
                 this->loaderB->loadSprite(DOSIS_PATH,estadoDosisB,renderer,&texturas[DOSIS_B]);
                 ++estadoDosisB;
+                evolucionar_celula(lista_celulas, lista_dosis_a);
             }
     }
 }

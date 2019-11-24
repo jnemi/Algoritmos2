@@ -32,7 +32,7 @@ class Entorno
         bool iniciar(const char *titulo, int xPos, int yPos, int flags);
         void renderizarTodo(Lista<Celula>*, Lista<Anticuerpo>*, Lista<Suero>*, Lista<Suero>*, Nanobot*);
         void limpiar();
-        void explotarDosis(dosis dosis);
+        void explotarDosis(dosis dosis, Lista<Celula>*, Lista<Suero>*, Lista<Suero>*);
         bool dosisAExplotando();
         bool dosisBExplotando();
         //PRE: -

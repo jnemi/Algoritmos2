@@ -6,6 +6,7 @@
 #include "Juego.h"
 #include "Entorno.h"
 #include "Constants.h"
+#include <math.h>
 
 //Funcion para leer el archivo
 void lectura(Lista <Suero>* lista_dosis_a, Lista <Suero>* lista_dosis_b, Lista <Celula>* lista_celulas, Lista <Anticuerpo>* lista_anticuerpos){
@@ -148,5 +149,48 @@ void armado_red_grafica(SDL_Renderer* renderer, Lista<Celula>* lista){
             SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
         }
     }
+
+}
+
+void revertir_celula(Lista<Celula>* lista_celulas, Lista<Suero>* lista_dosis_a){
+    int largo_dosis = lista_dosis_a->obtener_largo();
+    int largo_celulas = lista_celulas->obtener_largo();
+
+    int pos_dosis_x, pos_dosis_y, pos_celula_x, pos_celula_y;
+    float distancia;
+    char tipo;
+
+    for(int i=1; i<=largo_dosis; i++){
+
+        pos_dosis_x = lista_dosis_a->obtener_puntero(i)->obtener_posicion_x();
+        pos_dosis_y = lista_dosis_a->obtener_puntero(i)->obtener_posicion_y();
+
+        for(int j=1; j<=largo_celulas; j++){
+
+                pos_celula_x = (lista_celulas->obtener_puntero(j)->obtener_posicion_x())-25;
+                pos_celula_y = (lista_celulas->obtener_puntero(j)->obtener_posicion_y())-25;
+
+                distancia = sqrt(((pos_celula_x - pos_dosis_x)*(pos_celula_x - pos_dosis_x))+((pos_celula_y - pos_dosis_y)*(pos_celula_y - pos_dosis_y)));
+
+                tipo = lista_celulas->obtener_puntero(j)->obtener_tipo_celula();
+
+                if(distancia <= 60){
+                    switch(tipo){
+                        case 'z':
+                            lista_celulas->obtener_puntero(j)->asignar_tipo('y');
+                            break;
+                        case 'y':
+                            lista_celulas->obtener_puntero(j)->asignar_tipo('x');
+                            break;
+                        case 'x':
+                            lista_celulas->obtener_puntero(j)->asignar_tipo('s');
+                            break;
+                    }
+                }
+        }
+    }
+}
+
+void evolucionar_celula(Lista<Celula>*, Lista<Suero>*){
 
 }

@@ -80,6 +80,10 @@ class Celula : public Microorganismo{
      //POS: Contagia una o mas Celulas S adyacentes (si las hay)
      virtual void contagiar(Lista<Celula>*);
 
+     //PRE: Recibir dato valido
+     //POS: Asigna el tipo de celula
+     void asignar_tipo(char);
+
      //constructor sin parametros
      Celula();
 
