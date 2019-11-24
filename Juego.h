@@ -32,7 +32,7 @@ public:
     bool iniciar(const char* titulo, int xPos, int yPos, int flags);
     void correr(Lista<Celula>*, Lista<Anticuerpo>*, Lista <Suero>*, Lista <Suero>*, Nanobot*);
     void renderizar(Lista<Celula>*, Lista<Anticuerpo>*, Lista<Suero>*, Lista<Suero>*, Nanobot*);
-    void manejarEventos(Lista<Anticuerpo>*, Lista <Suero>*, Lista <Suero>*, bool &tope, Nanobot*);
+    void manejarEventos(Lista<Anticuerpo>*, Lista <Suero>*, Lista <Suero>*, bool &tope, Nanobot*, Lista<Celula>*);
     void limpiar();
 };
 

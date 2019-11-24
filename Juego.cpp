@@ -29,7 +29,7 @@ void Juego::correr(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticu
 	while(running) {
 		fpsManager.start();
 
-		manejarEventos(lista_anticuerpos, lista_dosis_a, lista_dosis_b, tope, nanobot);
+		manejarEventos(lista_anticuerpos, lista_dosis_a, lista_dosis_b, tope, nanobot, lista_celulas);
 		renderizar(lista_celulas, lista_anticuerpos, lista_dosis_a, lista_dosis_b, nanobot);
 
 		fpsManager.stop();
@@ -51,7 +51,7 @@ void Juego::limpiar() {
 // En general, para saber si una tecla esta siendo presionada se utilizara
 // el metodo "isKeyDown(KEY)". Para saber que KEY pasar por parametro, consultar
 // el archivo "InputTable.h" que mapea codigos de teclado de SDL.
-void Juego::manejarEventos(Lista<Anticuerpo>* lista_anticuerpos, Lista <Suero>* lista_dosis_a, Lista <Suero>* lista_dosis_b, bool &tope, Nanobot *nanobot) {
+void Juego::manejarEventos(Lista<Anticuerpo>* lista_anticuerpos, Lista <Suero>* lista_dosis_a, Lista <Suero>* lista_dosis_b, bool &tope, Nanobot *nanobot, Lista<Celula>* lista_celulas) {
 	InputManager* inputManager = InputManager::getInstance();
     inputManager->update();
     if(inputManager->quitRequested()) running = false;
@@ -89,7 +89,8 @@ void Juego::manejarEventos(Lista<Anticuerpo>* lista_anticuerpos, Lista <Suero>* 
     if(inputManager->isKeyDown(KEY_LEFT)){
         entorno.desplazar_izquierda(nanobot);
     }
-if (lista_anticuerpos -> obtener_largo() != 0){
+
+    if (lista_anticuerpos -> obtener_largo() != 0){
 
         for (int i = 1; i <= lista_anticuerpos -> obtener_largo(); i++){
 
@@ -151,6 +152,19 @@ if (lista_anticuerpos -> obtener_largo() != 0){
             }
 
             entorno.volar(*p);
+
+            for (int j = 1; j <= lista_celulas -> obtener_largo(); j++){
+
+                Celula* c = &lista_celulas-> obtener_valor(j);
+
+                if (c-> obtener_tipo_celula() == 'z'){
+
+                    if (entorno.verificarZ(*p, *c)){
+                        lista_celulas -> borrar(j);
+                        lista_anticuerpos -> borrar(i);
+                    }
+                }
+            }
         }
     }
 

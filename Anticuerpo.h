@@ -27,9 +27,6 @@ class Anticuerpo : public Microorganismo{
     void asignar_direccion(Direccion);
 
     //Getters
-    float obtener_posicion_x();
-
-    float obtener_posicion_y();
 
     bool obtener_capturado();
 

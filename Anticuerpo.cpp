@@ -23,14 +23,6 @@ void Anticuerpo::mostrar(){
   Microorganismo::mostrar();
 }
 
-float Anticuerpo::obtener_posicion_x(){
-    return posicion_x;
-}
-
-float Anticuerpo::obtener_posicion_y(){
-    return posicion_y;
-}
-
 void Anticuerpo::capturar(bool capturado){
     this -> capturado = capturado;
 }

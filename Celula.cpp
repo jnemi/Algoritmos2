@@ -2,10 +2,12 @@
 
 //Constructor sin parametros
 Celula::Celula() : Microorganismo(){
+    contacto = false;
 }
 
 //Constructor con parametros
 Celula::Celula(float x, float y) : Microorganismo(x, y){
+    contacto = false;
 }
 
 //Destructor
@@ -85,6 +87,14 @@ string Celula::obtenerMaterialGnetico(){
 
 bool Celula::obtenerUnicelular(){
   return unicelular;
+}
+
+void Celula::asignar_contacto(bool contacto){
+    this -> contacto = contacto;
+}
+
+bool Celula::obtener_contacto(){
+    return contacto;
 }
 
 //Mostrar

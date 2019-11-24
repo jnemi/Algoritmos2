@@ -13,6 +13,8 @@ class Celula : public Microorganismo{
      char tipo;
      Lista<int> adyacentes;
 
+     bool contacto;
+
    public:
 
      //Metodos
@@ -79,6 +81,10 @@ class Celula : public Microorganismo{
      //PRE: Recibe la direccion de la lista de Celulas
      //POS: Contagia una o mas Celulas S adyacentes (si las hay)
      virtual void contagiar(Lista<Celula>*);
+
+     void asignar_contacto(bool);
+
+     bool obtener_contacto();
 
      //constructor sin parametros
      Celula();
