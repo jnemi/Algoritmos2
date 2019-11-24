@@ -87,6 +87,51 @@ bool Celula::obtenerUnicelular(){
   return unicelular;
 }
 
+void Celula::asignar_tipo(char t){
+    tipo = t;
+}
+
+void Celula::duplicar_celula(Lista<Celula>* lista_celulas, char tipo, int j){
+    int x, y, fin;
+
+    x = lista_celulas->obtener_puntero(j)->obtener_posicion_x();
+    y = lista_celulas->obtener_puntero(j)->obtener_posicion_y();
+
+    if((x < 475)){
+                x = x + 100;
+            }else{
+                x = x - 100;
+            }
+            if(y < 275){
+                y = y + 100;
+            }else{
+                y = y - 100;
+            }
+
+    switch(tipo){
+        case 's':
+            lista_celulas->extender(new Celula(x, y));
+            fin = lista_celulas->obtener_largo();
+            lista_celulas->obtener_puntero(fin)->asignar_tipo(tipo);
+            break;
+        case 'x':
+            lista_celulas->extender(new Celula(x, y));
+            fin = lista_celulas->obtener_largo();
+            lista_celulas->obtener_puntero(fin)->asignar_tipo(tipo);
+            break;
+        case 'y':
+            lista_celulas->extender(new Celula(x, y));
+            fin = lista_celulas->obtener_largo();
+            lista_celulas->obtener_puntero(fin)->asignar_tipo(tipo);
+            break;
+        case 'z':
+            lista_celulas->extender(new Celula(x, y));
+            fin = lista_celulas->obtener_largo();
+            lista_celulas->obtener_puntero(fin)->asignar_tipo(tipo);
+            break;
+    }
+}
+
 //Mostrar
 void Celula::mostrar(){
   Microorganismo::mostrar();

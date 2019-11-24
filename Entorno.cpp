@@ -113,7 +113,6 @@ void Entorno::renderizarTodo(Lista<Celula>* lista, Lista<Anticuerpo>* lista_anti
 	SDL_RenderClear(renderer); // clear the renderer to the draw color
 	renderizar(FONDO,0,0);
 	renderizar(NANOBOT, nanobot->obtener_posicion_x(), nanobot->obtener_posicion_y());
-	//renderizar(NANOBOT,0,SCREEN_HEIGHT-NANOBOT_HEIGHT);
 	//Prepara el Draw para dibujar una linea negra
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
     //Inserte codigo para dibujar lineas

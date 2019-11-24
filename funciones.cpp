@@ -6,6 +6,7 @@
 #include "Juego.h"
 #include "Entorno.h"
 #include "Constants.h"
+#include <math.h>
 
 //Funcion para leer el archivo
 void lectura(Lista <Suero>* lista_dosis_a, Lista <Suero>* lista_dosis_b, Lista <Celula>* lista_celulas, Lista <Anticuerpo>* lista_anticuerpos){
@@ -127,20 +128,20 @@ void cruzar_celulas(Lista<Celula>* lista, Lista<int>* celulas_conectadas)
     }
 }
 
-void armado_red_grafica(SDL_Renderer* renderer, Lista<Celula>* lista){
-    int largo = lista->obtener_largo();
+void armado_red_grafica(SDL_Renderer* renderer, Lista<Celula>* lista_celulas){
+    int largo = lista_celulas->obtener_largo();
     float x1, y1, x2, y2;
 
 
     for(int i=1; i<=largo; i++){
-        Celula* cel_actual = lista->obtener_puntero(i);
+        Celula* cel_actual = lista_celulas->obtener_puntero(i);
         x1 = cel_actual->obtener_posicion_x();
         y1 = cel_actual->obtener_posicion_y();
 
         int cantAdyacentes = cel_actual->obtenerCantidadAdyacentes();
 
         for (int j = 1; j <= cantAdyacentes; j++){
-            Celula* adyacente_actual = lista->obtener_puntero(cel_actual->obtenerAdyacente(j));
+            Celula* adyacente_actual = lista_celulas->obtener_puntero(cel_actual->obtenerAdyacente(j));
             x2 = adyacente_actual->obtener_posicion_x();
             y2 = adyacente_actual->obtener_posicion_y();
 
@@ -149,4 +150,88 @@ void armado_red_grafica(SDL_Renderer* renderer, Lista<Celula>* lista){
         }
     }
 
+}
+
+void revertir_celula(Lista<Celula>* lista_celulas, Lista<Suero>* lista_dosis_a){
+    int largo_dosis = lista_dosis_a->obtener_largo();
+    int largo_celulas = lista_celulas->obtener_largo();
+
+    int pos_dosis_x, pos_dosis_y, pos_celula_x, pos_celula_y;
+    float distancia;
+    char tipo;
+
+    for(int i=1; i<=largo_dosis; i++){
+
+        pos_dosis_x = (lista_dosis_a->obtener_puntero(i)->obtener_posicion_x());
+        pos_dosis_y = (lista_dosis_a->obtener_puntero(i)->obtener_posicion_y());
+
+        for(int j=1; j<=largo_celulas; j++){
+
+                pos_celula_x = (lista_celulas->obtener_puntero(j)->obtener_posicion_x())-60;
+                pos_celula_y = (lista_celulas->obtener_puntero(j)->obtener_posicion_y())-60;
+
+                distancia = sqrt(((pos_celula_x - pos_dosis_x)*(pos_celula_x - pos_dosis_x))+((pos_celula_y - pos_dosis_y)*(pos_celula_y - pos_dosis_y)));
+
+                tipo = lista_celulas->obtener_puntero(j)->obtener_tipo_celula();
+
+                if(distancia <= 60){
+                    switch(tipo){
+                        case 'z':
+                            lista_celulas->obtener_puntero(j)->asignar_tipo('y');
+                            break;
+                        case 'y':
+                            lista_celulas->obtener_puntero(j)->asignar_tipo('x');
+                            break;
+                        case 'x':
+                            lista_celulas->obtener_puntero(j)->asignar_tipo('s');
+                            break;
+                        case 's':
+                            lista_celulas->borrar(j);
+                            break;
+                    }
+                }
+        }
+    }
+}
+
+void evolucionar_celula(Lista<Celula>* lista_celulas, Lista<Suero>* lista_dosis_b){
+    int largo_dosis = lista_dosis_b->obtener_largo();
+    int largo_celulas = lista_celulas->obtener_largo();
+
+    int pos_dosis_x, pos_dosis_y, pos_celula_x, pos_celula_y;
+    float distancia;
+    char tipo;
+
+    for(int i=1; i<=largo_dosis; i++){
+
+        pos_dosis_x = (lista_dosis_b->obtener_puntero(i)->obtener_posicion_x());
+        pos_dosis_y = (lista_dosis_b->obtener_puntero(i)->obtener_posicion_y());
+
+        for(int j=1; j<=largo_celulas; j++){
+
+                pos_celula_x = (lista_celulas->obtener_puntero(j)->obtener_posicion_x())-60;
+                pos_celula_y = (lista_celulas->obtener_puntero(j)->obtener_posicion_y())-60;
+
+                distancia = sqrt(((pos_celula_x - pos_dosis_x)*(pos_celula_x - pos_dosis_x))+((pos_celula_y - pos_dosis_y)*(pos_celula_y - pos_dosis_y)));
+
+                tipo = lista_celulas->obtener_puntero(j)->obtener_tipo_celula();
+
+                if(distancia <= 60){
+                    switch(tipo){
+                        case 'z':
+                            lista_celulas->obtener_puntero(j)->duplicar_celula(lista_celulas, tipo, j);
+                            break;
+                        case 'y':
+                            lista_celulas->obtener_puntero(j)->asignar_tipo('z');
+                            break;
+                        case 'x':
+                            lista_celulas->obtener_puntero(j)->asignar_tipo('y');
+                            break;
+                        case 's':
+                            lista_celulas->obtener_puntero(j)->duplicar_celula(lista_celulas, tipo, j);
+                            break;
+                    }
+                }
+        }
+    }
 }
