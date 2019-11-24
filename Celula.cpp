@@ -87,6 +87,50 @@ bool Celula::obtenerUnicelular(){
   return unicelular;
 }
 
+void Celula::asignar_tipo(char t){
+    tipo = t;
+}
+
+void Celula::duplicar_celula(Lista<Celula>* lista_celulas, char tipo, int j){
+    int x, y;
+
+    Celula* duplicar = lista_celulas->obtener_puntero(j);
+    x = duplicar->obtener_posicion_x();
+    y = duplicar->obtener_posicion_y();
+
+    if((x < 475)){
+                x = x + 100;
+            }else{
+                x = x - 100;
+            }
+            if(y < 275){
+                y = y + 100;
+            }else{
+                y = y - 100;
+            }
+
+    Celula* nueva = new Celula(x, y);
+    lista_celulas->extender(nueva);
+
+    duplicar->agregarAdyacente(lista_celulas->obtener_largo());
+    nueva->agregarAdyacente(j);
+
+    switch(tipo){
+        case 's':
+            nueva->asignar_tipo(tipo);
+            break;
+        case 'x':
+            nueva->asignar_tipo(tipo);
+            break;
+        case 'y':
+            nueva->asignar_tipo(tipo);
+            break;
+        case 'z':
+            nueva->asignar_tipo(tipo);
+            break;
+    }
+}
+
 //Mostrar
 void Celula::mostrar(){
   Microorganismo::mostrar();

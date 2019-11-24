@@ -60,7 +60,6 @@ template <typename Objeto>
 Nodo<Objeto>::~Nodo()
 {
     delete valor;
-    cout<<"Nodo eliminado"<<endl;
 }
 
 template <typename Objeto>

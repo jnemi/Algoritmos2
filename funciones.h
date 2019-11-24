@@ -14,13 +14,24 @@
 
 using namespace std;
 
-void lectura(Lista<Elemento>*, Lista<Celula>*, Lista<Anticuerpo>*);
+void lectura(Lista<Suero>*, Lista<Suero>*, Lista<Celula>*, Lista<Anticuerpo>*);
 
-void procesar_archivo(ifstream &archivo, string &dato, Lista<Elemento>*, Lista<Celula>*, Lista<Anticuerpo>*);
+void procesar_archivo(ifstream &archivo, string &dato, Lista<Suero>*, Lista <Suero>*, Lista<Celula>*, Lista<Anticuerpo>*);
 
 void armado_red_celular(Lista<Celula>*, int, int);
 
 void cruzar_celulas(Lista<Celula>* , Lista<int>*);
 
 void armado_red_grafica(SDL_Renderer*, Lista<Celula>*);
+
+void revertir_celula(Lista<Celula>*, Lista<Suero>*);
+
+void evolucionar_celula(Lista<Celula>*, Lista<Suero>*);
+
+void reconectar_red(Lista<Celula>*, int);
+
+void actualizar_adyacentes(Lista<Celula>*, int);
+
+void infeccion_z(Lista<Celula>*);
+
 #endif // FUNCIONES_H_INCLUDED
