@@ -76,6 +76,8 @@ class Entorno
         void liberar(Anticuerpo &anticuerpo, Direccion direccion);
 
         void volar(Anticuerpo &anticuerpo);
+
+        bool verificarZ(Microorganismo &anticuerpo, Celula &celula);
 };
 
 #endif // ENTORNO_H

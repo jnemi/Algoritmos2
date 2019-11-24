@@ -2,10 +2,12 @@
 
 //Constructor sin parametros
 Celula::Celula() : Microorganismo(){
+    contacto = false;
 }
 
 //Constructor con parametros
 Celula::Celula(float x, float y) : Microorganismo(x, y){
+    contacto = false;
 }
 
 //Destructor
@@ -89,6 +91,14 @@ bool Celula::obtenerUnicelular(){
 
 void Celula::asignar_tipo(char t){
     tipo = t;
+}
+
+void Celula::asignar_contacto(bool contacto){
+    this -> contacto = contacto;
+}
+
+bool Celula::obtener_contacto(){
+    return contacto;
 }
 
 void Celula::duplicar_celula(Lista<Celula>* lista_celulas, char tipo, int j){
