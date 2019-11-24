@@ -8,6 +8,8 @@
 #include "Constants.h"
 #include <math.h>
 
+Juego* juego = 0;
+
 //Funcion para leer el archivo
 void lectura(Lista <Suero>* lista_dosis_a, Lista <Suero>* lista_dosis_b, Lista <Celula>* lista_celulas, Lista <Anticuerpo>* lista_anticuerpos){
    ifstream archivo;
@@ -177,13 +179,37 @@ void revertir_celula(Lista<Celula>* lista_celulas, Lista<Suero>* lista_dosis_a){
                 if(distancia <= 60){
                     switch(tipo){
                         case 'z':
-                            lista_celulas->obtener_puntero(j)->asignar_tipo('y');
+                            {
+                            Celula* cel_objetivo = lista_celulas->obtener_puntero(j);
+                            Celula* revertida = new Celula_y(cel_objetivo->obtenerPosicionX(), cel_objetivo->obtenerPosicionY());
+
+                            for (int i = 1; i <= cel_objetivo->obtenerCantidadAdyacentes(); i++)
+                                revertida->agregarAdyacente(cel_objetivo->obtenerAdyacente(i));
+
+                            lista_celulas->reemplazar(j, revertida);
+                            }
                             break;
                         case 'y':
-                            lista_celulas->obtener_puntero(j)->asignar_tipo('x');
+                            {
+                            Celula* cel_objetivo = lista_celulas->obtener_puntero(j);
+                            Celula* revertida = new Celula_x(cel_objetivo->obtenerPosicionX(), cel_objetivo->obtenerPosicionY());
+
+                            for (int i = 1; i <= cel_objetivo->obtenerCantidadAdyacentes(); i++)
+                                revertida->agregarAdyacente(cel_objetivo->obtenerAdyacente(i));
+
+                            lista_celulas->reemplazar(j, revertida);
+                            }
                             break;
                         case 'x':
-                            lista_celulas->obtener_puntero(j)->asignar_tipo('s');
+                            {
+                            Celula* cel_objetivo = lista_celulas->obtener_puntero(j);
+                            Celula* revertida = new Celula_s(cel_objetivo->obtenerPosicionX(), cel_objetivo->obtenerPosicionY());
+
+                            for (int i = 1; i <= cel_objetivo->obtenerCantidadAdyacentes(); i++)
+                                revertida->agregarAdyacente(cel_objetivo->obtenerAdyacente(i));
+
+                            lista_celulas->reemplazar(j, revertida);
+                            }
                             break;
                         case 's':
                             reconectar_red(lista_celulas, j);
@@ -224,10 +250,26 @@ void evolucionar_celula(Lista<Celula>* lista_celulas, Lista<Suero>* lista_dosis_
                             lista_celulas->obtener_puntero(j)->duplicar_celula(lista_celulas, tipo, j);
                             break;
                         case 'y':
-                            lista_celulas->obtener_puntero(j)->asignar_tipo('z');
+                            {
+                            Celula* cel_objetivo = lista_celulas->obtener_puntero(j);
+                            Celula* revertida = new Celula_z(cel_objetivo->obtenerPosicionX(), cel_objetivo->obtenerPosicionY());
+
+                            for (int i = 1; i <= cel_objetivo->obtenerCantidadAdyacentes(); i++)
+                                revertida->agregarAdyacente(cel_objetivo->obtenerAdyacente(i));
+
+                            lista_celulas->reemplazar(j, revertida);
+                            }
                             break;
                         case 'x':
-                            lista_celulas->obtener_puntero(j)->asignar_tipo('y');
+                            {
+                            Celula* cel_objetivo = lista_celulas->obtener_puntero(j);
+                            Celula* revertida = new Celula_y(cel_objetivo->obtenerPosicionX(), cel_objetivo->obtenerPosicionY());
+
+                            for (int i = 1; i <= cel_objetivo->obtenerCantidadAdyacentes(); i++)
+                                revertida->agregarAdyacente(cel_objetivo->obtenerAdyacente(i));
+
+                            lista_celulas->reemplazar(j, revertida);
+                            }
                             break;
                         case 's':
                             lista_celulas->obtener_puntero(j)->duplicar_celula(lista_celulas, tipo, j);
@@ -281,4 +323,36 @@ void infeccion_z(Lista<Celula>* lista_celulas)
         Celula* cel_actual = lista_celulas->obtener_puntero(indice);
         cel_actual->contagiar(lista_celulas);
     }
+}
+
+void menu(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos, Lista<Suero>* lista_dosis_a, Lista<Suero>* lista_dosis_b, Nanobot* nanobot){
+    int opcion;
+    bool salir = true;
+
+    cout << "Trabajo Practico n°4: Nanotecnologia" << endl;
+    cout << "1- Iniciar Juego." << endl;
+    cout << "2- Salir." << endl;
+
+    do{
+        cout << "Ingrese una opcion: ";
+        cin >> opcion;
+
+        switch(opcion){
+            case 1:
+                juego = new Juego();
+                juego->iniciar("TP3", 100, 100, 0);
+                juego->correr(lista_celulas, lista_anticuerpos, lista_dosis_a, lista_dosis_b, nanobot);
+                juego->limpiar();
+                break;
+            case 2:
+                salir = false;
+                system("read -p 'Presione enter para continuar...' var");
+                break;
+            default:
+                cout << "Opcion incorrecta" << endl;
+                system("read -p 'Presione enter para continuar...' var");
+        }
+    }while(salir);
+
+    delete juego;
 }

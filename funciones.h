@@ -7,6 +7,7 @@
 #include "Celula_s.h"
 #include "Suero.h"
 #include "Anticuerpo.h"
+#include "Nanobot.h"
 #include <fstream>
 #include "Lista.h"
 #include "SDL2/SDL.h"
@@ -33,5 +34,7 @@ void reconectar_red(Lista<Celula>*, int);
 void actualizar_adyacentes(Lista<Celula>*, int);
 
 void infeccion_z(Lista<Celula>*);
+
+void menu(Lista<Celula>*, Lista<Anticuerpo>*, Lista<Suero>*, Lista<Suero>*, Nanobot*);
 
 #endif // FUNCIONES_H_INCLUDED

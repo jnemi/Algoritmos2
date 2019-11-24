@@ -37,8 +37,15 @@ unsigned int Reloj::tick()
     {
         for(int j=1; j<=lista_celulas->obtener_largo(); j++){
             char tipo = lista_celulas->obtener_puntero(j)->obtener_tipo_celula();
-            if (tipo == 'y')
-                lista_celulas->obtener_puntero(j)->asignar_tipo('z');
+            if (tipo == 'y'){
+                Celula* cel_objetivo = lista_celulas->obtener_puntero(j);
+                Celula* revertida = new Celula_z(cel_objetivo->obtenerPosicionX(), cel_objetivo->obtenerPosicionY());
+
+                for (int i = 1; i <= cel_objetivo->obtenerCantidadAdyacentes(); i++)
+                                revertida->agregarAdyacente(cel_objetivo->obtenerAdyacente(i));
+
+                lista_celulas->reemplazar(j, revertida);
+            }
         }
     }
 
@@ -46,8 +53,15 @@ unsigned int Reloj::tick()
     {
         for(int j=1; j<=lista_celulas->obtener_largo(); j++){
             char tipo = lista_celulas->obtener_puntero(j)->obtener_tipo_celula();
-            if (tipo == 'x')
-                lista_celulas->obtener_puntero(j)->asignar_tipo('y');
+            if (tipo == 'x'){
+                Celula* cel_objetivo = lista_celulas->obtener_puntero(j);
+                Celula* revertida = new Celula_y(cel_objetivo->obtenerPosicionX(), cel_objetivo->obtenerPosicionY());
+
+                for (int i = 1; i <= cel_objetivo->obtenerCantidadAdyacentes(); i++)
+                                revertida->agregarAdyacente(cel_objetivo->obtenerAdyacente(i));
+
+                lista_celulas->reemplazar(j, revertida);
+            }
         }
     }
 
