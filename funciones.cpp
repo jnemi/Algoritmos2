@@ -340,9 +340,22 @@ void menu(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos, Li
         switch(opcion){
             case 1:
                 juego = new Juego();
+
+                lista_dosis_a = new Lista <Suero>;
+                lista_dosis_b = new Lista <Suero>;
+                lista_celulas = new Lista <Celula>;
+                lista_anticuerpos = new Lista <Anticuerpo>;
+                lectura(lista_dosis_a, lista_dosis_b, lista_celulas, lista_anticuerpos);
+                armado_red_celular(lista_celulas, 3, 1);
+
                 juego->iniciar("TP3", 100, 100, 0);
                 juego->correr(lista_celulas, lista_anticuerpos, lista_dosis_a, lista_dosis_b, nanobot);
                 juego->limpiar();
+
+                delete lista_dosis_a;
+                delete lista_dosis_b;
+                delete lista_celulas;
+                delete lista_anticuerpos;
                 break;
             case 2:
                 salir = false;
@@ -355,4 +368,25 @@ void menu(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos, Li
     }while(salir);
 
     delete juego;
+}
+
+bool estado_juego(Lista<Celula>* lista_celulas)
+{
+    int cant_cel_s = 0;
+    int cant_cel_z = 0;
+    for (int i = 1; i <= lista_celulas->obtener_largo(); i++){
+        Celula* cel_actual = lista_celulas->obtener_puntero(i);
+        if (cel_actual->obtener_tipo_celula() == 's')
+            cant_cel_s++;
+        if (cel_actual->obtener_tipo_celula() == 'z')
+            cant_cel_z++;
+    }
+
+    bool jugando = cant_cel_s >= cant_cel_z;
+    bool victoria = cant_cel_s >= lista_celulas->obtener_largo();
+    if (jugando && victoria)
+        cout<<endl<<endl<<"FELICITACIONES! GANASTE"<<endl<<endl;
+    if (!jugando)
+        cout<<endl<<endl<<"PERDISTE"<<endl<<endl;
+    return (jugando && !victoria);
 }

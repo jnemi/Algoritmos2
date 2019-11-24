@@ -37,4 +37,7 @@ void infeccion_z(Lista<Celula>*);
 
 void menu(Lista<Celula>*, Lista<Anticuerpo>*, Lista<Suero>*, Lista<Suero>*, Nanobot*);
 
+
+bool estado_juego(Lista<Celula>*);
+
 #endif // FUNCIONES_H_INCLUDED
