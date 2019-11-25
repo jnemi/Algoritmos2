@@ -3,6 +3,8 @@
 //Constructor sin parametros
 Suero::Suero() : Elemento(){
   asignarTipo('-');
+  //Asigna por defecto una posicion muy grande para que no cause problemas al recorrer la lista
+  //Al momento de inyectar una dosis se asigna el nuevo valor
   asignar_posicion_x(10000);
   asignar_posicion_y(10000);
   asignar_renderizado(false);
@@ -11,6 +13,8 @@ Suero::Suero() : Elemento(){
 //Constructor con parametros
 Suero::Suero(char t) : Elemento(){
   asignarTipo(t);
+  //Asigna por defecto una posicion muy grande para que no cause problemas al recorrer la lista
+  //Al momento de inyectar una dosis se asigna el nuevo valor
   asignar_posicion_x(10000);
   asignar_posicion_y(10000);
   asignar_renderizado(false);

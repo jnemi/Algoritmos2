@@ -18,8 +18,12 @@ class Celula : public Microorganismo{
    public:
 
      //Metodos
+     //PRE: -
+     //POS: Devuelve el tipo de celula (s, x, y o z)
      char obtener_tipo_celula();
      //Agregar Celulas Adyacentes
+     //PRE: Recibir dato valido
+     //POS: Agrega una celula a la lista de adyacentes
      void agregarAdyacente(int);
 
      //PRE: Recibe un entero [0, cantidad de adyacentes]
@@ -34,7 +38,6 @@ class Celula : public Microorganismo{
      //POS: Elimina un elemento de la lista adyacentes
      void removerAdyacente(int);
 
-     //Setters
      //PRE: Recibir dato valido
      //POS: Asigna valor a cantEnzimas
      void asignarCantEnzimas(unsigned int);
@@ -51,7 +54,6 @@ class Celula : public Microorganismo{
      //POS: Asigna verdadero en caso unicelular o falso en caso contrario
      void asignarUnicelular(bool);
 
-     //Getters
      //PRE: -
      //POS: Devuelve la posicion de la celula en el eje X.
      float obtener_posicion_x();
@@ -68,7 +70,6 @@ class Celula : public Microorganismo{
      //PRE: -
      //POS: devuelve el material geentico
      string obtenerMaterialGnetico();
-
      //PRE: -
      //POS: devuelve verdadero en caso unicelular y falso en caso contrario
      bool obtenerUnicelular();

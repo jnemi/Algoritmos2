@@ -14,7 +14,7 @@ bool Juego::iniciar(const char *title, int xpos, int ypos, int flags) {
 }
 
 
-Juego::Juego() : reloj(600)
+Juego::Juego() : reloj(3200)
 {
 	running = false;
 }

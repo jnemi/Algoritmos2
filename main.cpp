@@ -10,21 +10,15 @@
 
 using namespace std;
 
-//Juego* juego = 0;
-
 int main(int argc, char** argv){
+    //Declaracion de listas de objetos
     Lista <Suero>* lista_dosis_a = 0;
     Lista <Suero>* lista_dosis_b = 0;
     Lista <Celula>* lista_celulas = 0;
     Lista <Anticuerpo>* lista_anticuerpos = 0;
     Nanobot* nanobot = new Nanobot(0, 550);
 
-
-
     menu(lista_celulas, lista_anticuerpos, lista_dosis_a, lista_dosis_b, nanobot);
-
-    //for (int i = 1; i <= lista_celulas->obtener_largo(); i++)
-    //    lista_celulas->obtener_valor(i).mostrar();
 
     cout<<endl<<endl<<"[DEBUG]: PROGRAMA FINALIZADO"<<endl;
   return 0;

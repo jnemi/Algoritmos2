@@ -62,6 +62,7 @@ void procesar_archivo(ifstream &archivo, string &dato, Lista<Suero> *lista_dosis
        lista_anticuerpos -> extender(new Anticuerpo(aux1, aux2));
      }else{
           if(dato == "dosis"){
+            //Se crea objeto Suero
             //aux3 es el tipo
             //aux4 es la cantidad
             archivo >> aux3;
@@ -69,13 +70,11 @@ void procesar_archivo(ifstream &archivo, string &dato, Lista<Suero> *lista_dosis
             if(aux3 == 'A'){
                 for(int i=1; i<=aux4; i++){
                     lista_dosis_a -> extender(new Suero(aux3));
-                    //cout << "SE EXTIENDE LISTA DOSIS A" << endl;
                 }
                 }else{
                     if(aux3 == 'B'){
                         for(int i=1; i<=aux4; i++){
                             lista_dosis_b -> extender(new Suero(aux3));
-                            //cout << "SE EXTIENDE LISTA DOSIS B" << endl;
                         }
                     }
                 }
@@ -85,13 +84,7 @@ void procesar_archivo(ifstream &archivo, string &dato, Lista<Suero> *lista_dosis
 }
 
 void armado_red_celular(Lista<Celula>* lista, int elementosXGrupo, int interseccion){
-    //cout<<"[DEBUG]: Configurando la red celular"<<endl<<endl;
     int cantGrupos = ((lista->obtener_largo() - 1) / (elementosXGrupo - interseccion)) + 1;
-    //cout<<"         Hay "<<lista->obtener_largo()<<" elemento en la lista"<<endl;
-    //cout<<"         Armando grupos con "<<elementosXGrupo<<" elementos por grupo, ";
-    //cout<<"con "<<interseccion<<" elementos intersectando..."<<endl<<endl;
-
-    //cout<<"[DEBUG]: Preparando "<<cantGrupos<<" grupos..."<<endl<<endl;
 
     for (int a = 1; a <= cantGrupos; a++)
     {
@@ -99,15 +92,13 @@ void armado_red_celular(Lista<Celula>* lista, int elementosXGrupo, int intersecc
 
         int principioGrupo = 1 + (a - 1)*(elementosXGrupo - interseccion);
 
-        //cout<<"[DEBUG]: Grupo "<<a<<", iniciando en "<<principioGrupo<<"("<<aux<<" -> "<<&(aux->obtener_valor())<<"):"<<endl;
-
         for (int k = 1; k <= elementosXGrupo; k++)
         {
             int indice_actual = principioGrupo + k - 1;
             if (indice_actual <= lista->obtener_largo())
                 grupo.extender(new int(indice_actual));
         }
-        //cout<<endl<<"[DEBUG]: Iniciando cruce..."<<endl;
+
         cruzar_celulas(lista, &grupo);
     }
 }
@@ -119,13 +110,8 @@ void cruzar_celulas(Lista<Celula>* lista, Lista<int>* celulas_conectadas)
     {
         for (int j = 1; j <= largo; j++)
         {
-            if (i != j){
-                //cout<<"[DEBUG]: Cruzando "<<celulas_conectadas->obtener_valor(i)<<"("<<i<<")"<<" con "<<celulas_conectadas->obtener_valor(j)<<"("<<j<<") ";
-
+            if (i != j)
                 lista->obtener_puntero(celulas_conectadas->obtener_valor(i))->agregarAdyacente(celulas_conectadas->obtener_valor(j));
-
-                //celulas_conectadas->obtener_valor(i)->agregarAdyacente(&(celulas_conectadas->obtener_valor(j)));
-            }
         }
     }
 }
@@ -147,7 +133,6 @@ void armado_red_grafica(SDL_Renderer* renderer, Lista<Celula>* lista_celulas){
             x2 = adyacente_actual->obtener_posicion_x();
             y2 = adyacente_actual->obtener_posicion_y();
 
-            //cout << "LA LINEA VA DE (" << x1 << "," << y1 << ") a (" << x2 << "," << y2 << ")";
             SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
         }
     }
@@ -329,7 +314,7 @@ void menu(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos, Li
     int opcion;
     bool salir = true;
 
-    cout << "Trabajo Practico n°4: Nanotecnologia" << endl;
+    cout << "Trabajo Practico n°3: Nanobot" << endl;
     cout << "1- Iniciar Juego." << endl;
     cout << "2- Salir." << endl;
 
@@ -359,6 +344,7 @@ void menu(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos, Li
                 break;
             case 2:
                 salir = false;
+                cout << endl << endl;
                 system("read -p 'Presione enter para continuar...' var");
                 break;
             default:
@@ -385,8 +371,8 @@ bool estado_juego(Lista<Celula>* lista_celulas)
     bool jugando = cant_cel_s >= cant_cel_z;
     bool victoria = cant_cel_s >= lista_celulas->obtener_largo();
     if (jugando && victoria)
-        cout<<endl<<endl<<"FELICITACIONES! GANASTE"<<endl<<endl;
+        cout<<endl<<endl<<"FELICITACIONES! GANASTE. SALVASTE AL SUJETO PERO FUISTE INFECTADO"<<endl<<"CON UNA MUTACION DEL VIRUS. TUS DIAS ESTAN CONTADOS..."<<endl<<endl<<endl;
     if (!jugando)
-        cout<<endl<<endl<<"PERDISTE"<<endl<<endl;
+        cout<<endl<<endl<<"PERDISTE. POR CULPA DE TUS LENTAS MANOS EL SUJETO FALLECIO..."<<endl<<"SERAS DENUNCIADO POR MALA PRAXIS Y PROBABLEMENTE CONDENADO A PRISION."<<endl<<endl<<endl;
     return (jugando && !victoria);
 }

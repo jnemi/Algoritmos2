@@ -23,9 +23,7 @@ void Celula::contagiar(Lista<Celula>*)
 //Agregar Celulas Adyacentes
 void Celula::agregarAdyacente(int nueva_ady)
 {
-    cout<<"[DEBUG]: Conectando "<<this<<" con "<<nueva_ady;
     adyacentes.extender(new int(nueva_ady));
-    cout<<"  COMPLETADO"<<endl;
 }
 
 int Celula::obtenerAdyacente(int indice)
@@ -108,6 +106,8 @@ void Celula::duplicar_celula(Lista<Celula>* lista_celulas, char tipo, int j){
     x = duplicar->obtener_posicion_x();
     y = duplicar->obtener_posicion_y();
 
+    //Dependiendo la posicion, renderiza la celula nueva
+    //en una posicion que se encuentre dentro de la pantalla
     if((x < 475)){
                 x = x + 100;
             }else{

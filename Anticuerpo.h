@@ -22,17 +22,25 @@ class Anticuerpo : public Microorganismo{
     Anticuerpo(float, float);
 
     //Setters
+    //PRE: Recibir dato valido
+    //POS: Asigna verdadero en caso de tener un anticuerpo capturado y falso en caso contrario
     void capturar(bool);
-
+    //PRE: Recibir dato valido
+    //POS: Asigna la direccion
     void asignar_direccion(Direccion);
 
     //Getters
+    //PRE: -
+    //POS: Decuelve la posicion en x
     float obtener_posicion_x();
-
+    //PRE: -
+    //POS: Decuelve la posicion en y
     float obtener_posicion_y();
-
+    //PRE: -
+    //POS: Devuelve verdadero en caso de tener un anticuerpo capturado
     bool obtener_capturado();
-
+    //PRE: -
+    //POS: Devuelve la direccion
     Direccion obtener_direccion();
 
     //Destructor
