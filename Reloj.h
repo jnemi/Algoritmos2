@@ -22,6 +22,8 @@ public:
     //POS: Incrementa el cronometro e inicia las acciones correspondientes
     unsigned int tick();
 
+    //PRE: Recibir dato valido y que exista la lista
+    //POS: Asigna un puntero a la lista de celulas
     void asignar_referencia_lista_celulas(Lista<Celula>*);
 };
 
