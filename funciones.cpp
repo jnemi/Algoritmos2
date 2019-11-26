@@ -314,7 +314,7 @@ void menu(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos, Li
     int opcion;
     bool salir = true;
 
-    cout << "Trabajo Practico n°3: Nanobot" << endl;
+    cout << "Trabajo Practico n°4: Nanotecnologia" << endl;
     cout << "1- Iniciar Juego." << endl;
     cout << "2- Salir." << endl;
 
