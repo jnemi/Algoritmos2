@@ -172,8 +172,16 @@ void Juego::manejarEventos(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* list
                 if (c-> obtener_tipo_celula() == 'z'){
 
                     if (entorno.verificarZ(*p, *c)){
+                        reconectar_red(lista_celulas, j);
                         lista_celulas -> borrar(j);
+                        actualizar_adyacentes(lista_celulas, j);
                         lista_anticuerpos -> borrar(i);
+
+                        /*
+                            reconectar_red(lista_celulas, j);
+                            lista_celulas->borrar(j);
+                            actualizar_adyacentes(lista_celulas, j);
+                        */
                     }
                 }
             }
