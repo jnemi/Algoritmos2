@@ -42,7 +42,7 @@ void InputManager::update() {
 			if(event.key.repeat)
 				this->keyHold[SDL_GetScancodeFromKey(event.key.keysym.sym)] = 1;
 
-			this->keyStatus[SDL_GetScancodeFromKey(event.key.keysym.sym)] = 1;
+            this->keyStatus[SDL_GetScancodeFromKey(event.key.keysym.sym)] = 1;
 			break;
 
 		case SDL_KEYUP:
@@ -68,7 +68,7 @@ bool InputManager::isKeyUp(int key) {
 	if(key < 0 || key >= KEYBOARD_SIZE)
 		return false;
 
-	return this->keyStatus[key];
+	return this->keyStatus[key] == 0;
 }
 
 bool InputManager::isHoldingKey(int key){

@@ -1,4 +1,6 @@
 #include "Celula.h"
+#include <cstdlib>
+#include <math.h>
 
 //Constructor sin parametros
 Celula::Celula() : Microorganismo(){
@@ -23,7 +25,12 @@ void Celula::contagiar(Lista<Celula>*)
 //Agregar Celulas Adyacentes
 void Celula::agregarAdyacente(int nueva_ady)
 {
-    adyacentes.extender(new int(nueva_ady));
+    bool esAdyacente = false;
+    for (int ady = 1; ady <= adyacentes.obtener_largo(); ady++){
+        esAdyacente = esAdyacente || (adyacentes.obtener_valor(ady) == nueva_ady);
+    }
+    if (!esAdyacente)
+        adyacentes.extender(new int(nueva_ady));
 }
 
 int Celula::obtenerAdyacente(int indice)
@@ -108,16 +115,9 @@ void Celula::duplicar_celula(Lista<Celula>* lista_celulas, char tipo, int j){
 
     //Dependiendo la posicion, renderiza la celula nueva
     //en una posicion que se encuentre dentro de la pantalla
-    if((x < 475)){
-                x = x + 100;
-            }else{
-                x = x - 100;
-            }
-            if(y < 275){
-                y = y + 100;
-            }else{
-                y = y - 100;
-            }
+    x = max(30.0, min(x + sqrt(rand()%500001) - 350, 950.0));
+    y = max(30.0, min(y + sqrt(rand()%360001) - 300, 550.0));
+
 
     Celula* nueva = new Celula(x, y);
     lista_celulas->extender(nueva);

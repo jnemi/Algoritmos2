@@ -330,6 +330,7 @@ void menu(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos, Li
                 lista_dosis_b = new Lista <Suero>;
                 lista_celulas = new Lista <Celula>;
                 lista_anticuerpos = new Lista <Anticuerpo>;
+                nanobot = new Nanobot(450, 325);
                 lectura(lista_dosis_a, lista_dosis_b, lista_celulas, lista_anticuerpos);
                 armado_red_celular(lista_celulas, 3, 1);
 
@@ -341,6 +342,7 @@ void menu(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos, Li
                 delete lista_dosis_b;
                 delete lista_celulas;
                 delete lista_anticuerpos;
+                delete nanobot;
                 break;
             case 2:
                 salir = false;
