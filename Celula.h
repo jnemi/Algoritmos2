@@ -3,6 +3,12 @@
 #include "Microorganismo.h"
 #include "Lista.h"
 
+struct Adyacente{
+    int indice;
+    int peso;
+};
+
+
 class Celula : public Microorganismo{
    //Atributos
    protected:
@@ -11,7 +17,7 @@ class Celula : public Microorganismo{
      string materialGenetico;
      bool unicelular;
      char tipo;
-     Lista<int> adyacentes;
+     Lista<Adyacente> adyacentes;
 
      bool contacto;
 
@@ -37,6 +43,14 @@ class Celula : public Microorganismo{
      //PRE: Recibe un entero [0, cantidad de adyacentes]
      //POS: Elimina un elemento de la lista adyacentes
      void removerAdyacente(int);
+
+     //PRE: Recibe el peso y un indice de la lista adyacentes [0, cantidad de adyacentes]
+     //POS: Asigna el peso correspondiente
+     void asignarPesoAdyacente(int, int);
+
+     //PRE: Recibe un indice de la lista adyacentes
+     //POS: Devuelve el peso del enlace
+     int obtenerPesoAdyacente(int);
 
      //PRE: Recibir dato valido
      //POS: Asigna valor a cantEnzimas
