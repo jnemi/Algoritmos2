@@ -27,15 +27,19 @@ void Celula::agregarAdyacente(int nueva_ady)
 {
     bool esAdyacente = false;
     for (int ady = 1; ady <= adyacentes.obtener_largo(); ady++){
-        esAdyacente = esAdyacente || (adyacentes.obtener_valor(ady) == nueva_ady);
+        esAdyacente = esAdyacente || (adyacentes.obtener_valor(ady).indice == nueva_ady);
     }
-    if (!esAdyacente)
-        adyacentes.extender(new int(nueva_ady));
+    if (!esAdyacente){
+        Adyacente* adyacente = new Adyacente;
+        adyacente->indice = nueva_ady;
+        adyacente->peso = 0;
+        adyacentes.extender(adyacente);
+    }
 }
 
 int Celula::obtenerAdyacente(int indice)
 {
-    return adyacentes.obtener_valor(indice);
+    return adyacentes.obtener_valor(indice).indice;
 }
 
 int Celula::obtenerCantidadAdyacentes()
@@ -46,6 +50,16 @@ int Celula::obtenerCantidadAdyacentes()
 void Celula::removerAdyacente(int indice)
 {
     adyacentes.borrar(indice);
+}
+
+void Celula::asignarPesoAdyacente(int pesoNuevo, int indiceAdy)
+{
+    adyacentes.obtener_puntero(indiceAdy)->peso = pesoNuevo;
+}
+
+int Celula::obtenerPesoAdyacente(int indiceAdy)
+{
+    return adyacentes.obtener_puntero(indiceAdy)->peso;
 }
 
 //Setters
@@ -149,7 +163,7 @@ void Celula::mostrar(){
   cout<<"****************************"<<endl;
   cout<<">>Adyacentes: "<<endl;
   for (int i = 1; i <= adyacentes.obtener_largo(); i++)
-    cout<<"        Cel: "<<(adyacentes.obtener_valor(i))<<endl;
+    cout<<"        Cel: "<<(adyacentes.obtener_valor(i).indice)<<endl;
   cout << "Cantidad de enzimas: " << obtenerCantEnzimas() << endl;
   cout << "Cantidad de proteinas: " << obtenerCantEnzimas() << endl;
   cout << "Material Gnetico: " << obtenerMaterialGnetico() << endl;
