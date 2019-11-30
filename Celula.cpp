@@ -36,8 +36,22 @@ void Celula::agregarAdyacente(int nueva_ady)
         adyacente->peso = 0;
         adyacentes.extender(adyacente);
 
-        //borrar
-        asignarPesoAdyacente((rand()%20)+1, adyacentes.obtener_largo());
+        //Asigna un peso al azar
+        asignarPesoAdyacente((rand()%10)+1, adyacentes.obtener_largo());
+    }
+}
+
+void Celula::agregarAdyacente(int nueva_ady, int nuevo_peso)
+{
+    bool esAdyacente = false;
+    for (int ady = 1; ady <= adyacentes.obtener_largo(); ady++){
+        esAdyacente = esAdyacente || (adyacentes.obtener_valor(ady).indice == nueva_ady);
+    }
+    if (!esAdyacente){
+        Adyacente* adyacente = new Adyacente;
+        adyacente->indice = nueva_ady;
+        adyacente->peso = nuevo_peso;
+        adyacentes.extender(adyacente);
     }
 }
 
@@ -140,8 +154,9 @@ void Celula::duplicar_celula(Lista<Celula>* lista_celulas, char tipo, int j){
     Celula* nueva = new Celula(x, y);
     lista_celulas->extender(nueva);
 
-    duplicar->agregarAdyacente(lista_celulas->obtener_largo());
-    nueva->agregarAdyacente(j);
+    int peso_nuevo = 1 + rand()%10;
+    duplicar->agregarAdyacente(lista_celulas->obtener_largo(), peso_nuevo);
+    nueva->agregarAdyacente(j, peso_nuevo);
 
     switch(tipo){
         case 's':
