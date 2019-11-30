@@ -112,8 +112,6 @@ void cruzar_celulas(Lista<Celula>* lista, Lista<int>* celulas_conectadas)
         for (int j = 1; j <= largo; j++){
             if (i > j)
                 pesos[i][j] = 1 + rand()%10;
-            else if (j > i)
-                pesos[i][j] = pesos[j][i];
         }
     }
 
@@ -122,7 +120,12 @@ void cruzar_celulas(Lista<Celula>* lista, Lista<int>* celulas_conectadas)
         for (int j = 1; j <= largo; j++)
         {
             if (i != j){
-                lista->obtener_puntero(celulas_conectadas->obtener_valor(i))->agregarAdyacente(celulas_conectadas->obtener_valor(j), pesos[i][j]);
+                int peso;
+                if (i > j)
+                    peso = pesos[i][j];
+                else
+                    peso = pesos[j][i];
+                lista->obtener_puntero(celulas_conectadas->obtener_valor(i))->agregarAdyacente(celulas_conectadas->obtener_valor(j), peso);
 
             }
         }
