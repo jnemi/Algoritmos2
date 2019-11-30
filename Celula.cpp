@@ -1,6 +1,7 @@
 #include "Celula.h"
 #include <cstdlib>
 #include <math.h>
+#include <random>
 
 //Constructor sin parametros
 Celula::Celula() : Microorganismo(){
@@ -34,6 +35,9 @@ void Celula::agregarAdyacente(int nueva_ady)
         adyacente->indice = nueva_ady;
         adyacente->peso = 0;
         adyacentes.extender(adyacente);
+
+        //borrar
+        asignarPesoAdyacente((rand()%20)+1, adyacentes.obtener_largo());
     }
 }
 

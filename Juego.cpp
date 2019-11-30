@@ -60,6 +60,8 @@ void Juego::manejarEventos(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* list
     reloj.tick();
     running = estado_juego(lista_celulas);
 
+    nanobot->actualizar();
+
 	InputManager* inputManager = InputManager::getInstance();
     inputManager->update();
     if(inputManager->quitRequested()) running = false;
@@ -90,7 +92,7 @@ void Juego::manejarEventos(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* list
 
 
     if(inputManager->isKeyDown(KEY_A)){
-        revertir_celula(lista_celulas, lista_dosis_a);
+        revertir_celula(lista_celulas, lista_dosis_a, nanobot);
     }
 
     if(inputManager->isKeyDown(KEY_B)){
@@ -185,6 +187,7 @@ void Juego::manejarEventos(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* list
                         reconectar_red(lista_celulas, j);
                         lista_celulas -> borrar(j);
                         actualizar_adyacentes(lista_celulas, j);
+                        nanobot->recalcular_mapa(j);
                         lista_anticuerpos -> borrar(i);
 
                         /*
