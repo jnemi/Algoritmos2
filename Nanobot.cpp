@@ -16,11 +16,13 @@ Nanobot::Nanobot(int x, int y, Lista<Celula>* lista_celulas){
     ir_a_cercana();
 
     //Borrar
+    /*
     Posta* posta_borrar = new Posta;
-    posta_borrar->camino = 11;
+    posta_borrar->camino = 10;
     posta_borrar->costo = 4;
     ruta.extender(posta_borrar);
-
+    */
+    ir_a(10);
 }
 
 void Nanobot::desplazar(int x, int y, int lentitud)
@@ -36,7 +38,6 @@ void Nanobot::desplazar(int x, int y, int lentitud)
 void Nanobot::actualizar()
 {
     if (!red_mapeada){
-        mapear(indice_celula_cercana);
         //Si ademas, habia elementos en ruta y el destino no era la celula cercana, recalcular trayectoria
         if (ruta.obtener_largo() > 0 && ruta.obtener_puntero(1)->camino != indice_celula_cercana)
             ir_a(ruta.obtener_puntero(1)->camino);
@@ -70,6 +71,8 @@ void Nanobot::actualizar()
 
 void Nanobot::ir_a(int indice_destino)
 {
+    mapear(indice_celula_cercana);
+
     //Limpio la ruta
     while (ruta.obtener_largo() > 0)
         ruta.borrar(1);
@@ -82,6 +85,7 @@ void Nanobot::ir_a(int indice_destino)
     recorrido_inverso->costo = posta_actual->costo - posta_anterior->costo; //Calculamos los costos individuales
 
     ruta.extender(recorrido_inverso);
+    cout<<"Ruta:"<<endl<<recorrido_inverso->camino<<" "<<recorrido_inverso->costo<<endl;
 
     while (posta_anterior->camino > 0){ //Mientras exista otra posta
         recorrido_inverso = new Posta;
@@ -92,29 +96,35 @@ void Nanobot::ir_a(int indice_destino)
         recorrido_inverso->costo = posta_actual->costo - posta_anterior->costo;
 
         ruta.extender(recorrido_inverso);
+        cout<<recorrido_inverso->camino<<" "<<recorrido_inverso->costo<<endl;
     }
 }
 
 void Nanobot::recalcular_mapa(int indice_removido)
 {
+    cout<<"Recalculando mapa"<<endl;
     red_mapeada = false;
     if (indice_removido == indice_celula_cercana){
+        cout<<"Cel cercana removida. Buscando cercana nueva..."<<endl;
         ir_a_cercana(); //Si removieron la celula de la nueva posicion del bot, ir a otra
     }
     else{
         if (indice_removido < indice_celula_cercana){
+            cout<<"Removido < cel_cercana: "<<indice_celula_cercana<<endl;
             indice_celula_cercana--; //Si removieron una celula de indice inferior, ajustar indice_celula_cercana
+            cout<<"Indice cercana ajustado: "<<indice_celula_cercana<<endl;
         }
     }
 
-
-    if (ruta.obtener_largo() > 0 && ruta.obtener_puntero(1)->camino == indice_removido){
+    if (ruta.obtener_largo() > 0){
         Posta* posta_final = ruta.obtener_puntero(1);
         if (posta_final->camino == indice_removido){
         //Si removieron la Celula destino, detener movimiento
+        cout<<"Destino removido... Deteniendo movimiento"<<endl;
         while (ruta.obtener_largo() > 0)
             ruta.borrar(1);
         }else if (posta_final->camino > indice_removido){
+                cout<<"Ajustando indice destino"<<endl;
                 posta_final->camino = posta_final->camino -1;
             }
     }
@@ -185,6 +195,7 @@ void Nanobot::mapear(int indice_inicial)
         mapa.borrar(1);
 
     //Carga las postas en el mapa
+    cout<<"Mapa:"<<endl;
     for (int p = 0; p < cant_celulas; p++){
         Posta* posta = new Posta;
         posta->costo = postas[p].costo;

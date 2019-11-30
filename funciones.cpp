@@ -362,11 +362,11 @@ void menu(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos, Li
                 juego->correr(lista_celulas, lista_anticuerpos, lista_dosis_a, lista_dosis_b, nanobot);
                 juego->limpiar();
 
+                delete nanobot;
                 delete lista_dosis_a;
                 delete lista_dosis_b;
                 delete lista_celulas;
                 delete lista_anticuerpos;
-                delete nanobot;
             }
                 break;
             case 2:{
