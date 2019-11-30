@@ -8,6 +8,9 @@ using namespace std;
 
 const int SCREEN_FPS = 30;
 
+bool apretando1 = false;
+bool apretando2 = false;
+
 bool Juego::iniciar(const char *title, int xpos, int ypos, int flags) {
 
    return entorno.iniciar(title,xpos,ypos,flags);
@@ -71,13 +74,20 @@ void Juego::manejarEventos(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* list
         entorno.explotarDosis(B);
     }
 
-    if(inputManager -> isKeyDown(KEY_1)){
+    if(inputManager -> isKeyDown(KEY_1) && !apretando1){
+        apretando1 = true;
         entorno.inyectar_dosis_a(nanobot, lista_dosis_a);
     }
 
-    if(inputManager -> isKeyDown(KEY_2)){
+    apretando1 = !(inputManager -> isKeyUp(KEY_1));
+
+    if(inputManager -> isKeyDown(KEY_2) && !apretando2){
+        apretando2 = true;
         entorno.inyectar_dosis_b(nanobot, lista_dosis_b);
     }
+
+    apretando2 = !(inputManager -> isKeyUp(KEY_2));
+
 
     if(inputManager->isKeyDown(KEY_A)){
         revertir_celula(lista_celulas, lista_dosis_a);

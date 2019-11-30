@@ -1,4 +1,6 @@
 #include "Celula.h"
+#include <cstdlib>
+#include <math.h>
 
 //Constructor sin parametros
 Celula::Celula() : Microorganismo(){
@@ -23,12 +25,21 @@ void Celula::contagiar(Lista<Celula>*)
 //Agregar Celulas Adyacentes
 void Celula::agregarAdyacente(int nueva_ady)
 {
-    adyacentes.extender(new int(nueva_ady));
+    bool esAdyacente = false;
+    for (int ady = 1; ady <= adyacentes.obtener_largo(); ady++){
+        esAdyacente = esAdyacente || (adyacentes.obtener_valor(ady).indice == nueva_ady);
+    }
+    if (!esAdyacente){
+        Adyacente* adyacente = new Adyacente;
+        adyacente->indice = nueva_ady;
+        adyacente->peso = 0;
+        adyacentes.extender(adyacente);
+    }
 }
 
 int Celula::obtenerAdyacente(int indice)
 {
-    return adyacentes.obtener_valor(indice);
+    return adyacentes.obtener_valor(indice).indice;
 }
 
 int Celula::obtenerCantidadAdyacentes()
@@ -39,6 +50,16 @@ int Celula::obtenerCantidadAdyacentes()
 void Celula::removerAdyacente(int indice)
 {
     adyacentes.borrar(indice);
+}
+
+void Celula::asignarPesoAdyacente(int pesoNuevo, int indiceAdy)
+{
+    adyacentes.obtener_puntero(indiceAdy)->peso = pesoNuevo;
+}
+
+int Celula::obtenerPesoAdyacente(int indiceAdy)
+{
+    return adyacentes.obtener_puntero(indiceAdy)->peso;
 }
 
 //Setters
@@ -108,16 +129,9 @@ void Celula::duplicar_celula(Lista<Celula>* lista_celulas, char tipo, int j){
 
     //Dependiendo la posicion, renderiza la celula nueva
     //en una posicion que se encuentre dentro de la pantalla
-    if((x < 475)){
-                x = x + 100;
-            }else{
-                x = x - 100;
-            }
-            if(y < 275){
-                y = y + 100;
-            }else{
-                y = y - 100;
-            }
+    x = max(30.0, min(x + sqrt(rand()%500001) - 350, 950.0));
+    y = max(30.0, min(y + sqrt(rand()%360001) - 300, 550.0));
+
 
     Celula* nueva = new Celula(x, y);
     lista_celulas->extender(nueva);
@@ -149,7 +163,7 @@ void Celula::mostrar(){
   cout<<"****************************"<<endl;
   cout<<">>Adyacentes: "<<endl;
   for (int i = 1; i <= adyacentes.obtener_largo(); i++)
-    cout<<"        Cel: "<<(adyacentes.obtener_valor(i))<<endl;
+    cout<<"        Cel: "<<(adyacentes.obtener_valor(i).indice)<<endl;
   cout << "Cantidad de enzimas: " << obtenerCantEnzimas() << endl;
   cout << "Cantidad de proteinas: " << obtenerCantEnzimas() << endl;
   cout << "Material Gnetico: " << obtenerMaterialGnetico() << endl;

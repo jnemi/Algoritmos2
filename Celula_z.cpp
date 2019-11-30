@@ -19,12 +19,12 @@ void Celula_z::contagiar(Lista<Celula>* lista_celulas)
 {
  //NUEVA VERSION
     for (int indice = 1; indice <= adyacentes.obtener_largo(); indice++){
-        Celula* cel_objetivo = lista_celulas->obtener_puntero(adyacentes.obtener_valor(indice));
+        Celula* cel_objetivo = lista_celulas->obtener_puntero(adyacentes.obtener_valor(indice).indice);
         if (cel_objetivo->obtener_tipo_celula() == 's'){
         Celula* contagiada = new Celula_x(cel_objetivo->obtenerPosicionX(), cel_objetivo->obtenerPosicionY());
             for (int i = 1; i <= cel_objetivo->obtenerCantidadAdyacentes(); i++)
                 contagiada->agregarAdyacente(cel_objetivo->obtenerAdyacente(i));
-        lista_celulas->reemplazar(adyacentes.obtener_valor(indice), contagiada);
+        lista_celulas->reemplazar(adyacentes.obtener_valor(indice).indice, contagiada);
         }
     }
 }
