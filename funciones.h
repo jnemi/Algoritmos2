@@ -22,9 +22,6 @@ void lectura(Lista<Suero>*, Lista<Suero>*, Lista<Celula>*, Lista<Anticuerpo>*);
 //Procesa los datos del archivo de texto extendiendo las listas de objetos
 void procesar_archivo(ifstream &archivo, string &dato, Lista<Suero>*, Lista <Suero>*, Lista<Celula>*, Lista<Anticuerpo>*);
 
-//Algoritmo para armar los grupos de celulas adyacentes
-void armado_red_celular(Lista<Celula>*, int, int);
-
 //Crea las listas de adyacentes
 void cruzar_celulas(Lista<Celula>* , Lista<int>*);
 
