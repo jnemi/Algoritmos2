@@ -139,7 +139,7 @@ void armado_red_grafica(SDL_Renderer* renderer, Lista<Celula>* lista_celulas){
 
 }
 
-void revertir_celula(Lista<Celula>* lista_celulas, Lista<Suero>* lista_dosis_a){
+void revertir_celula(Lista<Celula>* lista_celulas, Lista<Suero>* lista_dosis_a, Nanobot* nanobot){
     int largo_dosis = lista_dosis_a->obtener_largo();
     int largo_celulas = lista_celulas->obtener_largo();
 
@@ -200,6 +200,7 @@ void revertir_celula(Lista<Celula>* lista_celulas, Lista<Suero>* lista_dosis_a){
                             reconectar_red(lista_celulas, j);
                             lista_celulas->borrar(j);
                             actualizar_adyacentes(lista_celulas, j);
+                            nanobot->recalcular_mapa(j);
                             break;
                     }
                 }
@@ -310,54 +311,6 @@ void infeccion_z(Lista<Celula>* lista_celulas)
     }
 }
 
-void menu(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos, Lista<Suero>* lista_dosis_a, Lista<Suero>* lista_dosis_b, Nanobot* nanobot){
-    int opcion;
-    bool salir = true;
-
-    cout << "Trabajo Practico n°4: Nanotecnologia" << endl;
-    cout << "1- Iniciar Juego." << endl;
-    cout << "2- Salir." << endl;
-
-    do{
-        cout << "Ingrese una opcion: ";
-        cin >> opcion;
-
-        switch(opcion){
-            case 1:
-                juego = new Juego();
-
-                lista_dosis_a = new Lista <Suero>;
-                lista_dosis_b = new Lista <Suero>;
-                lista_celulas = new Lista <Celula>;
-                lista_anticuerpos = new Lista <Anticuerpo>;
-                nanobot = new Nanobot(450, 325);
-                lectura(lista_dosis_a, lista_dosis_b, lista_celulas, lista_anticuerpos);
-                armado_red_celular(lista_celulas, 3, 1);
-
-                juego->iniciar("TP3", 100, 100, 0);
-                juego->correr(lista_celulas, lista_anticuerpos, lista_dosis_a, lista_dosis_b, nanobot);
-                juego->limpiar();
-
-                delete lista_dosis_a;
-                delete lista_dosis_b;
-                delete lista_celulas;
-                delete lista_anticuerpos;
-                delete nanobot;
-                break;
-            case 2:
-                salir = false;
-                cout << endl << endl;
-                system("read -p 'Presione enter para continuar...' var");
-                break;
-            default:
-                cout << "Opcion incorrecta" << endl;
-                system("read -p 'Presione enter para continuar...' var");
-        }
-    }while(salir);
-
-    delete juego;
-}
-
 bool estado_juego(Lista<Celula>* lista_celulas)
 {
     int cant_cel_s = 0;
@@ -377,4 +330,56 @@ bool estado_juego(Lista<Celula>* lista_celulas)
     if (!jugando)
         cout<<endl<<endl<<"PERDISTE. POR CULPA DE TUS LENTAS MANOS EL SUJETO FALLECIO..."<<endl<<"SERAS DENUNCIADO POR MALA PRAXIS Y PROBABLEMENTE CONDENADO A PRISION."<<endl<<endl<<endl;
     return (jugando && !victoria);
+}
+
+
+void menu(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos, Lista<Suero>* lista_dosis_a, Lista<Suero>* lista_dosis_b, Nanobot* nanobot){
+    int opcion;
+    bool salir = true;
+
+    cout << "Trabajo Practico n°4: Nanotecnologia" << endl;
+    cout << "1- Iniciar Juego." << endl;
+    cout << "2- Salir." << endl;
+
+    do{
+        cout << "Ingrese una opcion: ";
+        cin >> opcion;
+
+        switch(opcion){
+            case 1:{
+                juego = new Juego();
+
+                lista_dosis_a = new Lista <Suero>;
+                lista_dosis_b = new Lista <Suero>;
+                lista_celulas = new Lista <Celula>;
+                lista_anticuerpos = new Lista <Anticuerpo>;
+                lectura(lista_dosis_a, lista_dosis_b, lista_celulas, lista_anticuerpos);
+                armado_red_celular(lista_celulas, 3, 1);
+                nanobot = new Nanobot(100, 300, lista_celulas);
+
+
+                juego->iniciar("TP3", 100, 100, 0);
+                juego->correr(lista_celulas, lista_anticuerpos, lista_dosis_a, lista_dosis_b, nanobot);
+                juego->limpiar();
+
+                delete nanobot;
+                delete lista_dosis_a;
+                delete lista_dosis_b;
+                delete lista_celulas;
+                delete lista_anticuerpos;
+            }
+                break;
+            case 2:{
+                salir = false;
+                cout << endl << endl;
+                system("read -p 'Presione enter para continuar...' var");
+            }
+                break;
+            default:
+                cout << "Opcion incorrecta" << endl;
+                system("read -p 'Presione enter para continuar...' var");
+        }
+    }while(salir);
+
+    delete juego;
 }
