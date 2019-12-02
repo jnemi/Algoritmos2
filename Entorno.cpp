@@ -97,6 +97,10 @@ void Entorno::cargarTexturas()
     {
         texturas[i].cargarDesdeArchivo(PATHS[i],renderer);
     }
+    for(int i=0;i<10;i++)
+    {
+    	numeros[i].cargarDesdeArchivo(PATHS_NUMEROS[i],renderer);
+    }
     loaderA->loadSprite(DOSIS_PATH,estadoDosisA,renderer,&texturas[DOSIS_A]);
     loaderB->loadSprite(DOSIS_PATH,estadoDosisB,renderer,&texturas[DOSIS_B]);
 }
@@ -181,6 +185,38 @@ void Entorno::renderizarTodo(Lista<Celula>* lista, Lista<Anticuerpo>* lista_anti
         }
     }
 
+    //Renderizado de pesos
+    int longitud = lista->obtener_largo();
+    int peso, pos_x, pos_y;
+
+    for(int i=1; i<=longitud; i++){
+        Celula* cel_actual = lista->obtener_puntero(i);
+	int cantAdyacentes = cel_actual->obtenerCantidadAdyacentes();
+
+	for (int j=1; j<=cantAdyacentes; j++){
+            Celula* adyacente_actual = lista->obtener_puntero(cel_actual->obtenerAdyacente(j));
+            peso = adyacente_actual->obtenerPesoAdyacente(j);
+
+            pos_x = promedio(cel_actual->obtenerPosicionX(), adyacente_actual->obtenerPosicionX());
+            pos_y = promedio(cel_actual->obtenerPosicionY(), adyacente_actual->obtenerPosicionY());
+
+            //cout << "PESO: " << peso << endl;
+            //cout << "CUANTAS CIFRAS: " << cuantasCifras(peso) << endl;
+
+            if(peso <= 9){
+                //renderizarNumero(peso, pos_x, pos_y-5);
+            }else{
+                int vec[cuantas_cifras(peso)+1];
+                dividir_en_digitos(peso, cuantas_cifras(peso), vec);
+                for(int r=1; r<=cuantas_cifras(peso); r++){
+                    pos_x += 15;
+                    renderizarNumero(vec[r], pos_x, pos_y-5);
+                }
+            }
+        }
+    }
+
+
 	SDL_RenderPresent(renderer); // draw to the screen
 }
 
@@ -188,6 +224,8 @@ void Entorno::limpiar()
 {
     for(int i=0;i<7;i++)
         texturas[i].free();
+    for(int i=0;i<10;i++)
+        numeros[i].free();
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
     SDL_Quit();
@@ -352,4 +390,9 @@ bool Entorno::verificarZ(Microorganismo &anticuerpo, Celula &celula){
     }else{
         return false;
     }
+}
+
+void Entorno::renderizarNumero(int i,float x, float y)
+{
+    numeros[i].render(x,y,NUMERO_WIDTH,NUMERO_HEIGHT,renderer);
 }
