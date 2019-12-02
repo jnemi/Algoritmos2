@@ -312,7 +312,7 @@ void actualizar_adyacentes(Lista<Celula>* lista_celulas, int indice)
             if (adyacente_actual > indice){
                 int peso_actual = cel_actual->obtenerPesoAdyacente(num_ady_actual - offset);
                 cel_actual->removerAdyacente(num_ady_actual - offset);
-                cel_actual->agregarAdyacente(adyacente_actual - 1, peso_actual);
+                cel_actual->agregarAdyacente(adyacente_actual - 1, peso_actual, false);
                 offset++;
             }
         }
