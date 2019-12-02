@@ -43,7 +43,6 @@ void procesar_archivo(ifstream &archivo, string &dato, Lista<Suero> *lista_dosis
    int aux4;
    if(dato == "celula"){
       //Se crea objeto Celula
-      archivo >> dato; //SALTEO EL IDENTIFICADOR NUMERICO
       archivo >> dato;
       archivo >> aux1;
       archivo >> aux2;
@@ -79,55 +78,40 @@ void procesar_archivo(ifstream &archivo, string &dato, Lista<Suero> *lista_dosis
                         }
                     }
                 }
-         }else{
-            if (dato == "filamento"){
-                int indice_cel1;
-                int indice_cel2;
-                int peso;
-                archivo >> indice_cel1;
-                archivo >> indice_cel2;
-                archivo >> peso;
-
-                //Conectando Celula A con Celula B
-                Celula* cel_aux = lista_celulas->obtener_puntero(indice_cel1);
-                cel_aux->agregarAdyacente(indice_cel2);
-                cel_aux->asignarPesoAdyacente(peso, cel_aux->obtenerCantidadAdyacentes());
-                //Conectando Celula B con Celula A
-                cel_aux = lista_celulas->obtener_puntero(indice_cel2);
-                cel_aux->agregarAdyacente(indice_cel1);
-                cel_aux->asignarPesoAdyacente(peso, cel_aux->obtenerCantidadAdyacentes());
-            }
          }
        }
      }
 }
 
+void armado_red_celular(Lista<Celula>* lista, int elementosXGrupo, int interseccion){
+    int cantGrupos = ((lista->obtener_largo() - 1) / (elementosXGrupo - interseccion)) + 1;
+
+    for (int a = 1; a <= cantGrupos; a++)
+    {
+        Lista<int> grupo;
+
+        int principioGrupo = 1 + (a - 1)*(elementosXGrupo - interseccion);
+
+        for (int k = 1; k <= elementosXGrupo; k++)
+        {
+            int indice_actual = principioGrupo + k - 1;
+            if (indice_actual <= lista->obtener_largo())
+                grupo.extender(new int(indice_actual));
+        }
+
+        cruzar_celulas(lista, &grupo);
+    }
+}
+
 void cruzar_celulas(Lista<Celula>* lista, Lista<int>* celulas_conectadas)
 {
     int largo = celulas_conectadas->obtener_largo();
-
-    //Creo matriz de pesos
-    int pesos[largo][largo];
-    for (int i = 0; i < largo; i++){
-        for (int j = 0; j < largo; j++){
-            if (i > j)
-                pesos[i][j] = 1 + rand()%10;
-        }
-    }
-
     for (int i = 1; i <= largo; i++)
     {
         for (int j = 1; j <= largo; j++)
         {
-            if (i != j){
-                int peso;
-                if (i > j)
-                    peso = pesos[i-1][j-1];
-                else
-                    peso = pesos[j-1][i-1];
-                lista->obtener_puntero(celulas_conectadas->obtener_valor(i))->agregarAdyacente(celulas_conectadas->obtener_valor(j), peso);
-
-            }
+            if (i != j)
+                lista->obtener_puntero(celulas_conectadas->obtener_valor(i))->agregarAdyacente(celulas_conectadas->obtener_valor(j));
         }
     }
 }
@@ -155,7 +139,7 @@ void armado_red_grafica(SDL_Renderer* renderer, Lista<Celula>* lista_celulas){
 
 }
 
-void revertir_celula(Lista<Celula>* lista_celulas, Lista<Suero>* lista_dosis_a, Nanobot* nanobot){
+void revertir_celula(Lista<Celula>* lista_celulas, Lista<Suero>* lista_dosis_a){
     int largo_dosis = lista_dosis_a->obtener_largo();
     int largo_celulas = lista_celulas->obtener_largo();
 
@@ -216,7 +200,6 @@ void revertir_celula(Lista<Celula>* lista_celulas, Lista<Suero>* lista_dosis_a, 
                             reconectar_red(lista_celulas, j);
                             lista_celulas->borrar(j);
                             actualizar_adyacentes(lista_celulas, j);
-                            nanobot->recalcular_mapa(j);
                             break;
                     }
                 }
@@ -310,9 +293,8 @@ void actualizar_adyacentes(Lista<Celula>* lista_celulas, int indice)
                 offset++;
             }
             if (adyacente_actual > indice){
-                int peso_actual = cel_actual->obtenerPesoAdyacente(num_ady_actual - offset);
                 cel_actual->removerAdyacente(num_ady_actual - offset);
-                cel_actual->agregarAdyacente(adyacente_actual - 1, peso_actual);
+                cel_actual->agregarAdyacente(adyacente_actual - 1);
                 offset++;
             }
         }
@@ -326,6 +308,52 @@ void infeccion_z(Lista<Celula>* lista_celulas)
         Celula* cel_actual = lista_celulas->obtener_puntero(indice);
         cel_actual->contagiar(lista_celulas);
     }
+}
+
+void menu(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos, Lista<Suero>* lista_dosis_a, Lista<Suero>* lista_dosis_b, Nanobot* nanobot){
+    int opcion;
+    bool salir = true;
+
+    cout << "Trabajo Practico n°3: Nanobot" << endl;
+    cout << "1- Iniciar Juego." << endl;
+    cout << "2- Salir." << endl;
+
+    do{
+        cout << "Ingrese una opcion: ";
+        cin >> opcion;
+
+        switch(opcion){
+            case 1:
+                juego = new Juego();
+
+                lista_dosis_a = new Lista <Suero>;
+                lista_dosis_b = new Lista <Suero>;
+                lista_celulas = new Lista <Celula>;
+                lista_anticuerpos = new Lista <Anticuerpo>;
+                lectura(lista_dosis_a, lista_dosis_b, lista_celulas, lista_anticuerpos);
+                armado_red_celular(lista_celulas, 3, 1);
+
+                juego->iniciar("TP3", 100, 100, 0);
+                juego->correr(lista_celulas, lista_anticuerpos, lista_dosis_a, lista_dosis_b, nanobot);
+                juego->limpiar();
+
+                delete lista_dosis_a;
+                delete lista_dosis_b;
+                delete lista_celulas;
+                delete lista_anticuerpos;
+                break;
+            case 2:
+                salir = false;
+                cout << endl << endl;
+                system("read -p 'Presione enter para continuar...' var");
+                break;
+            default:
+                cout << "Opcion incorrecta" << endl;
+                system("read -p 'Presione enter para continuar...' var");
+        }
+    }while(salir);
+
+    delete juego;
 }
 
 bool estado_juego(Lista<Celula>* lista_celulas)
@@ -347,55 +375,4 @@ bool estado_juego(Lista<Celula>* lista_celulas)
     if (!jugando)
         cout<<endl<<endl<<"PERDISTE. POR CULPA DE TUS LENTAS MANOS EL SUJETO FALLECIO..."<<endl<<"SERAS DENUNCIADO POR MALA PRAXIS Y PROBABLEMENTE CONDENADO A PRISION."<<endl<<endl<<endl;
     return (jugando && !victoria);
-}
-
-
-void menu(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos, Lista<Suero>* lista_dosis_a, Lista<Suero>* lista_dosis_b, Nanobot* nanobot){
-    int opcion;
-    bool salir = true;
-
-    cout << "Trabajo Practico n°4: Nanotecnologia" << endl;
-    cout << "1- Iniciar Juego." << endl;
-    cout << "2- Salir." << endl;
-
-    do{
-        cout << "Ingrese una opcion: ";
-        cin >> opcion;
-
-        switch(opcion){
-            case 1:{
-                juego = new Juego();
-
-                lista_dosis_a = new Lista <Suero>;
-                lista_dosis_b = new Lista <Suero>;
-                lista_celulas = new Lista <Celula>;
-                lista_anticuerpos = new Lista <Anticuerpo>;
-                lectura(lista_dosis_a, lista_dosis_b, lista_celulas, lista_anticuerpos);
-                //armado_red_celular(lista_celulas, 3, 1);
-                nanobot = new Nanobot(100, 300, lista_celulas);
-
-                juego->iniciar("TP3", 100, 100, 0);
-                juego->correr(lista_celulas, lista_anticuerpos, lista_dosis_a, lista_dosis_b, nanobot);
-                juego->limpiar();
-
-                delete nanobot;
-                delete lista_dosis_a;
-                delete lista_dosis_b;
-                delete lista_celulas;
-                delete lista_anticuerpos;
-            }
-                break;
-            case 2:{
-                salir = false;
-                cout << endl << endl;
-                system("read -p 'Presione enter para continuar...' var");
-            }
-                break;
-            default:
-                cout << "Opcion incorrecta" << endl;
-                system("read -p 'Presione enter para continuar...' var");
-        }
-    }while(salir);
-
-    delete juego;
 }
