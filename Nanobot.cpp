@@ -67,36 +67,47 @@ void Nanobot::actualizar()
             posicion.y = posicion.y + round(velocidad * desplazamiento.y/norma);
         }
     }
+    else if (ruta.obtener_largo() > 0){
+        Posta* siguiente = ruta.obtener_puntero(ruta.obtener_largo()); //Elijo la ultima Posta agregada
+        indice_celula_cercana = siguiente->camino;
+        Celula* cel_siguiente = lista_celulas->obtener_puntero(indice_celula_cercana);
+
+        desplazar(cel_siguiente->obtenerPosicionX(), cel_siguiente->obtenerPosicionY(), siguiente->costo);
+        ruta.borrar(ruta.obtener_largo());
+    }
 }
 
 void Nanobot::ir_a(int indice_destino)
 {
-    mapear(indice_celula_cercana);
+    if (indice_destino != indice_celula_cercana){
 
-    //Limpio la ruta
-    while (ruta.obtener_largo() > 0)
-        ruta.borrar(1);
+        mapear(indice_celula_cercana);
 
-    Posta* recorrido_inverso = new Posta; //Posta para extender la Lista ruta. No borrar
-    Posta* posta_actual = mapa.obtener_puntero(indice_destino);         //Referencia a una Posta del Mapa...
-    Posta* posta_anterior = mapa.obtener_puntero(posta_actual->camino); //...No alterar
+        //Limpio la ruta
+        while (ruta.obtener_largo() > 0)
+            ruta.borrar(1);
 
-    recorrido_inverso->camino = indice_destino;
-    recorrido_inverso->costo = posta_actual->costo - posta_anterior->costo; //Calculamos los costos individuales
+        Posta* recorrido_inverso = new Posta; //Posta para extender la Lista ruta. No borrar
+        Posta* posta_actual = mapa.obtener_puntero(indice_destino);         //Referencia a una Posta del Mapa...
+        Posta* posta_anterior = mapa.obtener_puntero(posta_actual->camino); //...No alterar
 
-    ruta.extender(recorrido_inverso);
-    cout<<"Ruta:"<<endl<<recorrido_inverso->camino<<" "<<recorrido_inverso->costo<<endl;
-
-    while (posta_anterior->camino > 0){ //Mientras exista otra posta
-        recorrido_inverso = new Posta;
-        recorrido_inverso->camino = posta_actual->camino;
-        posta_actual = posta_anterior;
-        posta_anterior = mapa.obtener_puntero(posta_actual->camino);
-
-        recorrido_inverso->costo = posta_actual->costo - posta_anterior->costo;
+        recorrido_inverso->camino = indice_destino;
+        recorrido_inverso->costo = posta_actual->costo - posta_anterior->costo; //Calculamos los costos individuales
 
         ruta.extender(recorrido_inverso);
-        cout<<recorrido_inverso->camino<<" "<<recorrido_inverso->costo<<endl;
+        cout<<"Ruta:"<<endl<<recorrido_inverso->camino<<" "<<recorrido_inverso->costo<<endl;
+
+        while (posta_anterior->camino > 0){ //Mientras exista otra posta
+            recorrido_inverso = new Posta;
+            recorrido_inverso->camino = posta_actual->camino;
+            posta_actual = posta_anterior;
+            posta_anterior = mapa.obtener_puntero(posta_actual->camino);
+
+            recorrido_inverso->costo = posta_actual->costo - posta_anterior->costo;
+
+            ruta.extender(recorrido_inverso);
+            cout<<recorrido_inverso->camino<<" "<<recorrido_inverso->costo<<endl;
+        }
     }
 }
 
@@ -151,6 +162,16 @@ void Nanobot::ir_a_cercana()
 
 void Nanobot::mapear(int indice_inicial)
 {
+    if (indice_celula_cercana > lista_celulas->obtener_largo() || indice_celula_cercana <= 0)
+        ir_a_cercana();
+
+    //DEBUG
+    for (int i = 1; i <= lista_celulas->obtener_largo(); i++){
+        cout<<"Cel: "<<i<<" ";
+        lista_celulas->obtener_puntero(i)->mostrar();
+    }
+    //FIN DEBUG
+
     int cant_celulas = lista_celulas->obtener_largo();
 
     //Creo un vector de Postas con mismo largo que lista_celulas

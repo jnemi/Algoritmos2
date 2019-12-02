@@ -43,9 +43,16 @@ void Celula::agregarAdyacente(int nueva_ady)
 
 void Celula::agregarAdyacente(int nueva_ady, int nuevo_peso)
 {
+    agregarAdyacente(nueva_ady, nuevo_peso, true);
+}
+
+void Celula::agregarAdyacente(int nueva_ady, int nuevo_peso, bool evitarDuplicados)
+{
     bool esAdyacente = false;
-    for (int ady = 1; ady <= adyacentes.obtener_largo(); ady++){
-        esAdyacente = esAdyacente || (adyacentes.obtener_valor(ady).indice == nueva_ady);
+    if (evitarDuplicados){
+        for (int ady = 1; ady <= adyacentes.obtener_largo(); ady++){
+            esAdyacente = esAdyacente || (adyacentes.obtener_valor(ady).indice == nueva_ady);
+        }
     }
     if (!esAdyacente){
         Adyacente* adyacente = new Adyacente;
@@ -177,18 +184,18 @@ void Celula::duplicar_celula(Lista<Celula>* lista_celulas, char tipo, int j){
 //Mostrar
 void Celula::mostrar(){
   Microorganismo::mostrar();
-  cout<<"****************************"<<endl;
-  cout<<"Direccion: "<<this<<endl;
-  cout<<"****************************"<<endl;
+  //cout<<"****************************"<<endl;
+  //cout<<"Direccion: "<<this<<endl;
+  //cout<<"****************************"<<endl;
   cout<<">>Adyacentes: "<<endl;
   for (int i = 1; i <= adyacentes.obtener_largo(); i++)
-    cout<<"        Cel: "<<(adyacentes.obtener_valor(i).indice)<<endl;
-  cout << "Cantidad de enzimas: " << obtenerCantEnzimas() << endl;
-  cout << "Cantidad de proteinas: " << obtenerCantEnzimas() << endl;
-  cout << "Material Gnetico: " << obtenerMaterialGnetico() << endl;
-  if(obtenerUnicelular())
-    cout << "Tipo de organismo: Unicelular" << endl;
-  else
-    cout << "Tipo de organismo: Pluricelular" << endl;
+    cout<<"        Cel: "<<(adyacentes.obtener_valor(i).indice)<<" "<<(adyacentes.obtener_valor(i).peso)<<endl;
+  //cout << "Cantidad de enzimas: " << obtenerCantEnzimas() << endl;
+  //cout << "Cantidad de proteinas: " << obtenerCantEnzimas() << endl;
+  //cout << "Material Gnetico: " << obtenerMaterialGnetico() << endl;
+  //if(obtenerUnicelular())
+    //cout << "Tipo de organismo: Unicelular" << endl;
+  //else
+    //cout << "Tipo de organismo: Pluricelular" << endl;
   cout<<"_______________________________________________________________"<<endl;
 }
