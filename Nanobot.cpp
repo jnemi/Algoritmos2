@@ -162,6 +162,16 @@ void Nanobot::ir_a_cercana()
 
 void Nanobot::mapear(int indice_inicial)
 {
+    if (indice_celula_cercana > lista_celulas->obtener_largo() || indice_celula_cercana <= 0)
+        ir_a_cercana();
+
+    //DEBUG
+    for (int i = 1; i <= lista_celulas->obtener_largo(); i++){
+        cout<<"Cel: "<<i<<" ";
+        lista_celulas->obtener_puntero(i)->mostrar();
+    }
+    //FIN DEBUG
+
     int cant_celulas = lista_celulas->obtener_largo();
 
     //Creo un vector de Postas con mismo largo que lista_celulas

@@ -185,7 +185,7 @@ void revertir_celula(Lista<Celula>* lista_celulas, Lista<Suero>* lista_dosis_a, 
                             Celula* revertida = new Celula_y(cel_objetivo->obtenerPosicionX(), cel_objetivo->obtenerPosicionY());
 
                             for (int i = 1; i <= cel_objetivo->obtenerCantidadAdyacentes(); i++)
-                                revertida->agregarAdyacente(cel_objetivo->obtenerAdyacente(i));
+                                revertida->agregarAdyacente(cel_objetivo->obtenerAdyacente(i), cel_objetivo->obtenerPesoAdyacente(i));
 
                             lista_celulas->reemplazar(j, revertida);
                             }
@@ -196,7 +196,7 @@ void revertir_celula(Lista<Celula>* lista_celulas, Lista<Suero>* lista_dosis_a, 
                             Celula* revertida = new Celula_x(cel_objetivo->obtenerPosicionX(), cel_objetivo->obtenerPosicionY());
 
                             for (int i = 1; i <= cel_objetivo->obtenerCantidadAdyacentes(); i++)
-                                revertida->agregarAdyacente(cel_objetivo->obtenerAdyacente(i));
+                                revertida->agregarAdyacente(cel_objetivo->obtenerAdyacente(i), cel_objetivo->obtenerPesoAdyacente(i));
 
                             lista_celulas->reemplazar(j, revertida);
                             }
@@ -207,7 +207,7 @@ void revertir_celula(Lista<Celula>* lista_celulas, Lista<Suero>* lista_dosis_a, 
                             Celula* revertida = new Celula_s(cel_objetivo->obtenerPosicionX(), cel_objetivo->obtenerPosicionY());
 
                             for (int i = 1; i <= cel_objetivo->obtenerCantidadAdyacentes(); i++)
-                                revertida->agregarAdyacente(cel_objetivo->obtenerAdyacente(i));
+                                revertida->agregarAdyacente(cel_objetivo->obtenerAdyacente(i), cel_objetivo->obtenerPesoAdyacente(i));
 
                             lista_celulas->reemplazar(j, revertida);
                             }
@@ -257,7 +257,7 @@ void evolucionar_celula(Lista<Celula>* lista_celulas, Lista<Suero>* lista_dosis_
                             Celula* revertida = new Celula_z(cel_objetivo->obtenerPosicionX(), cel_objetivo->obtenerPosicionY());
 
                             for (int i = 1; i <= cel_objetivo->obtenerCantidadAdyacentes(); i++)
-                                revertida->agregarAdyacente(cel_objetivo->obtenerAdyacente(i));
+                                revertida->agregarAdyacente(cel_objetivo->obtenerAdyacente(i), cel_objetivo->obtenerPesoAdyacente(i));
 
                             lista_celulas->reemplazar(j, revertida);
                             }
@@ -268,7 +268,7 @@ void evolucionar_celula(Lista<Celula>* lista_celulas, Lista<Suero>* lista_dosis_
                             Celula* revertida = new Celula_y(cel_objetivo->obtenerPosicionX(), cel_objetivo->obtenerPosicionY());
 
                             for (int i = 1; i <= cel_objetivo->obtenerCantidadAdyacentes(); i++)
-                                revertida->agregarAdyacente(cel_objetivo->obtenerAdyacente(i));
+                                revertida->agregarAdyacente(cel_objetivo->obtenerAdyacente(i), cel_objetivo->obtenerPesoAdyacente(i));
 
                             lista_celulas->reemplazar(j, revertida);
                             }
