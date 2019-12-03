@@ -374,7 +374,7 @@ void menu(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos, Li
                 //armado_red_celular(lista_celulas, 3, 1);
                 nanobot = new Nanobot(100, 300, lista_celulas);
 
-                juego->iniciar("TP3", 100, 100, 0);
+                juego->iniciar("TP4", 100, 100, 0);
                 juego->correr(lista_celulas, lista_anticuerpos, lista_dosis_a, lista_dosis_b, nanobot);
                 juego->limpiar();
 
@@ -398,4 +398,59 @@ void menu(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos, Li
     }while(salir);
 
     delete juego;
+}
+
+int cuantas_cifras(int numero){
+    int divisor = 10;
+    int resto = 0;
+    int cifras_aux = 0;
+
+    while (resto != numero){
+        resto = numero % divisor;
+        divisor = divisor * 10;
+        cifras_aux++;
+    }
+
+    return cifras_aux;
+}
+
+void dividir_en_digitos(int numero, int cifras, int vec[]){
+    cifras -= 1;
+    int divisor = 10;
+    int resto = 0;
+    int digito = 0;
+    int cifras_aux = cifras;
+    int i = 1; //indice
+
+    cout << "NUMERO: " << numero << endl;
+
+    //Se eleva el divisor de forma que tenga el mismo número de cifras que el número inicial
+    divisor = pow(divisor, (cifras_aux));
+
+    while (cifras_aux >= 0){
+        //El cociente son Digitos de izquiera a derecha
+        digito = numero / divisor;
+
+        //El resto se convierte en el numero
+        resto = numero % divisor;
+        numero = resto;
+
+        //El divisor disminuye
+        divisor = divisor / 10;
+
+        //se agrega el digito al vector
+        vec[i] = digito;
+        i++;
+        cifras_aux--;
+    }
+    cout << "VECTOR: ";
+    for(int h=1; h<=cifras+1; h++)
+        cout << vec[h];
+    cout << endl;
+}
+
+
+int promedio(int x, int y){
+    int promedio = (x+y)/2;
+    return promedio;
 }

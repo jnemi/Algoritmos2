@@ -23,6 +23,7 @@ class Entorno
     ImageLoader* loaderB;
     Textura texturas[9];
     int estadoDosisA,estadoDosisB;
+    Textura numeros[10];
 
     public:
         Entorno();
@@ -35,6 +36,7 @@ class Entorno
         void explotarDosis(dosis dosis);
         bool dosisAExplotando();
         bool dosisBExplotando();
+        void renderizarNumero(int i,float x, float y);
         //PRE: -
         //POS: Renderiza una dosis A en la posicion del nanobot
         void inyectar_dosis_a(Nanobot*, Lista <Suero>* lista_dosis_a);
