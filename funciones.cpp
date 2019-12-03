@@ -43,6 +43,7 @@ void procesar_archivo(ifstream &archivo, string &dato, Lista<Suero> *lista_dosis
    int aux4;
    if(dato == "celula"){
       //Se crea objeto Celula
+      archivo >> dato; //SALTEO EL IDENTIFICADOR NUMERICO
       archivo >> dato;
       archivo >> aux1;
       archivo >> aux2;
@@ -78,40 +79,55 @@ void procesar_archivo(ifstream &archivo, string &dato, Lista<Suero> *lista_dosis
                         }
                     }
                 }
+         }else{
+            if (dato == "filamento"){
+                int indice_cel1;
+                int indice_cel2;
+                int peso;
+                archivo >> indice_cel1;
+                archivo >> indice_cel2;
+                archivo >> peso;
+
+                //Conectando Celula A con Celula B
+                Celula* cel_aux = lista_celulas->obtener_puntero(indice_cel1);
+                cel_aux->agregarAdyacente(indice_cel2);
+                cel_aux->asignarPesoAdyacente(peso, cel_aux->obtenerCantidadAdyacentes());
+                //Conectando Celula B con Celula A
+                cel_aux = lista_celulas->obtener_puntero(indice_cel2);
+                cel_aux->agregarAdyacente(indice_cel1);
+                cel_aux->asignarPesoAdyacente(peso, cel_aux->obtenerCantidadAdyacentes());
+            }
          }
        }
      }
 }
 
-void armado_red_celular(Lista<Celula>* lista, int elementosXGrupo, int interseccion){
-    int cantGrupos = ((lista->obtener_largo() - 1) / (elementosXGrupo - interseccion)) + 1;
-
-    for (int a = 1; a <= cantGrupos; a++)
-    {
-        Lista<int> grupo;
-
-        int principioGrupo = 1 + (a - 1)*(elementosXGrupo - interseccion);
-
-        for (int k = 1; k <= elementosXGrupo; k++)
-        {
-            int indice_actual = principioGrupo + k - 1;
-            if (indice_actual <= lista->obtener_largo())
-                grupo.extender(new int(indice_actual));
-        }
-
-        cruzar_celulas(lista, &grupo);
-    }
-}
-
 void cruzar_celulas(Lista<Celula>* lista, Lista<int>* celulas_conectadas)
 {
     int largo = celulas_conectadas->obtener_largo();
+
+    //Creo matriz de pesos
+    int pesos[largo][largo];
+    for (int i = 0; i < largo; i++){
+        for (int j = 0; j < largo; j++){
+            if (i > j)
+                pesos[i][j] = 1 + rand()%10;
+        }
+    }
+
     for (int i = 1; i <= largo; i++)
     {
         for (int j = 1; j <= largo; j++)
         {
-            if (i != j)
-                lista->obtener_puntero(celulas_conectadas->obtener_valor(i))->agregarAdyacente(celulas_conectadas->obtener_valor(j));
+            if (i != j){
+                int peso;
+                if (i > j)
+                    peso = pesos[i-1][j-1];
+                else
+                    peso = pesos[j-1][i-1];
+                lista->obtener_puntero(celulas_conectadas->obtener_valor(i))->agregarAdyacente(celulas_conectadas->obtener_valor(j), peso);
+
+            }
         }
     }
 }
@@ -169,7 +185,7 @@ void revertir_celula(Lista<Celula>* lista_celulas, Lista<Suero>* lista_dosis_a, 
                             Celula* revertida = new Celula_y(cel_objetivo->obtenerPosicionX(), cel_objetivo->obtenerPosicionY());
 
                             for (int i = 1; i <= cel_objetivo->obtenerCantidadAdyacentes(); i++)
-                                revertida->agregarAdyacente(cel_objetivo->obtenerAdyacente(i));
+                                revertida->agregarAdyacente(cel_objetivo->obtenerAdyacente(i), cel_objetivo->obtenerPesoAdyacente(i));
 
                             lista_celulas->reemplazar(j, revertida);
                             }
@@ -180,7 +196,7 @@ void revertir_celula(Lista<Celula>* lista_celulas, Lista<Suero>* lista_dosis_a, 
                             Celula* revertida = new Celula_x(cel_objetivo->obtenerPosicionX(), cel_objetivo->obtenerPosicionY());
 
                             for (int i = 1; i <= cel_objetivo->obtenerCantidadAdyacentes(); i++)
-                                revertida->agregarAdyacente(cel_objetivo->obtenerAdyacente(i));
+                                revertida->agregarAdyacente(cel_objetivo->obtenerAdyacente(i), cel_objetivo->obtenerPesoAdyacente(i));
 
                             lista_celulas->reemplazar(j, revertida);
                             }
@@ -191,7 +207,7 @@ void revertir_celula(Lista<Celula>* lista_celulas, Lista<Suero>* lista_dosis_a, 
                             Celula* revertida = new Celula_s(cel_objetivo->obtenerPosicionX(), cel_objetivo->obtenerPosicionY());
 
                             for (int i = 1; i <= cel_objetivo->obtenerCantidadAdyacentes(); i++)
-                                revertida->agregarAdyacente(cel_objetivo->obtenerAdyacente(i));
+                                revertida->agregarAdyacente(cel_objetivo->obtenerAdyacente(i), cel_objetivo->obtenerPesoAdyacente(i));
 
                             lista_celulas->reemplazar(j, revertida);
                             }
@@ -241,7 +257,7 @@ void evolucionar_celula(Lista<Celula>* lista_celulas, Lista<Suero>* lista_dosis_
                             Celula* revertida = new Celula_z(cel_objetivo->obtenerPosicionX(), cel_objetivo->obtenerPosicionY());
 
                             for (int i = 1; i <= cel_objetivo->obtenerCantidadAdyacentes(); i++)
-                                revertida->agregarAdyacente(cel_objetivo->obtenerAdyacente(i));
+                                revertida->agregarAdyacente(cel_objetivo->obtenerAdyacente(i), cel_objetivo->obtenerPesoAdyacente(i));
 
                             lista_celulas->reemplazar(j, revertida);
                             }
@@ -252,7 +268,7 @@ void evolucionar_celula(Lista<Celula>* lista_celulas, Lista<Suero>* lista_dosis_
                             Celula* revertida = new Celula_y(cel_objetivo->obtenerPosicionX(), cel_objetivo->obtenerPosicionY());
 
                             for (int i = 1; i <= cel_objetivo->obtenerCantidadAdyacentes(); i++)
-                                revertida->agregarAdyacente(cel_objetivo->obtenerAdyacente(i));
+                                revertida->agregarAdyacente(cel_objetivo->obtenerAdyacente(i), cel_objetivo->obtenerPesoAdyacente(i));
 
                             lista_celulas->reemplazar(j, revertida);
                             }
@@ -294,8 +310,9 @@ void actualizar_adyacentes(Lista<Celula>* lista_celulas, int indice)
                 offset++;
             }
             if (adyacente_actual > indice){
+                int peso_actual = cel_actual->obtenerPesoAdyacente(num_ady_actual - offset);
                 cel_actual->removerAdyacente(num_ady_actual - offset);
-                cel_actual->agregarAdyacente(adyacente_actual - 1);
+                cel_actual->agregarAdyacente(adyacente_actual - 1, peso_actual, false);
                 offset++;
             }
         }
@@ -354,11 +371,10 @@ void menu(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos, Li
                 lista_celulas = new Lista <Celula>;
                 lista_anticuerpos = new Lista <Anticuerpo>;
                 lectura(lista_dosis_a, lista_dosis_b, lista_celulas, lista_anticuerpos);
-                armado_red_celular(lista_celulas, 3, 1);
-                nanobot = new Nanobot(100, 300, lista_celulas);
+                //armado_red_celular(lista_celulas, 3, 1);
+                nanobot = new Nanobot(400, 300, lista_celulas);
 
-
-                juego->iniciar("TP3", 100, 100, 0);
+                juego->iniciar("TP4", 100, 100, 0);
                 juego->correr(lista_celulas, lista_anticuerpos, lista_dosis_a, lista_dosis_b, nanobot);
                 juego->limpiar();
 
@@ -382,4 +398,59 @@ void menu(Lista<Celula>* lista_celulas, Lista<Anticuerpo>* lista_anticuerpos, Li
     }while(salir);
 
     delete juego;
+}
+
+int cuantas_cifras(int numero){
+    int divisor = 10;
+    int resto = 0;
+    int cifras_aux = 0;
+
+    while (resto != numero){
+        resto = numero % divisor;
+        divisor = divisor * 10;
+        cifras_aux++;
+    }
+
+    return cifras_aux;
+}
+
+void dividir_en_digitos(int numero, int cifras, int vec[]){
+    cifras -= 1;
+    int divisor = 10;
+    int resto = 0;
+    int digito = 0;
+    int cifras_aux = cifras;
+    int i = 1; //indice
+
+    cout << "NUMERO: " << numero << endl;
+
+    //Se eleva el divisor de forma que tenga el mismo número de cifras que el número inicial
+    divisor = pow(divisor, (cifras_aux));
+
+    while (cifras_aux >= 0){
+        //El cociente son Digitos de izquiera a derecha
+        digito = numero / divisor;
+
+        //El resto se convierte en el numero
+        resto = numero % divisor;
+        numero = resto;
+
+        //El divisor disminuye
+        divisor = divisor / 10;
+
+        //se agrega el digito al vector
+        vec[i] = digito;
+        i++;
+        cifras_aux--;
+    }
+    cout << "VECTOR: ";
+    for(int h=1; h<=cifras+1; h++)
+        cout << vec[h];
+    cout << endl;
+}
+
+
+int promedio(int x, int y){
+    int promedio = (x+y)/2;
+    return promedio;
 }
