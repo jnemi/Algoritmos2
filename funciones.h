@@ -22,9 +22,6 @@ void lectura(Lista<Suero>*, Lista<Suero>*, Lista<Celula>*, Lista<Anticuerpo>*);
 //Procesa los datos del archivo de texto extendiendo las listas de objetos
 void procesar_archivo(ifstream &archivo, string &dato, Lista<Suero>*, Lista <Suero>*, Lista<Celula>*, Lista<Anticuerpo>*);
 
-//Algoritmo para armar los grupos de celulas adyacentes
-void armado_red_celular(Lista<Celula>*, int, int);
-
 //Crea las listas de adyacentes
 void cruzar_celulas(Lista<Celula>* , Lista<int>*);
 
@@ -52,6 +49,13 @@ void menu(Lista<Celula>*, Lista<Anticuerpo>*, Lista<Suero>*, Lista<Suero>*, Nano
 //Se encarga de revisar si el jugador gana o pierde
 bool estado_juego(Lista<Celula>*);
 
+//devulve la cantidad de cifras de un numero
+int cuantas_cifras(int);
 
+//divide un numero en digitos y los coloca en un vector. Recibe el numero, la cantidad de digitos y un vector donde alojarlos
+void dividir_en_digitos(int, int, int vec[]);
+
+//devuelve el promedio entre dos enteros
+int promedio(int, int);
 
 #endif // FUNCIONES_H_INCLUDED
