@@ -32,6 +32,14 @@ class Celula : public Microorganismo{
      //POS: Agrega una celula a la lista de adyacentes
      void agregarAdyacente(int);
 
+     //PRE: Recibe un indice de celula y su peso
+     //POS: Crea el enlace
+     void agregarAdyacente(int, int);
+
+     //PRE: Recibe un indice de celula, su peso, y si se quiere evitar duplicados o no
+     //POS: Crea el enlace
+     void agregarAdyacente(int, int, bool);
+
      //PRE: Recibe un entero [0, cantidad de adyacentes]
      //POS: Devuelve el indice (de la lista de celulas) de una celula adyacente
      int obtenerAdyacente(int);

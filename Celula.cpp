@@ -36,8 +36,29 @@ void Celula::agregarAdyacente(int nueva_ady)
         adyacente->peso = 0;
         adyacentes.extender(adyacente);
 
-        //borrar
-        asignarPesoAdyacente((rand()%20)+1, adyacentes.obtener_largo());
+        //Asigna un peso al azar
+        asignarPesoAdyacente((rand()%10)+1, adyacentes.obtener_largo());
+    }
+}
+
+void Celula::agregarAdyacente(int nueva_ady, int nuevo_peso)
+{
+    agregarAdyacente(nueva_ady, nuevo_peso, true);
+}
+
+void Celula::agregarAdyacente(int nueva_ady, int nuevo_peso, bool evitarDuplicados)
+{
+    bool esAdyacente = false;
+    if (evitarDuplicados){
+        for (int ady = 1; ady <= adyacentes.obtener_largo(); ady++){
+            esAdyacente = esAdyacente || (adyacentes.obtener_valor(ady).indice == nueva_ady);
+        }
+    }
+    if (!esAdyacente){
+        Adyacente* adyacente = new Adyacente;
+        adyacente->indice = nueva_ady;
+        adyacente->peso = nuevo_peso;
+        adyacentes.extender(adyacente);
     }
 }
 
@@ -140,8 +161,9 @@ void Celula::duplicar_celula(Lista<Celula>* lista_celulas, char tipo, int j){
     Celula* nueva = new Celula(x, y);
     lista_celulas->extender(nueva);
 
-    duplicar->agregarAdyacente(lista_celulas->obtener_largo());
-    nueva->agregarAdyacente(j);
+    int peso_nuevo = 1 + rand()%10;
+    duplicar->agregarAdyacente(lista_celulas->obtener_largo(), peso_nuevo);
+    nueva->agregarAdyacente(j, peso_nuevo);
 
     switch(tipo){
         case 's':
@@ -162,18 +184,18 @@ void Celula::duplicar_celula(Lista<Celula>* lista_celulas, char tipo, int j){
 //Mostrar
 void Celula::mostrar(){
   Microorganismo::mostrar();
-  cout<<"****************************"<<endl;
-  cout<<"Direccion: "<<this<<endl;
-  cout<<"****************************"<<endl;
+  //cout<<"****************************"<<endl;
+  //cout<<"Direccion: "<<this<<endl;
+  //cout<<"****************************"<<endl;
   cout<<">>Adyacentes: "<<endl;
   for (int i = 1; i <= adyacentes.obtener_largo(); i++)
-    cout<<"        Cel: "<<(adyacentes.obtener_valor(i).indice)<<endl;
-  cout << "Cantidad de enzimas: " << obtenerCantEnzimas() << endl;
-  cout << "Cantidad de proteinas: " << obtenerCantEnzimas() << endl;
-  cout << "Material Gnetico: " << obtenerMaterialGnetico() << endl;
-  if(obtenerUnicelular())
-    cout << "Tipo de organismo: Unicelular" << endl;
-  else
-    cout << "Tipo de organismo: Pluricelular" << endl;
+    cout<<"        Cel: "<<(adyacentes.obtener_valor(i).indice)<<" "<<(adyacentes.obtener_valor(i).peso)<<endl;
+  //cout << "Cantidad de enzimas: " << obtenerCantEnzimas() << endl;
+  //cout << "Cantidad de proteinas: " << obtenerCantEnzimas() << endl;
+  //cout << "Material Gnetico: " << obtenerMaterialGnetico() << endl;
+  //if(obtenerUnicelular())
+    //cout << "Tipo de organismo: Unicelular" << endl;
+  //else
+    //cout << "Tipo de organismo: Pluricelular" << endl;
   cout<<"_______________________________________________________________"<<endl;
 }

@@ -97,6 +97,10 @@ void Entorno::cargarTexturas()
     {
         texturas[i].cargarDesdeArchivo(PATHS[i],renderer);
     }
+    for(int i=0;i<10;i++)
+    {
+    	numeros[i].cargarDesdeArchivo(PATHS_NUMEROS[i],renderer);
+    }
     loaderA->loadSprite(DOSIS_PATH,estadoDosisA,renderer,&texturas[DOSIS_A]);
     loaderB->loadSprite(DOSIS_PATH,estadoDosisB,renderer,&texturas[DOSIS_B]);
 }
@@ -121,6 +125,15 @@ void Entorno::renderizarTodo(Lista<Celula>* lista, Lista<Anticuerpo>* lista_anti
     int largo = lista->obtener_largo();
     float x, y;
     char tipo_celula;
+
+    /*
+    int prueba[2];
+    prueba[0] = 4;
+    prueba[1] = 7;
+
+    for (int r = 0; r<2; r++)
+        renderizarNumero(prueba[r], 100.0 + r*20.0, 300.0);
+    */
 
     for(int i=1; i<=largo; i++){
         x = lista->obtener_valor(i).obtener_posicion_x();
@@ -181,6 +194,56 @@ void Entorno::renderizarTodo(Lista<Celula>* lista, Lista<Anticuerpo>* lista_anti
         }
     }
 
+    //Renderizado de indices
+    int longitud = lista->obtener_largo();
+    int peso, pos_x, pos_y;
+
+    for(int i=1; i<=longitud; i++){
+        Celula* cel_actual = lista->obtener_puntero(i);
+        pos_x = cel_actual->obtener_posicion_x()-5;
+
+        if(i<=9){
+            renderizarNumero(i, pos_x, cel_actual->obtener_posicion_y()-5);
+        }else{
+            int vec[cuantas_cifras(i)+1];
+                dividir_en_digitos(i, cuantas_cifras(i), vec);
+                for(int r=1; r<=cuantas_cifras(i); r++){
+                    pos_x -= 5;
+                    renderizarNumero(vec[r], pos_x, cel_actual->obtener_posicion_y()-5);
+                    pos_x += 15;
+                }
+        }
+
+    //Renderizado de pesos
+	int cantAdyacentes = cel_actual->obtenerCantidadAdyacentes();
+
+	for (int j=1; j<=cantAdyacentes; j++)
+        {
+            Celula* adyacente_actual = lista->obtener_puntero(cel_actual->obtenerAdyacente(j));
+            peso = cel_actual->obtenerPesoAdyacente(j);
+
+            pos_x = promedio(cel_actual->obtenerPosicionX(), adyacente_actual->obtenerPosicionX());
+            pos_y = promedio(cel_actual->obtenerPosicionY(), adyacente_actual->obtenerPosicionY());
+
+            //cout << "PESO: " << peso << endl;
+            //cout << "CUANTAS CIFRAS: " << cuantas_cifras(peso) << endl;
+
+            if(peso <= 9){
+                //cout << "RENDERIZA EL: " << peso << endl;
+                //cout << "EN LA POSICION: " << pos_x << " " << pos_y << endl;
+                renderizarNumero(peso, pos_x, pos_y-5);
+            }else{
+                int vec[cuantas_cifras(peso)+1];
+                dividir_en_digitos(peso, cuantas_cifras(peso), vec);
+                for(int r=1; r<=cuantas_cifras(peso); r++){
+                    pos_x += 15;
+                    renderizarNumero(vec[r], pos_x, pos_y-5);
+                }
+            }
+        }
+    }
+
+
 	SDL_RenderPresent(renderer); // draw to the screen
 }
 
@@ -188,6 +251,8 @@ void Entorno::limpiar()
 {
     for(int i=0;i<7;i++)
         texturas[i].free();
+    for(int i=0;i<10;i++)
+        numeros[i].free();
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
     SDL_Quit();
@@ -352,4 +417,9 @@ bool Entorno::verificarZ(Microorganismo &anticuerpo, Celula &celula){
     }else{
         return false;
     }
+}
+
+void Entorno::renderizarNumero(int i,float x, float y)
+{
+    numeros[i].render(x,y,NUMERO_WIDTH,NUMERO_HEIGHT,renderer);
 }
