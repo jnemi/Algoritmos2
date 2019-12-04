@@ -1,24 +1,24 @@
-#include <iostream>
-#include "heap.h"
+#include "funciones.h"
+#include "Celula_x.h"
+#include "Celula_y.h"
+#include "Celula_z.h"
+#include "Celula_s.h"
+#include "Suero.h"
+#include "Anticuerpo.h"
+#include "Lista.h"
+#include "Juego.h"
+
 using namespace std;
 
-int main()
-{
-    heap h;
-    h.agregar_persona("Carlos",23);
-    h.agregar_persona("Jose",14);
-    h.agregar_persona("Raul",12);
-    h.agregar_persona("Pedro",7);
-    h.agregar_persona("DDD",12);
-    h.agregar_persona("GGG",12);
-    h.mostrar();
-    h.desencolar_uno();
-    h.desencolar_uno();
-    h.desencolar_uno();
-    h.desencolar_uno();
-    h.desencolar_uno();
-    h.desencolar_uno();
-    h.desencolar_uno();
-    h.mostrar();
-    return 0;
+int main(int argc, char** argv){
+    //Declaracion de listas de objetos
+    Lista <Suero>* lista_dosis_a = 0;
+    Lista <Suero>* lista_dosis_b = 0;
+    Lista <Celula>* lista_celulas = 0;
+    Lista <Anticuerpo>* lista_anticuerpos = 0;
+    Nanobot* nanobot = 0;
+
+    menu(lista_celulas, lista_anticuerpos, lista_dosis_a, lista_dosis_b, nanobot);
+
+  return 0;
 }

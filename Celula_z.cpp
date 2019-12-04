@@ -23,7 +23,7 @@ void Celula_z::contagiar(Lista<Celula>* lista_celulas)
         if (cel_objetivo->obtener_tipo_celula() == 's'){
         Celula* contagiada = new Celula_x(cel_objetivo->obtenerPosicionX(), cel_objetivo->obtenerPosicionY());
             for (int i = 1; i <= cel_objetivo->obtenerCantidadAdyacentes(); i++)
-                contagiada->agregarAdyacente(cel_objetivo->obtenerAdyacente(i));
+                contagiada->agregarAdyacente(cel_objetivo->obtenerAdyacente(i), cel_objetivo->obtenerPesoAdyacente(i));
         lista_celulas->reemplazar(adyacentes.obtener_valor(indice).indice, contagiada);
         }
     }
